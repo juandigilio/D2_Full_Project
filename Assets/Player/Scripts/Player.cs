@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     public float idleThreshold = 1.0f;
     private bool isGrounded = true;
     private bool isJumping = false;
-    private int isIdle;
+    private bool isIdle = true;
     private int idleState;
     private int jumpState;
 
@@ -149,6 +149,9 @@ public class Player : MonoBehaviour
         {
             animator.SetFloat("speedX", input.x);
         }
+
+        //Debug.Log("speedX = " + input.x);
+        //Debug.Log("speedY = " + input.y);
     }
 
     private void JumpAnimationState()
@@ -174,7 +177,7 @@ public class Player : MonoBehaviour
     {
         if (input == Vector2.zero && !isJumping)
         {
-            isIdle = 1;
+            isIdle = true;
             idleTimer += Time.deltaTime;
 
             idleState = -1;
@@ -189,10 +192,12 @@ public class Player : MonoBehaviour
         }
         else
         {
-            isIdle = 0;
+            isIdle = false;
             idleTimer = 0.0f;
         }
-        animator.SetFloat("isIdle", isIdle);
+        animator.SetBool("isIdle", isIdle);
+        isIdle = false;
+        Debug.Log("isIdle = " + isIdle);
     }
 
     public void ControlsChanged(PlayerInput playerInput)
