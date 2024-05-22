@@ -13,13 +13,18 @@ public class Player : MonoBehaviour
 
     private Vector2 input;
     private Vector3 displacement;
+    private Vector3 stopedVelocity;
+
+
     public float maxSpeed = 6.0f;
     public float decelerationSpeed = 5.0f;
     public float acelerationForce = 4.0f;
     public float jumpForce = 4.0f;
     private bool jumped = false;
     public bool isGrounded;
+    private bool badLanded;
     private float landingSpeed;
+    public float badLandingLimit = 10.0f;
     public float rotationSpeed = 11.0f;
     public float mouseSensivity = 0.1f;
 
@@ -31,12 +36,19 @@ public class Player : MonoBehaviour
     private Vector3 cameraRight;
     public float cameraRotation;
 
-    private void Start()
+    private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
+        rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         mainCamera = Camera.main.GetComponent<Camera>();
+    }
+    private void OnEnable()
+    {
+        if(playerInput != null)
+        {
+            playerInput.currentActionMap.FindAction("Jump").started += Jump;
+        }
     }
 
     private void Update()
@@ -70,18 +82,18 @@ public class Player : MonoBehaviour
 
         cameraRotation += Mouse.current.delta.ReadValue().x * mouseSensivity;
 
-        if (isGrounded)
-        {
-            float jumpInput = playerInput.actions["Jump"].ReadValue<float>();
+        //if (isGrounded)
+        //{
+        //    float jumpInput = playerInput.actions["Jump"].ReadValue<float>();
 
-            jumped = jumpInput > 0.2f;
+        //    jumped = jumpInput > 0.2f;
 
-            if (jumped)
-            {
-                animator.SetTrigger("jumped");
-                animator.ResetTrigger("landed");
-            }
-        }
+        //    if (jumped)
+        //    {
+        //        animator.SetTrigger("jumped");
+        //        animator.ResetTrigger("landed");
+        //    }
+        //}
     }
 
     private void Move()
@@ -95,13 +107,18 @@ public class Player : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext callbackContext)
     {
-        if (callbackContext.performed)
+        //Debug.Log("Jumped");
+
+        if (callbackContext.started)
         {
             if (isGrounded)
             {
-                //jumped = true;
+                jumped = true;
                 //animator.SetTrigger("jumped");
                 //Debug.Log("salto");
+                animator.SetTrigger("jumped");
+                animator.ResetTrigger("landed");
+                Debug.Log("Jumped");
             }
         }
         Debug.Log(callbackContext.phase);
@@ -116,6 +133,12 @@ public class Player : MonoBehaviour
                 animator.SetTrigger("landed");
                 animator.SetFloat("landingSpeed", landingSpeed);
                 animator.ResetTrigger("jumped");
+                
+                if (landingSpeed > badLandingLimit)
+                {
+                    badLanded = true;
+                }
+
                 landingSpeed = 0.0f;
                 isGrounded = true;
             }
@@ -180,6 +203,11 @@ public class Player : MonoBehaviour
         {
             rb.AddForce(displacement * 5.0f);
             animator.SetFloat("verticalVelocity", rb.velocity.y);
+        }
+
+        if (badLanded)
+        {
+            rb.velocity = Vector3.zero;
         }
     }
 

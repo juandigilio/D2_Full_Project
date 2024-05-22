@@ -40,7 +40,7 @@ public class FollowPlataform : MonoBehaviour
                 groundPosition = groundedIn.transform.position;
                 actualRotation = groundedIn.transform.rotation;
 
-                Debug.Log(groundID);
+                //Debug.Log(groundID);
 
                 if (groundID == lastGroundID)
                 {
