@@ -5,29 +5,31 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    private Rigidbody rb;
+    public Rigidbody rb;
     private PlayerInput playerInput;
     private Animator animator;
+    public FeetsCollider leftFeet;
+    public FeetsCollider rightFeet;
 
     private Vector2 input;
     private Vector3 displacement;
-    private float maxSpeed = 3.0f;
-    private float decelerationSpeed = 5.0f;
-    private float acelerationForce = 80.0f;
-    private float jumpForce = 4.0f;
+    public float maxSpeed = 6.0f;
+    public float decelerationSpeed = 5.0f;
+    public float acelerationForce = 4.0f;
+    public float jumpForce = 4.0f;
+    private bool jumped = false;
+    public bool isGrounded;
+    private float landingSpeed;
+    public float rotationSpeed = 11.0f;
+    public float mouseSensivity = 0.1f;
 
     private float idleTimer = 0.0f;
     public float idleThreshold = 1.0f;
-    private bool isGrounded = true;
-    private bool isJumping = false;
-    private bool isIdle = true;
-    private int idleState;
-    private int jumpState;
 
-    private float cameraRotationX;
     public Camera mainCamera;
     private Vector3 cameraForward;
     private Vector3 cameraRight;
+    public float cameraRotation;
 
     private void Start()
     {
@@ -39,7 +41,21 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        IsGrounded();
+
+        GetCameraDirection();
+
         GetInput();
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        //wallContact = true;
+    }
+
+    private void OnTriggerExit(Collider collider)
+    {
+        //wallContact = false;
     }
 
     private void FixedUpdate()
@@ -47,71 +63,34 @@ public class Player : MonoBehaviour
         Move();
     }
 
-    private void LateUpdate()
-    {
-        cameraRotationX += Mouse.current.delta.ReadValue().x * 0.05f;
-        transform.rotation = Quaternion.Euler(0, cameraRotationX, 0);
-
-        UpdateAnimationsStates();
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.tag == "Floor")
-        {
-            isGrounded = true;
-            isJumping = false;
-            animator.SetBool("jumped", isJumping);
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if(collision.collider.tag == "Floor")
-        {
-            isGrounded = false;
-        }
-    }
-
     private void GetInput()
     {
         input = playerInput.actions["Move"].ReadValue<Vector2>();
+        animator.SetFloat("horizontalVelocity", input.magnitude * maxSpeed);
 
-        if (input.y < -0.5f)
+        cameraRotation += Mouse.current.delta.ReadValue().x * mouseSensivity;
+
+        if (isGrounded)
         {
-            input.y = -0.5f;
+            float jumpInput = playerInput.actions["Jump"].ReadValue<float>();
 
-            if (input.x < -0.5f)
+            jumped = jumpInput > 0.2f;
+
+            if (jumped)
             {
-                input.x = -0.5f;
-            }
-            else if (input.x > 0.5f)
-            {
-                input.x = 0.5f;
+                animator.SetTrigger("jumped");
+                animator.ResetTrigger("landed");
             }
         }
     }
 
     private void Move()
     {
-        GetCameraDirection();
+        LookForward();
 
-        if (isGrounded)
-        {
-            displacement = input.x * cameraRight + input.y * cameraForward;
+        AddForces();
 
-            rb.AddForce(displacement * acelerationForce);
-            rb.velocity = Vector3.ClampMagnitude(rb.velocity, maxSpeed);
-
-            if (rb.velocity != Vector3.zero && input == Vector2.zero)
-            {
-                Vector3 stop = rb.velocity;
-                stop.x = Mathf.Lerp(stop.x, 0, Time.fixedDeltaTime * decelerationSpeed);
-                stop.z = Mathf.Lerp(stop.z, 0, Time.fixedDeltaTime * decelerationSpeed);
-
-                rb.velocity = stop;
-            }
-        }
+        StopInertia();
     }
 
     public void Jump(InputAction.CallbackContext callbackContext)
@@ -120,89 +99,39 @@ public class Player : MonoBehaviour
         {
             if (isGrounded)
             {
-                rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-
-                isGrounded = false;
-                isJumping = true;
+                //jumped = true;
+                //animator.SetTrigger("jumped");
+                //Debug.Log("salto");
             }
         }
         Debug.Log(callbackContext.phase);
     }
 
-    private void UpdateAnimationsStates()
+    private void IsGrounded()
     {
-        RuningAnimationState();
-
-        IdleAnimationState();
-
-        JumpAnimationState();
-    }
-
-    private void RuningAnimationState()
-    {
-        animator.SetFloat("speedY", input.y);
-        if (input.y < 0)
+        if (leftFeet.isInTrigger || rightFeet.isInTrigger)
         {
-            animator.SetFloat("speedX", -input.x);
+            if (!isGrounded)
+            {
+                animator.SetTrigger("landed");
+                animator.SetFloat("landingSpeed", landingSpeed);
+                animator.ResetTrigger("jumped");
+                landingSpeed = 0.0f;
+                isGrounded = true;
+            }
         }
         else
         {
-            animator.SetFloat("speedX", input.x);
-        }
+            isGrounded = false;             
 
-        //Debug.Log("speedX = " + input.x);
-        //Debug.Log("speedY = " + input.y);
-    }
-
-    private void JumpAnimationState()
-    {
-        if (isJumping)
-        {
-            animator.SetBool("jumped", isJumping);
-
-            if (input.y < 0.5f)
+            if (rb.velocity.y < landingSpeed)
             {
-                jumpState = -1;
+                landingSpeed = rb.velocity.y;
             }
-            else
-            {
-                jumpState = 0;
-            }
-
-            animator.SetFloat("jumpState", jumpState);
         }
-    }
 
-    private void IdleAnimationState()
-    {
-        if (input == Vector2.zero && !isJumping)
-        {
-            isIdle = true;
-            idleTimer += Time.deltaTime;
-
-            idleState = -1;
-
-            if (idleTimer >= idleThreshold)
-            {
-                idleState = Random.Range(0, 2);
-                idleTimer = 0;
-            }
-
-            animator.SetFloat("idleState", idleState);
-        }
-        else
-        {
-            isIdle = false;
-            idleTimer = 0.0f;
-        }
-        animator.SetBool("isIdle", isIdle);
-        isIdle = false;
-        Debug.Log("isIdle = " + isIdle);
-    }
-
-    public void ControlsChanged(PlayerInput playerInput)
-    {
-        Debug.Log("Cambio de dispositivo: " + playerInput.currentControlScheme);
+        //animator.SetFloat("landingSpeed", landingSpeed);
+        animator.SetBool("isGrounded", isGrounded);
     }
 
     private void GetCameraDirection()
@@ -215,5 +144,59 @@ public class Player : MonoBehaviour
 
         cameraForward = cameraForward.normalized;
         cameraRight = cameraRight.normalized;
+    }
+
+    private void LookForward()
+    {
+        displacement = input.x * cameraRight + input.y * cameraForward;
+
+        if (displacement.sqrMagnitude > 0.01f)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(displacement);
+            rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, rotationSpeed * Time.deltaTime));
+        }
+    }
+
+    private void AddForces()
+    {
+        if (isGrounded)
+        {
+            if (rb.velocity.magnitude <= maxSpeed * 0.5f)
+            {
+                rb.AddForce(displacement * (maxSpeed * acelerationForce));
+            }
+            else
+            {
+                rb.AddForce(displacement * maxSpeed);
+            }
+
+            if (jumped)
+            {
+                rb.AddForce(jumpForce * Vector3.up, ForceMode.Impulse);
+                jumped = false;
+            }
+        }
+        else
+        {
+            rb.AddForce(displacement * 5.0f);
+            animator.SetFloat("verticalVelocity", rb.velocity.y);
+        }
+    }
+
+    private void StopInertia()
+    {
+        if (rb.velocity != Vector3.zero && input == Vector2.zero && isGrounded)
+        {
+            Vector3 stop = rb.velocity;
+            stop.x = Mathf.Lerp(stop.x, 0, Time.fixedDeltaTime * decelerationSpeed);
+            stop.z = Mathf.Lerp(stop.z, 0, Time.fixedDeltaTime * decelerationSpeed);
+
+            rb.velocity = stop;
+        }
+    }
+
+    public void ControlsChanged(PlayerInput playerInput)
+    {
+        Debug.Log("Cambio de dispositivo: " + playerInput.currentControlScheme);
     }
 }
