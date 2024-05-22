@@ -36,15 +36,15 @@ ModelImporter:
       name: Jump
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 0
-      lastFrame: 72
+      firstFrame: 21
+      lastFrame: 30
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -108,6 +108,11 @@ ModelImporter:
     normalSmoothingSource: 0
   referencedClips:
   - a85d503ff2f1393499fbfa74474d5b71
+  - 9f61553a910a8514b802a49ccb043d6c
+  - 447c00d411530304aae413168cba2cf6
+  - b22de3bbf31b09c4d96e4f6ca33f3264
+  - 5e3ee6a8dcacda543a48ad7fb17d237a
+  - 8761d7225b4722f41921434821703ed1
   - 06dc92c43cc734e469fe2f90dd65d3b0
   - ce31de17b9c333a43a36d30b08386635
   - 0c86eaeabecba654ebfffdec4dfc33b2
