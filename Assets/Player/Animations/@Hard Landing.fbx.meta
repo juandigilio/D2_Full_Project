@@ -36,8 +36,8 @@ ModelImporter:
       name: Hard Landing
       takeName: mixamo.com
       internalID: -203655887218126122
-      firstFrame: 0
-      lastFrame: 60
+      firstFrame: 4
+      lastFrame: 45
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -56,7 +56,14 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.9462026
+        functionName: AnimationFinished
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 62a22bf12d7e86c40a3fe2711b857107, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

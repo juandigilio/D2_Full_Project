@@ -15,13 +15,16 @@ public class Player : MonoBehaviour
     private Vector3 displacement;
     private Vector3 stopedVelocity;
 
-
+    private float deltaTime;
     public float maxSpeed = 6.0f;
     public float decelerationSpeed = 5.0f;
     public float acelerationForce = 4.0f;
     public float jumpForce = 4.0f;
+    public float airSpeedMultiplier = 100.0f;
     private bool jumped = false;
     public bool isGrounded;
+    private bool isStuck;
+    private bool isAnimating;
     private bool badLanded;
     private float landingSpeed;
     public float badLandingLimit = 10.0f;
@@ -42,6 +45,8 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         mainCamera = Camera.main.GetComponent<Camera>();
+
+        isAnimating = false;
     }
     private void OnEnable()
     {
@@ -60,40 +65,27 @@ public class Player : MonoBehaviour
         GetInput();
     }
 
-    private void OnTriggerEnter(Collider collider)
-    {
-        //wallContact = true;
-    }
-
-    private void OnTriggerExit(Collider collider)
-    {
-        //wallContact = false;
-    }
-
     private void FixedUpdate()
     {
+        UpdateDelta();
+
         Move();
+
+        Debug.Log("isAnimating: " + isAnimating);
     }
 
     private void GetInput()
     {
-        input = playerInput.actions["Move"].ReadValue<Vector2>();
-        animator.SetFloat("horizontalVelocity", input.magnitude * maxSpeed);
+        if (isAnimating)
+        {
+            input = Vector2.zero;
+        }
+        else
+        {
+            input = playerInput.actions["Move"].ReadValue<Vector2>();
+        }
 
         cameraRotation += Mouse.current.delta.ReadValue().x * mouseSensivity;
-
-        //if (isGrounded)
-        //{
-        //    float jumpInput = playerInput.actions["Jump"].ReadValue<float>();
-
-        //    jumped = jumpInput > 0.2f;
-
-        //    if (jumped)
-        //    {
-        //        animator.SetTrigger("jumped");
-        //        animator.ResetTrigger("landed");
-        //    }
-        //}
     }
 
     private void Move()
@@ -107,21 +99,17 @@ public class Player : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext callbackContext)
     {
-        //Debug.Log("Jumped");
-
         if (callbackContext.started)
         {
-            if (isGrounded)
+            if (isGrounded || isStuck)
             {
                 jumped = true;
-                //animator.SetTrigger("jumped");
-                //Debug.Log("salto");
                 animator.SetTrigger("jumped");
                 animator.ResetTrigger("landed");
-                Debug.Log("Jumped");
+                //Debug.Log("Jumped");
             }
         }
-        Debug.Log(callbackContext.phase);
+       // Debug.Log(callbackContext.phase);
     }
 
     private void IsGrounded()
@@ -133,6 +121,8 @@ public class Player : MonoBehaviour
                 animator.SetTrigger("landed");
                 animator.SetFloat("landingSpeed", landingSpeed);
                 animator.ResetTrigger("jumped");
+
+                isAnimating = true;
                 
                 if (landingSpeed > badLandingLimit)
                 {
@@ -153,8 +143,21 @@ public class Player : MonoBehaviour
             }
         }
 
-        //animator.SetFloat("landingSpeed", landingSpeed);
-        animator.SetBool("isGrounded", isGrounded);
+        isStuck = rb.velocity.magnitude > -0.1f && rb.velocity.magnitude < 0.1f && !isGrounded;
+
+        //Debug.Log("isStuck: " + isStuck);
+
+        animator.SetBool("isStuck", isStuck);
+
+        if (isStuck)
+        {
+            animator.SetBool("isGrounded", true);
+        }
+        else
+        {
+            animator.SetBool("isGrounded", isGrounded);
+        }
+        
     }
 
     private void GetCameraDirection()
@@ -184,25 +187,36 @@ public class Player : MonoBehaviour
     {
         if (isGrounded)
         {
-            if (rb.velocity.magnitude <= maxSpeed * 0.5f)
+            if (rb.velocity.magnitude <= maxSpeed * 0.25f)
             {
-                rb.AddForce(displacement * (maxSpeed * acelerationForce));
+                rb.AddForce(displacement * (maxSpeed * acelerationForce) * deltaTime);
+                //Debug.Log("AcelerationAdded");
             }
             else
             {
-                rb.AddForce(displacement * maxSpeed);
+                rb.AddForce((displacement * maxSpeed) * deltaTime);
+                //Debug.Log("maxSpeed");
             }
 
             if (jumped)
             {
-                rb.AddForce(jumpForce * Vector3.up, ForceMode.Impulse);
+                rb.AddForce((jumpForce * Vector3.up) * deltaTime, ForceMode.Impulse);
+
                 jumped = false;
             }
+
+            animator.SetFloat("verticalVelocity", 0.0f);
+            animator.SetFloat("horizontalVelocity", rb.velocity.magnitude);
         }
         else
         {
-            rb.AddForce(displacement * 5.0f);
+            rb.AddForce((displacement * airSpeedMultiplier) * deltaTime);
             animator.SetFloat("verticalVelocity", rb.velocity.y);
+
+            if (rb.velocity.y < -2.0f)
+            {
+                animator.SetFloat("horizontalVelocity", 0.0f);
+            }
         }
 
         if (badLanded)
@@ -226,5 +240,20 @@ public class Player : MonoBehaviour
     public void ControlsChanged(PlayerInput playerInput)
     {
         Debug.Log("Cambio de dispositivo: " + playerInput.currentControlScheme);
+    }
+
+    private void UpdateDelta()
+    {
+        deltaTime = Time.fixedDeltaTime;
+    }
+
+    private void AnimationStarted()
+    {
+        isAnimating = true;
+    }
+
+    private void AnimationFinished()
+    {
+        isAnimating = false;
     }
 }
