@@ -17,6 +17,7 @@ public class ContinuousMovement : MonoBehaviour
     private Vector3 endPosition;    // Posición de destino del movimiento actual
     private Quaternion originalRotation; // Rotación inicial del objeto
     private Quaternion targetRotation;   // Rotación objetivo del objeto
+    private Quaternion currentTargetRotation; // Rotación objetivo actual durante el movimiento
     private Vector3 returnStartPosition; // Posición de inicio del regreso al original
     private Quaternion returnStartRotation; // Rotación de inicio del regreso al original
     private float journeyLength;    // Longitud del viaje actual
@@ -100,6 +101,12 @@ public class ContinuousMovement : MonoBehaviour
         endPosition = points[currentPointIndex].transform.position;
         journeyLength = Vector3.Distance(startPosition, endPosition);
         startTime = Time.time;
+
+        if (rotatePlatform)
+        {
+            float rotationFraction = (float)currentPointIndex / (points.Count - 1);
+            currentTargetRotation = Quaternion.Lerp(originalRotation, targetRotation, rotationFraction);
+        }
     }
 
     private void SetReturnJourney()

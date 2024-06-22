@@ -106,10 +106,8 @@ public class Player : MonoBehaviour
                 jumped = true;
                 animator.SetTrigger("jumped");
                 animator.ResetTrigger("landed");
-                //Debug.Log("Jumped");
             }
         }
-       // Debug.Log(callbackContext.phase);
     }
 
     private void IsGrounded()
