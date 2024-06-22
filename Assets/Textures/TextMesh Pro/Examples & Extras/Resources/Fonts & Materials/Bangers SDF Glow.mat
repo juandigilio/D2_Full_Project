@@ -12,6 +12,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - BEVEL_ON
   - GLOW_ON
   - UNDERLAY_ON
   m_InvalidKeywords: []
@@ -52,10 +53,10 @@ Material:
     m_Ints: []
     m_Floats:
     - _Ambient: 0.5
-    - _Bevel: 0.5
+    - _Bevel: 0.861
     - _BevelClamp: 0
-    - _BevelOffset: 0
-    - _BevelRoundness: 0
+    - _BevelOffset: -0.231
+    - _BevelRoundness: 0.098
     - _BevelWidth: 0
     - _BumpFace: 0
     - _BumpOutline: 0

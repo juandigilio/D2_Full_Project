@@ -104,6 +104,7 @@ public class MenuManager : MonoBehaviour
     private IEnumerator MoveWallAndCamera(Transform wallTransform, Vector3 wallStart, Vector3 wallEnd, Vector3 cameraStartPos, Vector3 cameraEndPos, Quaternion cameraStartRot, Quaternion cameraEndRot, float duration = 1.0f)
     {
         float time = 0;
+
         while (time < duration)
         {
             float t = time / duration;
