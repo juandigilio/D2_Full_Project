@@ -1,38 +1,202 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
+using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class PauseManager : MonoBehaviour
 {
-    public static bool GameIsPaused = false;
+    public bool gameIsPaused = false;
     public GameObject pauseMenuUI;
+    public Player player;
+    public WallBehaviour wall;
 
-    void Update()
+    public Button continueButton;
+    public Button menuButton;
+    public Button exitButton;
+    public TextMeshProUGUI continueText;
+    public TextMeshProUGUI menuText;
+    public TextMeshProUGUI exitText;
+
+    private int index = 1;
+    public bool isJoystick = false;
+
+
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        pauseMenuUI.SetActive(false);
+
+        continueButton.onClick.AddListener(Continue);
+        menuButton.onClick.AddListener(LoadMainMenu);
+        exitButton.onClick.AddListener(Exit);
+
+        continueText.gameObject.SetActive(false);
+        menuText.gameObject.SetActive(false);
+        exitText.gameObject.SetActive(false);
+
+        AddEventTrigger(continueButton.gameObject, EventTriggerType.PointerEnter, () => OnHoverButton(continueText, true));
+        AddEventTrigger(continueButton.gameObject, EventTriggerType.PointerExit, () => OnHoverButton(continueText, false));
+
+        AddEventTrigger(menuButton.gameObject, EventTriggerType.PointerEnter, () => OnHoverButton(menuText, true));
+        AddEventTrigger(menuButton.gameObject, EventTriggerType.PointerExit, () => OnHoverButton(menuText, false));
+
+        AddEventTrigger(exitButton.gameObject, EventTriggerType.PointerEnter, () => OnHoverButton(exitText, true));
+        AddEventTrigger(exitButton.gameObject, EventTriggerType.PointerExit, () => OnHoverButton(exitText, false));
+    }
+
+    private void Update()
+    {
+        if (pauseMenuUI.activeSelf != wall.activeCanvas)
         {
-            if (GameIsPaused)
+            pauseMenuUI.SetActive(wall.activeCanvas);
+        }
+
+        ActiveSelected();
+    }
+
+    public void Pause()
+    {
+        if (!wall.isDropping && !wall.isQuiting)
+        {
+            Time.timeScale = 0f;
+            gameIsPaused = true;
+            player.enabled = false;
+            StartCoroutine(wall.DropWall());
+        }    
+    }
+
+    public void Resume(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.started)
+        {
+            Continue();
+        }      
+    }
+
+    public void Continue()
+    {
+        if (!wall.isDropping && !wall.isQuiting)
+        {
+            StartCoroutine(wall.QuitWall());
+            pauseMenuUI.SetActive(false);
+            gameIsPaused = false;
+            Time.timeScale = 1f;
+            player.enabled = true;
+        }
+    }
+
+    public void Up(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.started)
+        {
+            index--;
+
+            if (index < 1)
             {
-                Resume();
-            }
-            else
-            {
-                Pause();
+                index = 1;
             }
         }
     }
 
-    public void Resume()
+    public void Down(InputAction.CallbackContext callbackContext)
     {
-        pauseMenuUI.SetActive(false);
-        Time.timeScale = 1f;
-        GameIsPaused = false;
+        if (callbackContext.started)
+        {
+            index++;
+
+            if (index > 3)
+            {
+                index = 3;
+            }
+        }
     }
 
-    void Pause()
+    public void ActiveSelected()
     {
-        pauseMenuUI.SetActive(true);
-        Time.timeScale = 0f;
-        GameIsPaused = true;
+        if (isJoystick)
+        {
+            continueText.gameObject.SetActive(false);
+            menuText.gameObject.SetActive(false);
+            exitText.gameObject.SetActive(false);
+
+            switch (index)
+            {
+                case 1:
+                    {
+                        continueText.gameObject.SetActive(true);
+                        break;
+                    }
+                case 2:
+                    {
+                        menuText.gameObject.SetActive(true);
+                        break;
+                    }
+                case 3:
+                    {
+                        exitText.gameObject.SetActive(true);
+                        break;
+                    }
+            }
+        }
+        else
+        {
+            index = 0;
+        }
+    }
+
+    public void Select(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.started)
+        {
+            switch (index)
+            {
+                case 1:
+                    {
+                        Continue();
+                        break;
+                    }
+                case 2:
+                    {
+                        LoadMainMenu();
+                        break;
+                    }
+                case 3:
+                    {
+                        Exit();
+                        break;
+                    }
+            }
+        }
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadSceneAsync("MainMenu");
+    }
+
+    public void Exit()
+    {
+        Application.Quit();
+    }
+
+    private void OnHoverButton(TextMeshProUGUI text, bool isHovering)
+    {
+        text.gameObject.SetActive(isHovering);
+    }
+
+    private void AddEventTrigger(GameObject obj, EventTriggerType type, System.Action action)
+    {
+        EventTrigger trigger = obj.GetComponent<EventTrigger>();
+
+        if (trigger == null)
+        {
+            trigger = obj.AddComponent<EventTrigger>();
+        }
+
+        EventTrigger.Entry entry = new EventTrigger.Entry { eventID = type };
+
+        entry.callback.AddListener((eventData) => { action(); });
+        trigger.triggers.Add(entry);
     }
 }

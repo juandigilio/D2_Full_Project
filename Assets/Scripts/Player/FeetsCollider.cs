@@ -2,15 +2,14 @@ using UnityEngine;
 
 public class FeetsCollider : MonoBehaviour
 {
-    public GameObject playerObj;
-    private Rigidbody rb;
+    public Rigidbody rb;
 
     public bool isInTrigger = false;
     public float fallingSpeed;
 
     private void Start()
     {
-        rb = playerObj.GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
         
         if (rb == null)
         {

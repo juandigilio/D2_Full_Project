@@ -63,15 +63,18 @@
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
+    <Compile Include="Assets\Scripts\InputManager\InputManager.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
+    <Compile Include="Assets\Scripts\Player\MovementBehaviour.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\Scripts\Main menu\MenuManager.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
-    <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\Scripts\Pause\PauseManager.cs" />
+    <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\Camera\Cameraman.cs" />
+    <Compile Include="Assets\Scripts\Main menu\MenuInputManager.cs" />
     <Compile Include="Assets\Scripts\Player\PushRigisbodys.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
@@ -80,6 +83,7 @@
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
+    <Compile Include="Assets\Scripts\Player\AnimationsManager.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
@@ -102,6 +106,7 @@
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
+    <Compile Include="Assets\Scripts\Pause\WallBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Textures\TextMesh Pro\Shaders\TMPro.cginc" />

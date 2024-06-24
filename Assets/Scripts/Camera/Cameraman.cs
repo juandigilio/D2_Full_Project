@@ -4,16 +4,13 @@ public class Cameraman : MonoBehaviour
 {
     public Camera mainCamera;
     public Transform playerTransform;
-    public GameObject playerObj;
-    private Player player;
+    public InputManager inputManager;
     private float distance;
     private float height = 3.5f;
     private float offsetZ = 3.0f;
 
     void Start()
     {
-        player = playerObj.GetComponent<Player>();
-
         InitCamera();
     }
 
@@ -38,7 +35,7 @@ public class Cameraman : MonoBehaviour
     private void UpdatePosition()
     {
         Vector3 offset = new Vector3(0, height, -distance);
-        Quaternion newRotation = Quaternion.Euler(0, player.cameraRotation, 0);
+        Quaternion newRotation = Quaternion.Euler(0, inputManager.cameraRotation, 0);
         Vector3 rotatedOffset = newRotation * offset;
         Vector3 newPos = playerTransform.position + rotatedOffset;
 
