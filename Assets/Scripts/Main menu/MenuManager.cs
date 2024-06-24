@@ -117,6 +117,11 @@ public class MenuManager : MonoBehaviour
     public void Exit()
     {
         Application.Quit();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+
     }
 
     private IEnumerator MoveWallAndCamera(Transform wallTransform, Vector3 wallStart, Vector3 wallEnd, Vector3 cameraStartPos, Vector3 cameraEndPos, Quaternion cameraStartRot, Quaternion cameraEndRot, float duration = 1.0f)

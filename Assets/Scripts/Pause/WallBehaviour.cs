@@ -36,9 +36,21 @@ public class WallBehaviour : MonoBehaviour
         wall.transform.position = wallStartPosition;
     }
 
-    public IEnumerator DropWall()
+    public void DropWall()
     {
+        Debug.Log("A", gameObject);
+
+        if (wall == null)
+        {
+            return;
+        }
         wall.SetActive(true);
+
+        StartCoroutine(DropingWall());
+    }
+
+    private IEnumerator DropingWall()
+    {
         SetTargetPosition();
         isDropping = true;
 
@@ -52,11 +64,15 @@ public class WallBehaviour : MonoBehaviour
         }
         wall.transform.position = wallTargetPosition;
         activeCanvas = true;
-        isDropping = false;
-        
+        isDropping = false;        
     }
 
-    public IEnumerator QuitWall()
+    public void QuitWall()
+    {
+        StartCoroutine(QuitingWall());
+    }
+
+    private IEnumerator QuitingWall()
     {
         activeCanvas = false;
         isQuiting = true;
@@ -71,7 +87,7 @@ public class WallBehaviour : MonoBehaviour
             yield return null;
         }
         wall.transform.position = wallStartPosition;
-        wall.SetActive(false);
         isQuiting = false;
+        wall.SetActive(false);
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class MenuInputManager : MonoBehaviour
 {
-    public PlayerInput playerInput;
+    private PlayerInput playerInput;
     private MenuManager menuManager;
 
     private void Awake()
@@ -12,11 +12,12 @@ public class MenuInputManager : MonoBehaviour
         menuManager = GetComponent<MenuManager>();
     }
 
-    private void OnEnable()
+    private void Start()
     {
+        playerInput.SwitchCurrentActionMap("Paused");
         if (playerInput != null)
         {
-            playerInput.SwitchCurrentActionMap("Paused");
+            
 
             playerInput.currentActionMap.FindAction("Up").started += Up;
             playerInput.currentActionMap.FindAction("Down").started += Down;
@@ -25,9 +26,13 @@ public class MenuInputManager : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
-        //playerInput.SwitchCurrentActionMap("Paused");
+        if (playerInput.currentActionMap == null)
+        {
+            return;
+        }
+        playerInput.SwitchCurrentActionMap("Paused");
 
         playerInput.currentActionMap.FindAction("Up").started -= Up;
         playerInput.currentActionMap.FindAction("Down").started -= Down;

@@ -61,8 +61,13 @@ public class PauseManager : MonoBehaviour
         {
             Time.timeScale = 0f;
             gameIsPaused = true;
+            if (player == null)
+            {
+                player = FindAnyObjectByType<Player>();
+            }
             player.enabled = false;
-            StartCoroutine(wall.DropWall());
+
+            wall.DropWall();
         }    
     }
 
@@ -78,7 +83,7 @@ public class PauseManager : MonoBehaviour
     {
         if (!wall.isDropping && !wall.isQuiting)
         {
-            StartCoroutine(wall.QuitWall());
+            wall.QuitWall();
             pauseMenuUI.SetActive(false);
             gameIsPaused = false;
             Time.timeScale = 1f;
@@ -172,12 +177,20 @@ public class PauseManager : MonoBehaviour
 
     public void LoadMainMenu()
     {
+        gameIsPaused = false;
+        Time.timeScale = 1f;
+        InputManager.instance.Unsuscribe();
         SceneManager.LoadSceneAsync("MainMenu");
     }
 
     public void Exit()
     {
         Application.Quit();
+
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+
     }
 
     private void OnHoverButton(TextMeshProUGUI text, bool isHovering)

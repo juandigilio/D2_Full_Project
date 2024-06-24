@@ -4,7 +4,7 @@ public class Cameraman : MonoBehaviour
 {
     public Camera mainCamera;
     public Transform playerTransform;
-    public InputManager inputManager;
+    private InputManager inputManager;
     private float distance;
     private float height = 3.5f;
     private float offsetZ = 3.0f;
@@ -12,6 +12,7 @@ public class Cameraman : MonoBehaviour
     void Start()
     {
         InitCamera();
+        inputManager = InputManager.instance;
     }
 
     void LateUpdate()

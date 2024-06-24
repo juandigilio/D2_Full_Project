@@ -11,43 +11,36 @@ public class InputManager : MonoBehaviour
     public float cameraRotation = 0;
 
     public event Action OnPlayerMove;
+    public static InputManager instance;
 
     private void Awake()
     {
-        
+        instance = this;
+
+        playerInput = GetComponent<PlayerInput>();
     }
 
-    private void OnEnable()
+    private void Start()
     {
-        playerInput = GetComponent<PlayerInput>();
+        playerInput.ActivateInput();
 
         if (playerInput != null)
         {
+            playerInput.SwitchCurrentActionMap("Player");
+
             playerInput.currentActionMap.FindAction("Jump").started += player.Jump;
             playerInput.currentActionMap.FindAction("Pause").started += player.Pause;
             playerInput.currentActionMap.FindAction("Move").started += Move;
 
             playerInput.SwitchCurrentActionMap("Paused");
+
             playerInput.currentActionMap.FindAction("Resume").started += pauseManager.Resume;
             playerInput.currentActionMap.FindAction("Up").started += pauseManager.Up;
             playerInput.currentActionMap.FindAction("Down").started += pauseManager.Down;
             playerInput.currentActionMap.FindAction("Select").started += pauseManager.Select;
+
             playerInput.SwitchCurrentActionMap("Player");
         }
-    }
-
-    private void OnDisable()
-    {
-        playerInput.currentActionMap.FindAction("Jump").started -= player.Jump;
-        playerInput.currentActionMap.FindAction("Pause").started -= player.Pause;
-        playerInput.currentActionMap.FindAction("Move").started -= Move;
-
-        playerInput.SwitchCurrentActionMap("Paused");
-        playerInput.currentActionMap.FindAction("Resume").started -= pauseManager.Resume;
-        playerInput.currentActionMap.FindAction("Up").started -= pauseManager.Up;
-        playerInput.currentActionMap.FindAction("Down").started -= pauseManager.Down;
-        playerInput.currentActionMap.FindAction("Select").started -= pauseManager.Select;
-        //playerInput.SwitchCurrentActionMap("Player");
     }
 
     private void Update()
@@ -66,12 +59,29 @@ public class InputManager : MonoBehaviour
         MoveCamera();
     }
 
-    public void OnMove(InputValue inputValue)
+    public void Unsuscribe()
     {
-        OnPlayerMove?.Invoke();
+        playerInput.SwitchCurrentActionMap("Player");
+        playerInput.currentActionMap.FindAction("Jump").started -= player.Jump;
+        playerInput.currentActionMap.FindAction("Pause").started -= player.Pause;
+        playerInput.currentActionMap.FindAction("Move").started -= Move;
 
-        Debug.Log("MOve");
+        playerInput.SwitchCurrentActionMap("Paused");
+        playerInput.currentActionMap.FindAction("Resume").started -= pauseManager.Resume;
+        playerInput.currentActionMap.FindAction("Up").started -= pauseManager.Up;
+        playerInput.currentActionMap.FindAction("Down").started -= pauseManager.Down;
+        playerInput.currentActionMap.FindAction("Select").started -= pauseManager.Select;
+        playerInput.SwitchCurrentActionMap("Player");
     }
+
+    //public void OnMove(InputValue inputValue)
+    //{
+    //    OnPlayerMove?.Invoke();
+
+        
+
+    //    Debug.Log("MOve");
+    //}
 
     public void Move(InputAction.CallbackContext callbackContext)
     {
