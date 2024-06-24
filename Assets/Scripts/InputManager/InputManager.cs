@@ -51,7 +51,7 @@ public class InputManager : MonoBehaviour
     {
         if (callbackContext.started)
         {
-            player.stickInput = playerInput.actions["Move"].ReadValue<Vector2>();
+            player.stickInput = callbackContext.ReadValue<Vector2>();
         }        
     }
 
