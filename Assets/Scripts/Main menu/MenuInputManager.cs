@@ -25,6 +25,16 @@ public class MenuInputManager : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        //playerInput.SwitchCurrentActionMap("Paused");
+
+        playerInput.currentActionMap.FindAction("Up").started -= Up;
+        playerInput.currentActionMap.FindAction("Down").started -= Down;
+        playerInput.currentActionMap.FindAction("Select").started -= Select;
+        playerInput.currentActionMap.FindAction("Resume").started -= menuManager.Resume;
+    }
+
     private void Update()
     {
         CheckInput();

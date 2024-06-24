@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,13 +10,17 @@ public class InputManager : MonoBehaviour
     private float mouseSensivity = 0.1f;
     public float cameraRotation = 0;
 
+    public event Action OnPlayerMove;
+
     private void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
+        
     }
 
     private void OnEnable()
     {
+        playerInput = GetComponent<PlayerInput>();
+
         if (playerInput != null)
         {
             playerInput.currentActionMap.FindAction("Jump").started += player.Jump;
@@ -29,6 +34,20 @@ public class InputManager : MonoBehaviour
             playerInput.currentActionMap.FindAction("Select").started += pauseManager.Select;
             playerInput.SwitchCurrentActionMap("Player");
         }
+    }
+
+    private void OnDisable()
+    {
+        playerInput.currentActionMap.FindAction("Jump").started -= player.Jump;
+        playerInput.currentActionMap.FindAction("Pause").started -= player.Pause;
+        playerInput.currentActionMap.FindAction("Move").started -= Move;
+
+        playerInput.SwitchCurrentActionMap("Paused");
+        playerInput.currentActionMap.FindAction("Resume").started -= pauseManager.Resume;
+        playerInput.currentActionMap.FindAction("Up").started -= pauseManager.Up;
+        playerInput.currentActionMap.FindAction("Down").started -= pauseManager.Down;
+        playerInput.currentActionMap.FindAction("Select").started -= pauseManager.Select;
+        //playerInput.SwitchCurrentActionMap("Player");
     }
 
     private void Update()
@@ -45,6 +64,13 @@ public class InputManager : MonoBehaviour
 
         CheckInput();
         MoveCamera();
+    }
+
+    public void OnMove(InputValue inputValue)
+    {
+        OnPlayerMove?.Invoke();
+
+        Debug.Log("MOve");
     }
 
     public void Move(InputAction.CallbackContext callbackContext)

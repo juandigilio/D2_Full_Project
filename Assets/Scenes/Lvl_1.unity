@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.050741285, g: 0.061353087, b: 0.12912497, a: 1}
+  m_IndirectSpecularColor: {r: 0.050741248, g: 0.061353035, b: 0.12912491, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1173,7 +1173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5dea61612354234fad40c7eb7948ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameIsPaused: 0
+  gameIsPaused: 0
   pauseMenuUI: {fileID: 542340655}
   player: {fileID: 1924293263}
   wall: {fileID: 37700346}
@@ -1183,6 +1183,7 @@ MonoBehaviour:
   continueText: {fileID: 497765186}
   menuText: {fileID: 2084053288}
   exitText: {fileID: 2116080259}
+  isJoystick: 0
 --- !u!114 &37700346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1202,6 +1203,8 @@ MonoBehaviour:
   downMagnitude: 3.5
   leftMagnitude: 2
   activeCanvas: 0
+  isQuiting: 0
+  isDropping: 0
 --- !u!1001 &57863883
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26293,6 +26296,7 @@ MonoBehaviour:
   leftFeet: {fileID: 1554658432}
   rightFeet: {fileID: 655333964}
   pauseManager: {fileID: 37700345}
+  playerInput: {fileID: 631087454}
   stickInput: {x: 0, y: 0}
   input: {x: 0, y: 0}
   jumped: 0

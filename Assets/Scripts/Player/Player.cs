@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public FeetsCollider leftFeet;
     public FeetsCollider rightFeet;
     public PauseManager pauseManager;
+    public PlayerInput playerInput;
 
     public Vector2 stickInput;
     public Vector2 input;
@@ -22,6 +23,8 @@ public class Player : MonoBehaviour
     {      
         animator = GetComponent<Animator>();
         isAnimating = false;
+        //playerInput = GetComponent<PlayerInput>();
+        playerInput.SwitchCurrentActionMap("Player");
     }
 
     private void Update()
@@ -32,6 +35,8 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         Debug.Log("isAnimating: " + isAnimating);
+        Debug.Log(playerInput.currentControlScheme);
+        Debug.Log(playerInput.currentActionMap);
     }
 
     public void GetInput()
