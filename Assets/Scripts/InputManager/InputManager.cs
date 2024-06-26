@@ -10,7 +10,6 @@ public class InputManager : MonoBehaviour
     private float mouseSensivity = 0.1f;
     public float cameraRotation = 0;
 
-    public event Action OnPlayerMove;
     public static InputManager instance;
 
     private void Awake()
@@ -74,21 +73,13 @@ public class InputManager : MonoBehaviour
         playerInput.SwitchCurrentActionMap("Player");
     }
 
-    //public void OnMove(InputValue inputValue)
-    //{
-    //    OnPlayerMove?.Invoke();
-
-        
-
-    //    Debug.Log("MOve");
-    //}
-
     public void Move(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.started)
         {
             player.stickInput = callbackContext.ReadValue<Vector2>();
-        }        
+            Debug.Log("Input pressed!!!");
+        }
     }
 
     public void MoveCamera()

@@ -17,13 +17,12 @@ public class Player : MonoBehaviour
     public bool isGrounded; 
     public bool isStuck;
     public bool isAnimating;
-    
+
 
     private void Awake()
     {      
         animator = GetComponent<Animator>();
         isAnimating = false;
-        //playerInput = GetComponent<PlayerInput>();
         playerInput.SwitchCurrentActionMap("Player");
     }
 
@@ -48,6 +47,7 @@ public class Player : MonoBehaviour
         else
         {
             input = stickInput;
+            stickInput = Vector2.zero;
         }   
     }
 

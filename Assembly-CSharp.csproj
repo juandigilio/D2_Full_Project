@@ -81,6 +81,7 @@
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
+    <Compile Include="Assets\Scripts\Coin\Coin.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\Scripts\Player\AnimationsManager.cs" />
@@ -89,10 +90,12 @@
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
+    <Compile Include="Assets\Scripts\Levels\Platforms\ContinuousMovement.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\Scripts\Player\FeetsCollider.cs" />
-    <Compile Include="Assets\Scripts\Level_1\Platforms\ContinuousMovement.cs" />
+    <Compile Include="Assets\Scripts\Levels\Tutorial\Tutorial.cs" />
+    <Compile Include="Assets\Scripts\Quest\Altar.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
@@ -119,6 +122,7 @@
     <None Include="Assets\Textures\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\Textures\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\Textures\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\Textures\DavePixel\ReadMe!.rtf.txt" />
     <None Include="Assets\Textures\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\Textures\TextMesh Pro\Shaders\TMP_SDF.shader" />
     <None Include="Assets\Textures\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />

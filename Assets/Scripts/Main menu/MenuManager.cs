@@ -99,7 +99,6 @@ public class MenuManager : MonoBehaviour
 
     public void LoadLvl_1()
     {
-        //SceneManager.UnloadSceneAsync("MainMenu");
         SceneManager.LoadScene("Lvl_1");
     }
 

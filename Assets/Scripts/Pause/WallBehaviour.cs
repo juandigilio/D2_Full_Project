@@ -89,5 +89,6 @@ public class WallBehaviour : MonoBehaviour
         wall.transform.position = wallStartPosition;
         isQuiting = false;
         wall.SetActive(false);
+        Time.timeScale = 1f;
     }
 }

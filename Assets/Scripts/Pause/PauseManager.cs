@@ -86,7 +86,6 @@ public class PauseManager : MonoBehaviour
             wall.QuitWall();
             pauseMenuUI.SetActive(false);
             gameIsPaused = false;
-            Time.timeScale = 1f;
             player.enabled = true;
         }
     }
