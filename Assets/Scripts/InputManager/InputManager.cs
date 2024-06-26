@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.InputSystem.InputAction;
 
 public class InputManager : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class InputManager : MonoBehaviour
             playerInput.currentActionMap.FindAction("Jump").started += player.Jump;
             playerInput.currentActionMap.FindAction("Pause").started += player.Pause;
             playerInput.currentActionMap.FindAction("Move").started += Move;
+            playerInput.currentActionMap.FindAction("Move").performed += Move;
+            playerInput.currentActionMap.FindAction("Move").canceled += Move;
 
             playerInput.SwitchCurrentActionMap("Paused");
 
@@ -64,6 +67,8 @@ public class InputManager : MonoBehaviour
         playerInput.currentActionMap.FindAction("Jump").started -= player.Jump;
         playerInput.currentActionMap.FindAction("Pause").started -= player.Pause;
         playerInput.currentActionMap.FindAction("Move").started -= Move;
+        playerInput.currentActionMap.FindAction("Move").performed -= Move;
+        playerInput.currentActionMap.FindAction("Move").canceled -= Move;
 
         playerInput.SwitchCurrentActionMap("Paused");
         playerInput.currentActionMap.FindAction("Resume").started -= pauseManager.Resume;
@@ -75,10 +80,25 @@ public class InputManager : MonoBehaviour
 
     public void Move(InputAction.CallbackContext callbackContext)
     {
+        //Debug.Log("Move");
+
         if (callbackContext.started)
         {
             player.stickInput = callbackContext.ReadValue<Vector2>();
-            Debug.Log("Input pressed!!!");
+
+            Debug.Log( "Vector " + callbackContext.ReadValue<Vector2>());
+        }
+        if (callbackContext.performed)
+        {
+            player.stickInput = callbackContext.ReadValue<Vector2>();
+
+            Debug.Log("Performed!!!!! " + callbackContext.ReadValue<Vector2>());
+        }
+        if (callbackContext.canceled)
+        {
+            player.stickInput = Vector2.zero;
+
+            //Debug.Log("Performed!!!!! " + callbackContext.ReadValue<Vector2>());
         }
     }
 

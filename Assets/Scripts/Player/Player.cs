@@ -47,7 +47,6 @@ public class Player : MonoBehaviour
         else
         {
             input = stickInput;
-            stickInput = Vector2.zero;
         }   
     }
 
