@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Tutorial : MonoBehaviour
 {
+    public Player Player;
     public GameObject coinsPull;
-    public GameObject altar;
+    public Altar altar;
     public GameObject door;
 
     private int totalCoins;
@@ -20,7 +21,7 @@ public class Tutorial : MonoBehaviour
     private void Awake()
     {
         coinsPull = GameObject.Find("CoinsPull");
-        altar = GameObject.Find("Altar");
+        altar = GetComponent<Altar>();
         door = GameObject.Find("MainDoor");
 
         GetCoins();
@@ -48,7 +49,7 @@ public class Tutorial : MonoBehaviour
     {
         if (collectedCoins ==  totalCoins)
         {
-
+            altar.MoveUp();
         }
     }
 }

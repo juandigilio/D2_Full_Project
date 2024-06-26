@@ -17,7 +17,7 @@ public class MovementBehaviour : MonoBehaviour
     private Vector3 displacement;
     private Vector3 stopedVelocity;
     public float maxSpeed = 6.0f;
-    public float decelerationSpeed = 5.0f;
+    private float decelerationSpeed = 3.0f;
     public float acelerationForce = 4.0f;
     public float jumpForce = 4.0f;
     public float airSpeedMultiplier = 100.0f;
@@ -127,7 +127,7 @@ public class MovementBehaviour : MonoBehaviour
             player.isGrounded = false;
         }
 
-        Debug.Log("isGrounded: " + player.isGrounded);
+        //Debug.Log("isGrounded: " + player.isGrounded);
     }
 
     private void StopInertia()

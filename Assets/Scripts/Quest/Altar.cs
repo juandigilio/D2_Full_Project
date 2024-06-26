@@ -4,6 +4,7 @@ using System.Collections;
 public class Altar : MonoBehaviour
 {
     public Camera mainCamera;
+    private Player player;
     private float cameraDistance;
     private float cameraHeight = 3.5f;
     private float offsetZ = 3.0f;
@@ -16,10 +17,13 @@ public class Altar : MonoBehaviour
     void Start()
     {
         initialPosition = transform.position;
+        player = GetComponent<Player>();
+        gameObject.SetActive(false);
     }
 
     public void MoveUp()
     {
+        gameObject.SetActive(true);
         SetCamera();
         StartCoroutine(MoveUpRoutine());
     }

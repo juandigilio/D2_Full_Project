@@ -80,25 +80,21 @@ public class InputManager : MonoBehaviour
 
     public void Move(InputAction.CallbackContext callbackContext)
     {
-        //Debug.Log("Move");
-
         if (callbackContext.started)
         {
             player.stickInput = callbackContext.ReadValue<Vector2>();
 
-            Debug.Log( "Vector " + callbackContext.ReadValue<Vector2>());
+            //Debug.Log( "Vector " + callbackContext.ReadValue<Vector2>());
         }
+
         if (callbackContext.performed)
         {
             player.stickInput = callbackContext.ReadValue<Vector2>();
-
-            Debug.Log("Performed!!!!! " + callbackContext.ReadValue<Vector2>());
         }
+
         if (callbackContext.canceled)
         {
             player.stickInput = Vector2.zero;
-
-            //Debug.Log("Performed!!!!! " + callbackContext.ReadValue<Vector2>());
         }
     }
 

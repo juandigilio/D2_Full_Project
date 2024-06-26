@@ -20,8 +20,10 @@ public class Coin : MonoBehaviour
         Rotate();
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Colliding coin");
+
         if (other.CompareTag("Player"))
         {
             OnCoinCollected?.Invoke();

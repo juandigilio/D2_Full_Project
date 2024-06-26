@@ -33,9 +33,9 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log("isAnimating: " + isAnimating);
-        Debug.Log(playerInput.currentControlScheme);
-        Debug.Log(playerInput.currentActionMap);
+        //Debug.Log("isAnimating: " + isAnimating);
+        //Debug.Log(playerInput.currentControlScheme);
+        //Debug.Log(playerInput.currentActionMap);
     }
 
     public void GetInput()
