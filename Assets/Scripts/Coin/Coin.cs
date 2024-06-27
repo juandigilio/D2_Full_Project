@@ -4,7 +4,7 @@ using System;
 public class Coin : MonoBehaviour
 {
     private Vector3 rotationAxis = new Vector3(0, 0, 1);
-    private Transform transform;
+    //private Transform transform;
 
 
     public static event Action OnCoinCollected;
@@ -12,7 +12,7 @@ public class Coin : MonoBehaviour
 
     private void Start()
     {
-        transform = GetComponent<Transform>();    
+        //transform = GetComponent<Transform>();    
     }
 
     private void Update()

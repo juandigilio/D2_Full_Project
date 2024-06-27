@@ -8,9 +8,11 @@ public class Tutorial : MonoBehaviour
     public GameObject coinsPull;
     public Altar altar;
     public GameObject door;
+    private bool isAnimating = false;
 
     private int totalCoins;
     private int collectedCoins = 0;
+    private bool allCoinsCollected = false;
 
 
     private void Start()
@@ -21,10 +23,15 @@ public class Tutorial : MonoBehaviour
     private void Awake()
     {
         coinsPull = GameObject.Find("CoinsPull");
-        altar = GetComponent<Altar>();
+        //altar = GetComponent<Altar>();
         door = GameObject.Find("MainDoor");
 
         GetCoins();
+    }
+
+    private void Update()
+    {
+        CheckCoins();
     }
 
     private void GetCoins()
@@ -42,14 +49,28 @@ public class Tutorial : MonoBehaviour
     public void CollectCoin()
     {
         collectedCoins++;
-        Debug.Log("Collected coins: " + collectedCoins + "/" + totalCoins);
+        //Debug.Log("Collected coins: " + collectedCoins + "/" + totalCoins);
     }
 
-    private void CheckStatus()
+    private void CheckCoins()
     {
-        if (collectedCoins ==  totalCoins)
+        if (collectedCoins == totalCoins && !allCoinsCollected)
         {
-            altar.MoveUp();
+            allCoinsCollected = true;
+            altar.Activate();
         }
     }
+
+    public bool IsAnimating()
+    {
+        if (altar.IsAnimating())
+        {
+            return isAnimating;
+        }
+        else 
+        {
+            return isAnimating;
+        }
+    }
+
 }

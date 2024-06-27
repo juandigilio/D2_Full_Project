@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         isAnimating = false;
         playerInput.SwitchCurrentActionMap("Player");
+
+        Altar.OnPlayerPause += StopMoving;
     }
 
     private void Update()
@@ -71,6 +73,11 @@ public class Player : MonoBehaviour
                 pauseManager.Pause();
             }
         }   
+    }
+
+    private void StopMoving()
+    {
+        input = Vector2.zero;
     }
 
     private void AnimationStarted()

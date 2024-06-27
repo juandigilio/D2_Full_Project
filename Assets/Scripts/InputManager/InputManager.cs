@@ -8,6 +8,7 @@ public class InputManager : MonoBehaviour
     private PlayerInput playerInput;
     public Player player;
     public PauseManager pauseManager;
+    public Tutorial level;
     private float mouseSensivity = 0.1f;
     public float cameraRotation = 0;
 
@@ -100,7 +101,7 @@ public class InputManager : MonoBehaviour
 
     public void MoveCamera()
     {
-        if (!pauseManager.gameIsPaused)
+        if (!pauseManager.gameIsPaused && !level.IsAnimating())
         {
             cameraRotation += Mouse.current.delta.ReadValue().x * mouseSensivity;
         }
