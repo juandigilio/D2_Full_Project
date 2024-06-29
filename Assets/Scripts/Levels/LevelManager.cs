@@ -1,13 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class Tutorial : MonoBehaviour
+public class LevelManager : MonoBehaviour
 {
-    public Player Player;
-    public GameObject coinsPull;
-    public Altar altar;
-    public GameObject door;
+    [SerializeField] private Player Player;
+    [SerializeField] private GameObject coinsPull;
+    [SerializeField] private Altar altar;
+    [SerializeField] private Arch door;
+
+    private static int index = 1;
+
     private bool isAnimating = false;
 
     private int totalCoins;
@@ -18,14 +19,12 @@ public class Tutorial : MonoBehaviour
     private void Start()
     {
         Coin.OnCoinCollected += CollectCoin;
+        ExitZone.OnLevelFinished += LoadNextLevel;
     }
 
     private void Awake()
     {
         coinsPull = GameObject.Find("CoinsPull");
-        //altar = GetComponent<Altar>();
-        door = GameObject.Find("MainDoor");
-
         GetCoins();
     }
 
@@ -46,10 +45,9 @@ public class Tutorial : MonoBehaviour
         }
     }
 
-    public void CollectCoin()
+    private void CollectCoin()
     {
         collectedCoins++;
-        //Debug.Log("Collected coins: " + collectedCoins + "/" + totalCoins);
     }
 
     private void CheckCoins()
@@ -67,10 +65,22 @@ public class Tutorial : MonoBehaviour
         {
             return isAnimating;
         }
-        else 
+        else
         {
             return isAnimating;
         }
     }
 
+    private void LoadNextLevel()
+    {
+        //CustomSceneManager.UnLoadSceneAsync(scenes[index]);
+        index++;
+
+        if (index > 4)
+        {
+            index = 0;
+        }
+
+        //CustomSceneManager.LoadSceneAsync(scenes[index]);
+    }
 }

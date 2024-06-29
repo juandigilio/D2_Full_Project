@@ -4,8 +4,6 @@ using System;
 public class Coin : MonoBehaviour
 {
     private Vector3 rotationAxis = new Vector3(0, 0, 1);
-    //private Transform transform;
-
 
     public static event Action OnCoinCollected;
 
@@ -22,8 +20,6 @@ public class Coin : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Colliding coin");
-
         if (other.CompareTag("Player"))
         {
             OnCoinCollected?.Invoke();

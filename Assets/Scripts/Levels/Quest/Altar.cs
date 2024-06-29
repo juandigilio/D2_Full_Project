@@ -7,30 +7,30 @@ public class Altar : MonoBehaviour
     public Camera mainCamera;
     private Cameraman cameraman;
     public Player player;
-    public GameObject start;
-    public GameObject end;
     public GameObject cameraPoint;
+    public Arch arch;
 
     public float cameraHeight = 1.5f;
     public float offsetZ = 1.0f;
 
+    private Vector3 initialPosition;
+    public float altarHeight = 3.0f;
     public float duration = 2f;
     public float animationPause = 1.5f;
 
     private bool isAnimating = false;
-
-    private Vector3 initialPosition;
+    private bool inPrayingZone = false;
+    private bool hasPrayed = false;
 
     public static event Action OnPlayerPause;
+    public static event Action OnOpenDoor;
 
-    void Start()
+    private void Awake()
     {
-        initialPosition = start.transform.position;
-        Debug.Log("initialPosition: " + initialPosition); 
-
+        gameObject.SetActive(false);
         cameraman = mainCamera.GetComponent<Cameraman>();
 
-        gameObject.SetActive(false);
+        PrayBehaviour.OnActivateQuest += IsPraying;
     }
 
     public void Activate()
@@ -40,35 +40,22 @@ public class Altar : MonoBehaviour
         StartCoroutine(MoveUpRoutine());
     }
 
-    public void SetCamera()
-    {
-        Vector3 newPos = cameraPoint.transform.position;
-        newPos.y += cameraHeight;
-        newPos.z -= offsetZ;
-
-        mainCamera.transform.position = newPos;
-
-        mainCamera.transform.LookAt(cameraPoint.transform.position);
-    }
-
     private IEnumerator MoveUpRoutine()
     {
         OnPlayerPause?.Invoke();
         player.enabled = false;
         cameraman.enabled = false;
+        isAnimating = true;
 
-        SetCamera();
+        QuestCamera.SetCamera(cameraPoint, mainCamera, cameraHeight, offsetZ);
 
-        Vector3 targetPosition = end.transform.position;
+        initialPosition = transform.position;
+        Vector3 targetPosition = transform.position + Vector3.up * altarHeight;
 
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
         {
-            Debug.Log("initialPosition: " + initialPosition); 
-
-            //Debug.Log("Target Position: " + targetPosition);
-
             transform.position = Vector3.Lerp(initialPosition, targetPosition, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -87,6 +74,27 @@ public class Altar : MonoBehaviour
         player.enabled = true;
         cameraman.enabled = true;
         isAnimating = false;
+ 
+        //OnOpenDoor?.Invoke();
+    }
+
+    private void IsPraying()
+    {
+        if (!hasPrayed && inPrayingZone)
+        {
+            OnOpenDoor?.Invoke();
+            hasPrayed = true;
+        }
+    }
+
+    public void PrayingZone(bool state)
+    {
+        inPrayingZone = state;
+    }
+
+    public bool PrayingZone()
+    {
+        return inPrayingZone;
     }
 
     public bool IsAnimating()
