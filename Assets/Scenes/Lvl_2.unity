@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.050741248, g: 0.061353035, b: 0.12912491, a: 1}
+  m_IndirectSpecularColor: {r: 0.050741285, g: 0.061353087, b: 0.12912497, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9218,7 +9218,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1924293263}
+  jumpBehaviour: {fileID: 0}
+  prayBehaviour: {fileID: 0}
   pauseManager: {fileID: 37700345}
+  level: {fileID: 0}
+  mouseSensivity: 0.1
   cameraRotation: 0
 --- !u!4 &631087456
 Transform:
@@ -26238,7 +26242,7 @@ Transform:
   m_GameObject: {fileID: 1924293253}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.59, y: 23.36, z: 14.68}
+  m_LocalPosition: {x: 9.59, y: 93.1, z: 1.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -26291,18 +26295,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62a22bf12d7e86c40a3fe2711b857107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
   leftFeet: {fileID: 1554658432}
   rightFeet: {fileID: 655333964}
   pauseManager: {fileID: 37700345}
-  playerInput: {fileID: 631087454}
   stickInput: {x: 0, y: 0}
   input: {x: 0, y: 0}
-  jumped: 0
-  jumpedAnimation: 0
-  isGrounded: 0
-  isStuck: 0
-  isAnimating: 0
 --- !u!114 &1924293264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26328,10 +26325,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
+  deltaTime: 0
   maxSpeed: 35
-  decelerationSpeed: 3
   acelerationForce: 100
-  jumpForce: 600
   airSpeedMultiplier: 100
   isLanding: 0
   badLanded: 0
@@ -26347,6 +26343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b21e9d109e8d7468ec927ae1d29199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
 --- !u!1 &1924459963 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4586660233319608086, guid: 729deec6e080cfa469aea735d7c78644, type: 3}
