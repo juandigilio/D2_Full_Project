@@ -1,61 +1,73 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEngine.InputSystem.InputAction;
 
 public class InputManager : MonoBehaviour
 {
-    private PlayerInput playerInput;
-    public Player player;
-    public PauseManager pauseManager;
-    public Tutorial level;
-    private float mouseSensivity = 0.1f;
+    [SerializeField] private Player player;
+    [SerializeField] private JumpBehaviour jumpBehaviour;
+    [SerializeField] private PrayBehaviour prayBehaviour;
+    [SerializeField] private PauseManager pauseManager;
+    [SerializeField] private LevelManager level;
+    [SerializeField] private float mouseSensivity = 0.1f;
     public float cameraRotation = 0;
 
+    [SerializeField] private string jumpAction = "Jump";
+    [SerializeField] private string prayAction = "Pray";
+    [SerializeField] private string pauseAction = "Pause";
+    [SerializeField] private string moveAction = "Move";
+    [SerializeField] private string resumeAction = "Resume";
+    [SerializeField] private string upAction = "Up";
+    [SerializeField] private string downAction = "Down";
+    [SerializeField] private string selectAction = "Select";
+    [SerializeField] private string pausedAction = "Paused";
+    [SerializeField] private string playerAction = "Player";
+
     public static InputManager instance;
+    public PlayerInput PlayerInput { get; private set; }
 
     private void Awake()
     {
         instance = this;
 
-        playerInput = GetComponent<PlayerInput>();
+        PlayerInput = GetComponent<PlayerInput>();
     }
 
     private void Start()
     {
-        playerInput.ActivateInput();
+        PlayerInput.ActivateInput();
 
-        if (playerInput != null)
+        if (PlayerInput != null)
         {
-            playerInput.SwitchCurrentActionMap("Player");
+            PlayerInput.SwitchCurrentActionMap(playerAction);
 
-            playerInput.currentActionMap.FindAction("Jump").started += player.Jump;
-            playerInput.currentActionMap.FindAction("Pause").started += player.Pause;
-            playerInput.currentActionMap.FindAction("Move").started += Move;
-            playerInput.currentActionMap.FindAction("Move").performed += Move;
-            playerInput.currentActionMap.FindAction("Move").canceled += Move;
+            PlayerInput.currentActionMap.FindAction(jumpAction).started += jumpBehaviour.Jump;
+            PlayerInput.currentActionMap.FindAction(prayAction).started += prayBehaviour.Pray;
+            PlayerInput.currentActionMap.FindAction(pauseAction).started += pauseManager.Pause;
+            PlayerInput.currentActionMap.FindAction(moveAction).started += Move;
+            PlayerInput.currentActionMap.FindAction(moveAction).performed += Move;
+            PlayerInput.currentActionMap.FindAction(moveAction).canceled += Move;
 
-            playerInput.SwitchCurrentActionMap("Paused");
+            PlayerInput.SwitchCurrentActionMap(pausedAction);
 
-            playerInput.currentActionMap.FindAction("Resume").started += pauseManager.Resume;
-            playerInput.currentActionMap.FindAction("Up").started += pauseManager.Up;
-            playerInput.currentActionMap.FindAction("Down").started += pauseManager.Down;
-            playerInput.currentActionMap.FindAction("Select").started += pauseManager.Select;
+            PlayerInput.currentActionMap.FindAction(resumeAction).started += pauseManager.Resume;
+            PlayerInput.currentActionMap.FindAction(upAction).started += pauseManager.Up;
+            PlayerInput.currentActionMap.FindAction(downAction).started += pauseManager.Down;
+            PlayerInput.currentActionMap.FindAction(selectAction).started += pauseManager.Select;
 
-            playerInput.SwitchCurrentActionMap("Player");
+            PlayerInput.SwitchCurrentActionMap(playerAction);
         }
     }
 
     private void Update()
     {
-        if (pauseManager.gameIsPaused && playerInput.currentActionMap.name != "Paused")
+        if (pauseManager.gameIsPaused && PlayerInput.currentActionMap.name != pausedAction)
         {
-            playerInput.SwitchCurrentActionMap("Paused");
+            PlayerInput.SwitchCurrentActionMap(pausedAction);
         }
 
-        if (!pauseManager.gameIsPaused && playerInput.currentActionMap.name != "Player")
+        if (!pauseManager.gameIsPaused && PlayerInput.currentActionMap.name != playerAction)
         {
-            playerInput.SwitchCurrentActionMap("Player");
+            PlayerInput.SwitchCurrentActionMap(playerAction);
         }
 
         CheckInput();
@@ -64,19 +76,20 @@ public class InputManager : MonoBehaviour
 
     public void Unsuscribe()
     {
-        playerInput.SwitchCurrentActionMap("Player");
-        playerInput.currentActionMap.FindAction("Jump").started -= player.Jump;
-        playerInput.currentActionMap.FindAction("Pause").started -= player.Pause;
-        playerInput.currentActionMap.FindAction("Move").started -= Move;
-        playerInput.currentActionMap.FindAction("Move").performed -= Move;
-        playerInput.currentActionMap.FindAction("Move").canceled -= Move;
+        PlayerInput.SwitchCurrentActionMap(playerAction);
+        PlayerInput.currentActionMap.FindAction(jumpAction).started -= jumpBehaviour.Jump;
+        PlayerInput.currentActionMap.FindAction(prayAction).started -= prayBehaviour.Pray;
+        PlayerInput.currentActionMap.FindAction(pausedAction).started -= pauseManager.Pause;
+        PlayerInput.currentActionMap.FindAction(moveAction).started -= Move;
+        PlayerInput.currentActionMap.FindAction(moveAction).performed -= Move;
+        PlayerInput.currentActionMap.FindAction(moveAction).canceled -= Move;
 
-        playerInput.SwitchCurrentActionMap("Paused");
-        playerInput.currentActionMap.FindAction("Resume").started -= pauseManager.Resume;
-        playerInput.currentActionMap.FindAction("Up").started -= pauseManager.Up;
-        playerInput.currentActionMap.FindAction("Down").started -= pauseManager.Down;
-        playerInput.currentActionMap.FindAction("Select").started -= pauseManager.Select;
-        playerInput.SwitchCurrentActionMap("Player");
+        PlayerInput.SwitchCurrentActionMap(pausedAction);
+        PlayerInput.currentActionMap.FindAction(resumeAction).started -= pauseManager.Resume;
+        PlayerInput.currentActionMap.FindAction(upAction).started -= pauseManager.Up;
+        PlayerInput.currentActionMap.FindAction(downAction).started -= pauseManager.Down;
+        PlayerInput.currentActionMap.FindAction(selectAction).started -= pauseManager.Select;
+        PlayerInput.SwitchCurrentActionMap(playerAction);
     }
 
     public void Move(InputAction.CallbackContext callbackContext)
@@ -84,8 +97,6 @@ public class InputManager : MonoBehaviour
         if (callbackContext.started)
         {
             player.stickInput = callbackContext.ReadValue<Vector2>();
-
-            //Debug.Log( "Vector " + callbackContext.ReadValue<Vector2>());
         }
 
         if (callbackContext.performed)
@@ -101,7 +112,7 @@ public class InputManager : MonoBehaviour
 
     public void MoveCamera()
     {
-        if (!pauseManager.gameIsPaused && !level.IsAnimating())
+        if (!pauseManager.gameIsPaused)
         {
             cameraRotation += Mouse.current.delta.ReadValue().x * mouseSensivity;
         }
@@ -109,7 +120,7 @@ public class InputManager : MonoBehaviour
 
     public void CheckInput()
     {
-        if (playerInput.currentControlScheme == "Gamepad")
+        if (PlayerInput.currentControlScheme == "Gamepad")
         {
             pauseManager.isJoystick = true;
         }

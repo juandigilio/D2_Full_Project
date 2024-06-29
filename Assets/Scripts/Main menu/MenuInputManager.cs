@@ -79,7 +79,7 @@ public class MenuInputManager : MonoBehaviour
             {
                 case 1:
                     {
-                        menuManager.LoadLvl_1();
+                        menuManager.LoadTutorial();
                         break;
                     }
                 case 2:
