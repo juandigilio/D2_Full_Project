@@ -3,6 +3,7 @@ using UnityEngine;
 public class AnimationsManager : MonoBehaviour
 {
     private Player player;
+    [SerializeField] private Animator animator;
     private MovementBehaviour movementBehaviour;
     private float landingSpeed;
     private float badLandingLimit = 10.0f;
@@ -10,7 +11,11 @@ public class AnimationsManager : MonoBehaviour
     private void Awake()
     {
         player = GetComponent<Player>();
+        animator = GetComponent<Animator>();
         movementBehaviour = GetComponent<MovementBehaviour>();
+
+        PrayBehaviour.OnAnimationPraying += Praying;
+        JumpBehaviour.OnPlayerJumped += AnimateJump;
     }
 
     private void FixedUpdate()
@@ -18,36 +23,35 @@ public class AnimationsManager : MonoBehaviour
         CheckSpeed();
         CheckLanding();
         IsStuck();
-        CheckJump();
     }
 
-    public void CheckSpeed()
+    private void CheckSpeed()
     {
-        if (player.isGrounded)
+        if (movementBehaviour.IsGrounded())
         {
-            player.animator.SetFloat("verticalVelocity", 0.0f);
-            player.animator.SetFloat("horizontalVelocity", movementBehaviour.rb.velocity.magnitude);
+            animator.SetFloat("verticalVelocity", 0.0f);
+            animator.SetFloat("horizontalVelocity", movementBehaviour.rb.velocity.magnitude);
         }
         else
         {
-            player.animator.SetFloat("verticalVelocity", movementBehaviour.rb.velocity.y);
+            animator.SetFloat("verticalVelocity", movementBehaviour.rb.velocity.y);
 
             if (movementBehaviour.rb.velocity.y < -2.0f)
             {
-                player.animator.SetFloat("horizontalVelocity", 0.0f);
+                animator.SetFloat("horizontalVelocity", 0.0f);
             }
         }
     }
 
-    public void CheckLanding()
+    private void CheckLanding()
     {
         if (movementBehaviour.isLanding)
         {
-            player.animator.SetTrigger("landed");
-            player.animator.SetFloat("landingSpeed", landingSpeed);
-            player.animator.ResetTrigger("jumped");
+            animator.SetTrigger("landed");
+            animator.SetFloat("landingSpeed", landingSpeed);
+            animator.ResetTrigger("jumped");
 
-            player.isAnimating = true;
+            player.IsAnimating(true);
 
             if (landingSpeed > badLandingLimit)
             {
@@ -58,7 +62,7 @@ public class AnimationsManager : MonoBehaviour
 
             movementBehaviour.isLanding = false;
         }
-        else if (!player.isGrounded)
+        else if (!movementBehaviour.IsGrounded())
         {
             if (movementBehaviour.rb.velocity.y < landingSpeed)
             {
@@ -67,32 +71,29 @@ public class AnimationsManager : MonoBehaviour
         }
     }
 
-    public void IsStuck()
+    private void Praying()
     {
-        player.isStuck = movementBehaviour.rb.velocity.magnitude > -0.1f &&
-                         movementBehaviour.rb.velocity.magnitude < 0.1f &&
-                         !player.isGrounded;
+        animator.SetTrigger("pray");
+        player.IsAnimating(true);
+    }
 
-        player.animator.SetBool("isStuck", player.isStuck);
+    private void IsStuck()
+    {
+        animator.SetBool("isStuck", movementBehaviour.IsStuck());
 
-        if (player.isStuck)
+        if (movementBehaviour.IsStuck())
         {
-            player.animator.SetBool("isGrounded", true);
+            animator.SetBool("isGrounded", true);
         }
         else
         {
-            player.animator.SetBool("isGrounded", player.isGrounded);
+            animator.SetBool("isGrounded", movementBehaviour.IsGrounded());
         }
     }
 
-    public void CheckJump()
+    private void AnimateJump()
     {
-        if (player.jumpedAnimation)
-        {
-            player.animator.SetTrigger("jumped");
-            player.animator.ResetTrigger("landed");
-
-            player.jumpedAnimation = false;
-        }
+        animator.SetTrigger("jumped");
+        animator.ResetTrigger("landed");
     }
 }

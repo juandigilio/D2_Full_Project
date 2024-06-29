@@ -36,7 +36,7 @@ public class MenuManager : MonoBehaviour
         creditsText.gameObject.SetActive(false);
         exitText.gameObject.SetActive(false);
 
-        playButton.onClick.AddListener(LoadLvl_1);
+        playButton.onClick.AddListener(LoadTutorial);
         creditsButton.onClick.AddListener(LoadCredits);
         exitButton.onClick.AddListener(Exit);
 
@@ -97,9 +97,9 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    public void LoadLvl_1()
+    public void LoadTutorial()
     {
-        SceneManager.LoadScene("Lvl_1");
+        CustomSceneManager.LoadSceneAsync("Tutorial");
     }
 
     public void LoadCredits()

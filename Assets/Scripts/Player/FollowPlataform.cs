@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class FollowPlataform : MonoBehaviour
 {
-    private Player player;
+    //private Player player;
+    private MovementBehaviour movementBehaviour;
     private Vector3 groundPosition;
     private Vector3 lastGroundPositon;
     private int groundID;
@@ -15,7 +16,7 @@ public class FollowPlataform : MonoBehaviour
 
     void Start()
     {
-        player = GetComponent<Player>();
+        movementBehaviour = GetComponent<MovementBehaviour>();
 
         GetObjectHeight();
     }
@@ -28,7 +29,7 @@ public class FollowPlataform : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (player.isGrounded)
+        if (movementBehaviour.IsGrounded())
         {
             RaycastHit hit;
 
@@ -61,7 +62,7 @@ public class FollowPlataform : MonoBehaviour
                 lastRotation = actualRotation;
             }
         }
-        else if (!player.isGrounded)
+        else if (!movementBehaviour.IsGrounded())
         {
             lastGroundID = -999;
             lastGroundPositon = Vector3.zero;

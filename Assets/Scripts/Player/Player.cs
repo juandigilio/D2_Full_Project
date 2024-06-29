@@ -2,29 +2,17 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
-{    
-    public Animator animator;
-    public FeetsCollider leftFeet;
-    public FeetsCollider rightFeet;
+{
     public PauseManager pauseManager;
-    public PlayerInput playerInput;
 
     public Vector2 stickInput;
     public Vector2 input;
-     
-    public bool jumped = false;
-    public bool jumpedAnimation = false;
-    public bool isGrounded; 
-    public bool isStuck;
-    public bool isAnimating;
 
-
+    private bool isAnimating;
+    
     private void Awake()
-    {      
-        animator = GetComponent<Animator>();
+    { 
         isAnimating = false;
-        playerInput.SwitchCurrentActionMap("Player");
-
         Altar.OnPlayerPause += StopMoving;
     }
 
@@ -33,11 +21,18 @@ public class Player : MonoBehaviour
         GetInput();
     }
 
-    private void FixedUpdate()
+    private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log("isAnimating: " + isAnimating);
-        //Debug.Log(playerInput.currentControlScheme);
-        //Debug.Log(playerInput.currentActionMap);
+        if (other.CompareTag("ExitZone"))
+        {
+
+            Debug.Log("Next level");
+        }
+    }
+
+    private void OnDestroy()
+    {
+        Altar.OnPlayerPause -= StopMoving;
     }
 
     public void GetInput()
@@ -49,35 +44,22 @@ public class Player : MonoBehaviour
         else
         {
             input = stickInput;
-        }   
-    }
-
-    public void Jump(InputAction.CallbackContext callbackContext)
-    {
-        if (callbackContext.started)
-        {
-            if (isGrounded || isStuck)
-            {
-                jumped = true;
-                jumpedAnimation = true;
-            }
         }
-    }
-
-    public void Pause(InputAction.CallbackContext callbackContext)
-    {
-        if (!pauseManager.gameIsPaused)
-        {
-            if (callbackContext.started)
-            {
-                pauseManager.Pause();
-            }
-        }   
     }
 
     private void StopMoving()
     {
         input = Vector2.zero;
+    }
+
+    public bool IsAnimating()
+    {
+        return isAnimating;
+    }
+
+    public void IsAnimating(bool set)
+    {
+        isAnimating = set;
     }
 
     private void AnimationStarted()

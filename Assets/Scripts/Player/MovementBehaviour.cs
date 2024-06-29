@@ -4,6 +4,8 @@ public class MovementBehaviour : MonoBehaviour
 {
     private Player player;
     public Rigidbody rb;
+    [SerializeField] private FeetsCollider leftFeet;
+    [SerializeField] private FeetsCollider rightFeet;
 
     private Camera mainCamera;
     private Vector3 cameraForward;
@@ -12,22 +14,24 @@ public class MovementBehaviour : MonoBehaviour
     private float rotationSpeed = 11.0f;
    
 
-    private float deltaTime;
+    public float deltaTime;
 
     private Vector3 displacement;
     private Vector3 stopedVelocity;
     public float maxSpeed = 6.0f;
     private float decelerationSpeed = 3.0f;
     public float acelerationForce = 4.0f;
-    public float jumpForce = 4.0f;
+    
     public float airSpeedMultiplier = 100.0f;
     public bool isLanding = false;
     public bool badLanded;
+    private bool isStuck;
+    private bool isGrounded;
 
     private void Awake()
     {
         player = GetComponent<Player>();
-        rb = GetComponent<Rigidbody>();
+        rb = player.GetComponent<Rigidbody>();
         mainCamera = Camera.main.GetComponent<Camera>();
     }
 
@@ -35,7 +39,7 @@ public class MovementBehaviour : MonoBehaviour
     {
         GetCameraDirection();
 
-        IsGrounded();
+        CheckGround();
     }
 
     private void FixedUpdate()
@@ -47,9 +51,9 @@ public class MovementBehaviour : MonoBehaviour
 
     private void Move()
     {
-        
-
         LookForward();
+
+        CheckIfStuck();
 
         AddForces();
 
@@ -81,7 +85,7 @@ public class MovementBehaviour : MonoBehaviour
 
     private void AddForces()
     {
-        if (player.isGrounded)
+        if (isGrounded)
         {
             if (rb.velocity.magnitude <= maxSpeed * 0.25f)
             {
@@ -91,18 +95,10 @@ public class MovementBehaviour : MonoBehaviour
             {
                 rb.AddForce((displacement * maxSpeed) * deltaTime);
             }
-
-            if (player.jumped)
-            {
-                rb.AddForce((jumpForce * Vector3.up) * deltaTime, ForceMode.Impulse);
-
-                player.jumped = false;
-            }
         }
         else
         {
             rb.AddForce((displacement * airSpeedMultiplier) * deltaTime);
-
         }
 
         if (badLanded)
@@ -111,28 +107,40 @@ public class MovementBehaviour : MonoBehaviour
         }
     }
 
-    private void IsGrounded()
+    private void CheckGround()
     {
-        if (player.leftFeet.isInTrigger || player.rightFeet.isInTrigger)
+        if (leftFeet.isInTrigger || rightFeet.isInTrigger)
         {
-            if (!player.isGrounded)
+            if (!isGrounded)
             {
                 isLanding = true;
             }
 
-            player.isGrounded = true;
+            isGrounded = true;
         }
         else
         {
-            player.isGrounded = false;
+            isGrounded = false;
         }
 
-        //Debug.Log("isGrounded: " + player.isGrounded);
+        Debug.Log("isGrounded: " + isGrounded);
+    }
+
+    private void CheckIfStuck()
+    {
+        isStuck = rb.velocity.magnitude > -0.1f &&
+                        rb.velocity.magnitude < 0.1f &&
+                        !isGrounded;
+    }
+
+    public bool IsStuck()
+    {
+        return isStuck;
     }
 
     private void StopInertia()
     {
-        if (rb.velocity != Vector3.zero && player.input == Vector2.zero && player.isGrounded)
+        if (rb.velocity != Vector3.zero && player.input == Vector2.zero && isGrounded)
         {
             Vector3 stop = rb.velocity;
             stop.x = Mathf.Lerp(stop.x, 0, Time.fixedDeltaTime * decelerationSpeed);
@@ -140,6 +148,11 @@ public class MovementBehaviour : MonoBehaviour
 
             rb.velocity = stop;
         }
+    }
+
+    public bool IsGrounded()
+    {
+        return isGrounded;
     }
 
     private void UpdateDelta()

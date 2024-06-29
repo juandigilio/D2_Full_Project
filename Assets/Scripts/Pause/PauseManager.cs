@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
 public class PauseManager : MonoBehaviour
 {
+    private PauseManager instance;
+
     public bool gameIsPaused = false;
     public GameObject pauseMenuUI;
     public Player player;
@@ -25,6 +26,17 @@ public class PauseManager : MonoBehaviour
 
     private void Awake()
     {
+        if (!instance)
+        {
+            DontDestroyOnLoad(gameObject);
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+
         pauseMenuUI.SetActive(false);
 
         continueButton.onClick.AddListener(Continue);
@@ -55,20 +67,23 @@ public class PauseManager : MonoBehaviour
         ActiveSelected();
     }
 
-    public void Pause()
+    public void Pause(InputAction.CallbackContext callbackContext)
     {
-        if (!wall.isDropping && !wall.isQuiting)
+        if (callbackContext.started)
         {
-            Time.timeScale = 0f;
-            gameIsPaused = true;
-            if (player == null)
+            if (!wall.isDropping && !wall.isQuiting && !gameIsPaused)
             {
-                player = FindAnyObjectByType<Player>();
-            }
-            player.enabled = false;
+                Time.timeScale = 0f;
+                gameIsPaused = true;
+                if (player == null)
+                {
+                    player = FindAnyObjectByType<Player>();
+                }
+                player.enabled = false;
 
-            wall.DropWall();
-        }    
+                wall.DropWall();
+            }
+        }       
     }
 
     public void Resume(InputAction.CallbackContext callbackContext)
@@ -179,7 +194,7 @@ public class PauseManager : MonoBehaviour
         gameIsPaused = false;
         Time.timeScale = 1f;
         InputManager.instance.Unsuscribe();
-        SceneManager.LoadSceneAsync("MainMenu");
+        CustomSceneManager.LoadSceneAsync("MainMenu");
     }
 
     public void Exit()
