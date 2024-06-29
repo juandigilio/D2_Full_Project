@@ -26,6 +26,8 @@ public class ContinuousMovement : MonoBehaviour
     private bool atLastPoint;       // Estado si está en el último punto
     private bool returningToStart;  // Estado de regreso a la posición inicial
 
+    private Collider collider;
+
     void Start()
     {
         if (points != null && points.Count > 1)
@@ -36,6 +38,9 @@ public class ContinuousMovement : MonoBehaviour
             currentPointIndex = 0;
             atLastPoint = false;
             returningToStart = false;
+
+            collider = FindFirstObjectByType<Collider>();
+
             if (!requiresTrigger)
             {
                 SetNextJourney();
@@ -121,6 +126,7 @@ public class ContinuousMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Enter!!!!!");
         if (requiresTrigger && !isMoving && !returningToStart)
         {
             SetNextJourney();
