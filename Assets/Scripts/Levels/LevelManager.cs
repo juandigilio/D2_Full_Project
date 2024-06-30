@@ -6,6 +6,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject coinsPull;
     [SerializeField] private Altar altar;
     [SerializeField] private Arch door;
+    [SerializeField] private Transform deathZone;
 
     private static int index = 0;
 

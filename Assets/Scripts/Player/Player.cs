@@ -3,7 +3,7 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    public PauseManager pauseManager;
+    [SerializeField] private PauseManager pauseManager;
 
     public Vector2 stickInput;
     public Vector2 input;
