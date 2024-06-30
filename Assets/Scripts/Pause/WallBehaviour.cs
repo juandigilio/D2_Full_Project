@@ -38,8 +38,6 @@ public class WallBehaviour : MonoBehaviour
 
     public void DropWall()
     {
-        Debug.Log("A", gameObject);
-
         if (wall == null)
         {
             return;

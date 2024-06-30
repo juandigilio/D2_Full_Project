@@ -12,7 +12,7 @@ public class CustomSceneManager : MonoBehaviour
     {
         playerInput = InputManager.instance.PlayerInput;
 
-        LoadSceneAsync("MainMenu");
+        LoadSceneAsync(SceneActionDictionary.GetScenesList()[0].sceneName);
     }
 
     public static void LoadSceneAsync(string scene)
@@ -29,13 +29,13 @@ public class CustomSceneManager : MonoBehaviour
 
     private static void SetInput(string scene)
     {
-        if (scene == "MainMenu")
+        if (scene == SceneActionDictionary.GetScenesList()[0].sceneName)
         {
-            playerInput.SwitchCurrentActionMap("Paused");
+            playerInput.SwitchCurrentActionMap(SceneActionDictionary.GetScenesList()[0].actionName);
         }
         else
         {
-            playerInput.SwitchCurrentActionMap("Player");
+            playerInput.SwitchCurrentActionMap(SceneActionDictionary.GetScenesList()[1].actionName);
         }
     }
 }

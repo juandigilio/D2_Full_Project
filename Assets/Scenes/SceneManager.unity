@@ -134,6 +134,8 @@ GameObject:
   - component: {fileID: 448006755}
   - component: {fileID: 448006754}
   - component: {fileID: 448006756}
+  - component: {fileID: 448006757}
+  - component: {fileID: 448006758}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -180,17 +182,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea0522292fc556245b4fe33c04d64c37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneActionList:
-  - sceneName: MainMenu
-    actionName: Paused
-  - sceneName: Tutorial
-    actionName: Player
-  - sceneName: Lvl_1
-    actionName: Player
-  - sceneName: Lvl_2
-    actionName: Player
-  - sceneName: Lvl_3
-    actionName: Player
+--- !u!114 &448006757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448006753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bccee811bc52c4742a65d510e29618fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  jumpBehaviour: {fileID: 0}
+  prayBehaviour: {fileID: 0}
+  pauseManager: {fileID: 0}
+  level: {fileID: 0}
+  mouseSensivity: 0.1
+  cameraRotation: 0
+  jumpAction: Jump
+  prayAction: Pray
+  pauseAction: Pause
+  moveAction: Move
+  resumeAction: Resume
+  upAction: Up
+  downAction: Down
+  selectAction: Select
+  pausedAction: Paused
+  playerAction: Player
+--- !u!114 &448006758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448006753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: a318ea606a0f59044bd67e369ac53a46, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &716264399
 GameObject:
   m_ObjectHideFlags: 0

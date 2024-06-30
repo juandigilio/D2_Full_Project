@@ -7,7 +7,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Altar altar;
     [SerializeField] private Arch door;
 
-    private static int index = 1;
+    private static int index = 0;
 
     private bool isAnimating = false;
 
@@ -73,14 +73,14 @@ public class LevelManager : MonoBehaviour
 
     private void LoadNextLevel()
     {
-        //CustomSceneManager.UnLoadSceneAsync(scenes[index]);
+        CustomSceneManager.UnLoadSceneAsync(SceneActionDictionary.GetScenesList()[index].sceneName);
         index++;
 
-        if (index > 4)
+        if (index > SceneActionDictionary.GetScenesList().Count)
         {
             index = 0;
         }
 
-        //CustomSceneManager.LoadSceneAsync(scenes[index]);
+        CustomSceneManager.LoadSceneAsync(SceneActionDictionary.GetScenesList()[index].sceneName);
     }
 }

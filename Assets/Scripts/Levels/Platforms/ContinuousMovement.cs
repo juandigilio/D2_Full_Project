@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class ContinuousMovement : MonoBehaviour
 {
-    public List<GameObject> points; // Lista de puntos a seguir
-    public float speed;             // Velocidad del movimiento
-    public bool requiresTrigger;    // Si es verdadero, el movimiento inicia solo con contacto
-    public bool stopAtLastPoint;    // Si es verdadero, se detiene en el último punto hasta que el jugador deje de tener contacto
-    public bool rotatePlatform;     // Si es verdadero, la plataforma rota
-    public float rotationDegrees;   // Grados de rotación total
+    public List<GameObject> points; 
+    public float speed;             
+    public bool requiresTrigger;    
+    public bool stopAtLastPoint;    
+    public bool rotatePlatform;     
+    public float rotationDegrees;   
 
-    private int currentPointIndex;  // Índice del punto actual en la lista
-    private Vector3 startPosition;  // Posición de inicio del movimiento actual
-    private Vector3 originalPosition; // Posición inicial del objeto
-    private Vector3 endPosition;    // Posición de destino del movimiento actual
-    private Quaternion originalRotation; // Rotación inicial del objeto
-    private Quaternion targetRotation;   // Rotación objetivo del objeto
-    private Quaternion currentTargetRotation; // Rotación objetivo actual durante el movimiento
-    private Vector3 returnStartPosition; // Posición de inicio del regreso al original
-    private Quaternion returnStartRotation; // Rotación de inicio del regreso al original
-    private float journeyLength;    // Longitud del viaje actual
-    private float startTime;        // Tiempo de inicio del viaje actual
-    private bool isMoving;          // Estado del movimiento
-    private bool atLastPoint;       // Estado si está en el último punto
-    private bool returningToStart;  // Estado de regreso a la posición inicial
+    private int currentPointIndex;  
+    private Vector3 startPosition;  
+    private Vector3 originalPosition; 
+    private Vector3 endPosition;    
+    private Quaternion originalRotation; 
+    private Quaternion targetRotation;   
+    private Quaternion currentTargetRotation; 
+    private Vector3 returnStartPosition;
+    private Quaternion returnStartRotation; 
+    private float journeyLength;    
+    private float startTime;        
+    private bool isMoving;          
+    private bool atLastPoint;       
+    private bool returningToStart;  
 
     private Collider collider;
 
@@ -49,7 +49,7 @@ public class ContinuousMovement : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Debes asignar al menos dos puntos en la lista de puntos en el Inspector.");
+            Debug.LogError("Assign unles end and start");
         }
     }
 
@@ -121,7 +121,7 @@ public class ContinuousMovement : MonoBehaviour
         journeyLength = Vector3.Distance(returnStartPosition, originalPosition);
         startTime = Time.time;
         returningToStart = true;
-        isMoving = false; // Detenemos el movimiento normal para iniciar el regreso
+        isMoving = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -141,7 +141,7 @@ public class ContinuousMovement : MonoBehaviour
             if (isMoving || atLastPoint)
             {
                 SetReturnJourney();
-                atLastPoint = false; // Reseteamos atLastPoint
+                atLastPoint = false;
             }
         }
     }

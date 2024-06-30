@@ -9218,12 +9218,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1924293263}
-  jumpBehaviour: {fileID: 0}
-  prayBehaviour: {fileID: 0}
+  jumpBehaviour: {fileID: 1924293268}
+  prayBehaviour: {fileID: 1924293267}
   pauseManager: {fileID: 37700345}
   level: {fileID: 0}
   mouseSensivity: 0.1
   cameraRotation: 0
+  jumpAction: Jump
+  prayAction: Pray
+  pauseAction: Pause
+  moveAction: Move
+  resumeAction: Resume
+  upAction: Up
+  downAction: Down
+  selectAction: Select
+  pausedAction: Paused
+  playerAction: Player
 --- !u!4 &631087456
 Transform:
   m_ObjectHideFlags: 0
@@ -26176,6 +26186,8 @@ GameObject:
   - component: {fileID: 1924293262}
   - component: {fileID: 1924293264}
   - component: {fileID: 1924293265}
+  - component: {fileID: 1924293268}
+  - component: {fileID: 1924293267}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -26295,8 +26307,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62a22bf12d7e86c40a3fe2711b857107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftFeet: {fileID: 1554658432}
-  rightFeet: {fileID: 655333964}
   pauseManager: {fileID: 37700345}
   stickInput: {x: 0, y: 0}
   input: {x: 0, y: 0}
@@ -26325,6 +26335,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
+  leftFeet: {fileID: 1554658432}
+  rightFeet: {fileID: 655333964}
   deltaTime: 0
   maxSpeed: 35
   acelerationForce: 100
@@ -26344,6 +26356,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+--- !u!114 &1924293267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924293253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f92d496ef85eda4a9911ab1ab2d804a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1924293268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924293253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3301d20f978828a46b7984e31f7108b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpForce: 600
 --- !u!1 &1924459963 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4586660233319608086, guid: 729deec6e080cfa469aea735d7c78644, type: 3}

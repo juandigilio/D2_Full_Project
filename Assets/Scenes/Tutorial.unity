@@ -2877,6 +2877,16 @@ MonoBehaviour:
   level: {fileID: 0}
   mouseSensivity: 0.1
   cameraRotation: 0
+  jumpAction: Jump
+  prayAction: Pray
+  pauseAction: Pause
+  moveAction: Move
+  resumeAction: Resume
+  upAction: Up
+  downAction: Down
+  selectAction: Select
+  pausedAction: Paused
+  playerAction: Player
 --- !u!4 &631087456
 Transform:
   m_ObjectHideFlags: 0
@@ -3124,6 +3134,7 @@ GameObject:
   - component: {fileID: 737125161}
   - component: {fileID: 737125160}
   - component: {fileID: 737125159}
+  - component: {fileID: 737125162}
   m_Layer: 0
   m_Name: ExitZone
   m_TagString: ExitZone
@@ -3217,6 +3228,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 737125157}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &737125162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737125157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e34049d937667be4ba3b163e69834b35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &763392147
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8023,8 +8046,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62a22bf12d7e86c40a3fe2711b857107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftFeet: {fileID: 1554658432}
-  rightFeet: {fileID: 655333964}
   pauseManager: {fileID: 37700345}
   stickInput: {x: 0, y: 0}
   input: {x: 0, y: 0}
@@ -8053,6 +8074,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 0}
+  leftFeet: {fileID: 1554658432}
+  rightFeet: {fileID: 655333964}
   deltaTime: 0
   maxSpeed: 35
   acelerationForce: 100
