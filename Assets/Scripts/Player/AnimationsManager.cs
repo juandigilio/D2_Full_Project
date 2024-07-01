@@ -46,7 +46,7 @@ public class AnimationsManager : MonoBehaviour
 
             if (movementBehaviour.rb.velocity.y < -2.0f)
             {
-                animator.SetFloat("horizontalVelocity", 0.0f);
+                //animator.SetFloat("horizontalVelocity", 0.0f);
             }
         }
     }
