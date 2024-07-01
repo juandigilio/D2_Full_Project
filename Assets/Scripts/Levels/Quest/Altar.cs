@@ -4,19 +4,20 @@ using System.Collections;
 
 public class Altar : MonoBehaviour
 {
-    public Camera mainCamera;
     private Cameraman cameraman;
-    public Player player;
-    public GameObject cameraPoint;
-    public Arch arch;
+    private AltarSound altarSound;
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private Player player;
+    [SerializeField] private GameObject cameraPoint;
+    [SerializeField] private Arch arch;
 
-    public float cameraHeight = 1.5f;
-    public float offsetZ = 1.0f;
+    [SerializeField] private float cameraHeight = 1.5f;
+    [SerializeField] private float offsetZ = 1.0f;
 
     private Vector3 initialPosition;
-    public float altarHeight = 3.0f;
-    public float duration = 2f;
-    public float animationPause = 1.5f;
+    [SerializeField] private float altarHeight = 3.0f;
+    [SerializeField] private float duration = 2f;
+    [SerializeField] private float animationPause = 1.5f;
 
     private bool isAnimating = false;
     private bool inPrayingZone = false;
@@ -29,6 +30,7 @@ public class Altar : MonoBehaviour
     {
         gameObject.SetActive(false);
         cameraman = mainCamera.GetComponent<Cameraman>();
+        altarSound = GetComponent<AltarSound>();
 
         PrayBehaviour.OnActivateQuest += IsPraying;
     }
@@ -36,7 +38,7 @@ public class Altar : MonoBehaviour
     public void Activate()
     {
         gameObject.SetActive(true);
-        
+        altarSound.PlayAltarSound();
         StartCoroutine(MoveUpRoutine());
     }
 

@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Arch : MonoBehaviour
 {
-    public Camera mainCamera;
     private Cameraman cameraman;
-    public Player player;
     private GameObject grate;
-    public GameObject cameraPoint;
+    private DoorSound doorSOund;
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private Player player;
+    [SerializeField] private GameObject cameraPoint;
 
     public float cameraHeight = 1.5f;
     public float offsetZ = 1.0f;
@@ -31,12 +32,14 @@ public class Arch : MonoBehaviour
         }
 
         cameraman = mainCamera.GetComponent<Cameraman>();
+        doorSOund = GetComponent<DoorSound>();
 
         Altar.OnOpenDoor += Open;
     }
 
     private void Open()
     {
+        doorSOund.PlayDoorSound();
         StartCoroutine(MoveUpRoutine());
     }
 

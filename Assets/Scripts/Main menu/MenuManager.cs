@@ -21,6 +21,8 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Transform cameraEnd;
     [SerializeField] private Canvas mainCanvas;
 
+    private MenuSounds menuSounds;
+
     private Vector3 cameraStartPosition;
     private Quaternion cameraStartRotation;
 
@@ -30,6 +32,8 @@ public class MenuManager : MonoBehaviour
 
     void Start()
     {
+        menuSounds = GetComponent<MenuSounds>();
+
         TurnOffButtos();
 
         playButton.onClick.AddListener(LoadTutorial);
@@ -88,6 +92,8 @@ public class MenuManager : MonoBehaviour
 
     private IEnumerator MoveWallAndCamera(Transform wallTransform, Vector3 wallStart, Vector3 wallEnd, Vector3 cameraStartPos, Vector3 cameraEndPos, Quaternion cameraStartRot, Quaternion cameraEndRot, float duration = 1.0f)
     {
+        menuSounds.PlayWallSound();
+
         float time = 0;
 
         while (time < duration)
@@ -99,6 +105,8 @@ public class MenuManager : MonoBehaviour
             time += Time.deltaTime;
             yield return null;
         }
+
+        menuSounds.StopWallSound();
 
         wallTransform.position = wallEnd;
         mainCamera.transform.position = cameraEndPos;

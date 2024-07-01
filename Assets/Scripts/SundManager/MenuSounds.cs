@@ -4,6 +4,7 @@ public class MenuSounds : MonoBehaviour
 {
     [SerializeField] private AudioClip selectSound;
     [SerializeField] private AudioClip enterSound;
+    [SerializeField] private AudioClip wallSound;
 
     private AudioSource audioSource;
 
@@ -12,19 +13,28 @@ public class MenuSounds : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    private void PlaySelectSound()
+    public void PlaySelectSound()
     {
         audioSource.PlayOneShot(selectSound);
     }
 
-    private void PlayEnterSound()
+    public void PlayEnterSound()
     {
         audioSource.PlayOneShot(enterSound);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PlayWallSound()
     {
-        
+        audioSource.clip = wallSound;
+        audioSource.Play();
     }
+
+    public void StopWallSound()
+    {
+        if (audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+    }
+
 }

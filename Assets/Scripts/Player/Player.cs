@@ -28,15 +28,6 @@ public class Player : MonoBehaviour
         GetInput();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("ExitZone"))
-        {
-
-            Debug.Log("Next level");
-        }
-    }
-
     private void OnDestroy()
     {
         Altar.OnPlayerPause -= StopMoving;

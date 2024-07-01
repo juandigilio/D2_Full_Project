@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class AnimationsManager : MonoBehaviour
 {
-    private Player player;
     [SerializeField] private Animator animator;
+    private Player player;
     private MovementBehaviour movementBehaviour;
+    private PlayerSounds playerSounds;
     private float landingSpeed;
     private float badLandingLimit = 10.0f;
 
@@ -13,6 +14,7 @@ public class AnimationsManager : MonoBehaviour
         player = GetComponent<Player>();
         animator = GetComponent<Animator>();
         movementBehaviour = GetComponent<MovementBehaviour>();
+        playerSounds = GetComponent<PlayerSounds>();
 
         PrayBehaviour.OnAnimationPraying += Praying;
         JumpBehaviour.OnPlayerJumped += AnimateJump;
@@ -56,6 +58,7 @@ public class AnimationsManager : MonoBehaviour
             if (landingSpeed > badLandingLimit)
             {
                 movementBehaviour.badLanded = true;
+                playerSounds.PlayBadLandSound();
             }
 
             landingSpeed = 0.0f;
@@ -73,6 +76,7 @@ public class AnimationsManager : MonoBehaviour
 
     private void Praying()
     {
+        playerSounds.PlayPraySound();
         animator.SetTrigger("pray");
         player.SetAnimating(true);
     }
@@ -93,6 +97,7 @@ public class AnimationsManager : MonoBehaviour
 
     private void AnimateJump()
     {
+        playerSounds.PlayJumpSound();
         animator.SetTrigger("jumped");
         animator.ResetTrigger("landed");
     }

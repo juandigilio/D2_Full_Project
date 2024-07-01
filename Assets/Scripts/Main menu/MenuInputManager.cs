@@ -5,14 +5,17 @@ public class MenuInputManager : MonoBehaviour
 {
     private PlayerInput playerInput;
     private MenuManager menuManager;
+    private MenuSounds menuSounds;
 
     private bool isJoystick = false;
+    private int lastActive = 0;
 
 
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
         menuManager = GetComponent<MenuManager>();
+        menuSounds = GetComponent<MenuSounds>();
     }
 
     private void Start()
@@ -20,8 +23,6 @@ public class MenuInputManager : MonoBehaviour
         playerInput.SwitchCurrentActionMap("Paused");
         if (playerInput != null)
         {
-
-
             playerInput.currentActionMap.FindAction("Up").started += Up;
             playerInput.currentActionMap.FindAction("Down").started += Down;
             playerInput.currentActionMap.FindAction("Select").started += Select;
@@ -79,17 +80,47 @@ public class MenuInputManager : MonoBehaviour
     {
         menuManager.TurnOffButtos();
 
+        if (menuManager.GetIndex() == 0)
+        {
+            lastActive = menuManager.GetIndex();
+        }
+
         switch (menuManager.GetIndex())
         {
             case 1:
-                menuManager.GetPlayText().gameObject.SetActive(true);
-                break;
+                {
+                    menuManager.GetPlayText().gameObject.SetActive(true);
+
+                    if (lastActive != menuManager.GetIndex())
+                    {
+                        menuSounds.PlaySelectSound();
+                        lastActive = 1;
+                    }         
+                    break;
+                }
             case 2:
-                menuManager.GetCreditsText().gameObject.SetActive(true);
-                break;
+                {
+
+                    menuManager.GetCreditsText().gameObject.SetActive(true);
+
+                    if (lastActive != menuManager.GetIndex())
+                    {
+                        menuSounds.PlaySelectSound();
+                        lastActive = 2;
+                    }
+                    break;
+                }
             case 3:
-                menuManager.GetExitText().gameObject.SetActive(true);
-                break;
+                {
+                    menuManager.GetExitText().gameObject.SetActive(true);
+
+                    if (lastActive != menuManager.GetIndex())
+                    {
+                        menuSounds.PlaySelectSound();
+                        lastActive = 3;
+                    }
+                    break;
+                }
         }
     }
 
@@ -97,6 +128,8 @@ public class MenuInputManager : MonoBehaviour
     {
         if (callbackContext.started)
         {
+            menuSounds.PlayEnterSound();
+
             switch (menuManager.GetIndex())
             {
                 case 1:
