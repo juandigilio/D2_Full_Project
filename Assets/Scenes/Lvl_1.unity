@@ -590,7 +590,7 @@ Transform:
   m_GameObject: {fileID: 21387088}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.05, y: -0.3300004, z: -5.54}
+  m_LocalPosition: {x: -1.29, y: -0.3300004, z: -5.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4815,8 +4815,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.674736, y: 0.16048622, z: 1.702116}
-  m_Center: {x: 0.012386322, y: 0.06537557, z: 0.053420067}
+  m_Size: {x: 1.731567, y: 0.16048622, z: 1.702116}
+  m_Center: {x: 0.040801384, y: 0.06537557, z: 0.053420085}
 --- !u!1 &465957657
 GameObject:
   m_ObjectHideFlags: 0
@@ -6432,6 +6432,8 @@ MonoBehaviour:
   airSpeedMultiplier: 100
   isLanding: 0
   badLanded: 0
+  isStuck: 0
+  rigibodySpeed: 0
 --- !u!114 &649825732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6565,7 +6567,7 @@ Transform:
   m_GameObject: {fileID: 649825728}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0.3, y: 1.104, z: 97.25}
+  m_LocalPosition: {x: -24.61, y: 4.32, z: 60.86}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21553,7 +21555,7 @@ Transform:
   m_GameObject: {fileID: 2068209143}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.44, y: -0.3300004, z: -5.54}
+  m_LocalPosition: {x: -5.35, y: -0.3300004, z: -5.54}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

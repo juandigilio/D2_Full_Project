@@ -25,12 +25,12 @@ public class MovementBehaviour : MonoBehaviour
     public float airSpeedMultiplier = 100.0f;
     public bool isLanding = false;
     public bool badLanded;
-    private bool isStuck;
+    [SerializeField] private bool isStuck;
+    [SerializeField] private float rigibodySpeed;
     private bool isGrounded;
 
     private void Awake()
     {
-        //DontDestroyOnLoad(this);
         player = GetComponent<Player>();
         rb = player.GetComponent<Rigidbody>();
         mainCamera = Camera.main.GetComponent<Camera>();
@@ -46,8 +46,7 @@ public class MovementBehaviour : MonoBehaviour
     private void FixedUpdate()
     {
         UpdateDelta();
-
-        //Move();
+        rigibodySpeed = rb.velocity.magnitude;
     }
 
     public void Move()
