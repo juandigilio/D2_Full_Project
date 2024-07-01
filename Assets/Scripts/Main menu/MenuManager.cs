@@ -99,7 +99,7 @@ public class MenuManager : MonoBehaviour
 
     public void LoadTutorial()
     {
-        CustomSceneManager.LoadSceneAsync("Tutorial");
+        CustomSceneManager.LoadNextSceneAsync();
     }
 
     public void LoadCredits()

@@ -194,7 +194,7 @@ public class PauseManager : MonoBehaviour
         gameIsPaused = false;
         Time.timeScale = 1f;
         InputManager.instance.Unsuscribe();
-        CustomSceneManager.LoadSceneAsync("MainMenu");
+        CustomSceneManager.LoadMainMenu();
     }
 
     public void Exit()

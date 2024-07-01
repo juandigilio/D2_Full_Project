@@ -8,8 +8,6 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Arch door;
     [SerializeField] private Transform deathZone;
 
-    private static int index = 0;
-
     private bool isAnimating = false;
 
     private int totalCoins;
@@ -74,14 +72,6 @@ public class LevelManager : MonoBehaviour
 
     private void LoadNextLevel()
     {
-        CustomSceneManager.UnLoadSceneAsync(SceneActionDictionary.GetScenesList()[index].sceneName);
-        index++;
-
-        if (index > SceneActionDictionary.GetScenesList().Count)
-        {
-            index = 0;
-        }
-
-        CustomSceneManager.LoadSceneAsync(SceneActionDictionary.GetScenesList()[index].sceneName);
+        CustomSceneManager.LoadNextSceneAsync();
     }
 }
