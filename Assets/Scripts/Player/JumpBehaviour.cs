@@ -15,17 +15,6 @@ public class JumpBehaviour : MonoBehaviour
         movementBehaviour = GetComponent<MovementBehaviour>();
     }
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void Jump(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.started)

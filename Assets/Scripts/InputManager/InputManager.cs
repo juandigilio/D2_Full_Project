@@ -8,17 +8,27 @@ public class InputManager : MonoBehaviour
     [SerializeField] private PrayBehaviour prayBehaviour;
     [SerializeField] private PauseManager pauseManager;
     [SerializeField] private LevelManager level;
-    [SerializeField] private float mouseSensivity = 0.1f;
-    public float cameraRotation = 0;
 
+    [SerializeField] private float mouseSensivity = 0.1f;
+    private float cameraRotation = 0;
+
+    /// <summary>
+    /// Player inputs
+    /// </summary>
     [SerializeField] private string jumpAction = "Jump";
     [SerializeField] private string prayAction = "Pray";
     [SerializeField] private string pauseAction = "Pause";
     [SerializeField] private string moveAction = "Move";
+    /// <summary>
+    /// Paused and menu inputs
+    /// </summary>
     [SerializeField] private string resumeAction = "Resume";
     [SerializeField] private string upAction = "Up";
     [SerializeField] private string downAction = "Down";
     [SerializeField] private string selectAction = "Select";
+    /// <summary>
+    /// Maps
+    /// </summary>
     [SerializeField] private string pausedAction = "Paused";
     [SerializeField] private string playerAction = "Player";
 
@@ -110,7 +120,7 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public void MoveCamera()
+    private void MoveCamera()
     {
         if (!pauseManager.gameIsPaused)
         {
@@ -118,7 +128,7 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    public void CheckInput()
+    private void CheckInput()
     {
         if (PlayerInput.currentControlScheme == "Gamepad")
         {
@@ -128,5 +138,10 @@ public class InputManager : MonoBehaviour
         {
             pauseManager.isJoystick = false;
         }
+    }
+
+    public float GetCameraRotation()
+    {
+        return cameraRotation;
     }
 }

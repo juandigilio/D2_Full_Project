@@ -46,10 +46,10 @@ public class MovementBehaviour : MonoBehaviour
     {
         UpdateDelta();
 
-        Move();
+        //Move();
     }
 
-    private void Move()
+    public void Move()
     {
         LookForward();
 
@@ -123,7 +123,7 @@ public class MovementBehaviour : MonoBehaviour
             isGrounded = false;
         }
 
-        Debug.Log("isGrounded: " + isGrounded);
+        //Debug.Log("isGrounded: " + isGrounded);
     }
 
     private void CheckIfStuck()

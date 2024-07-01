@@ -36,7 +36,7 @@ public class Cameraman : MonoBehaviour
     private void UpdatePosition()
     {
         Vector3 offset = new Vector3(0, height, -distance);
-        Quaternion newRotation = Quaternion.Euler(0, inputManager.cameraRotation, 0);
+        Quaternion newRotation = Quaternion.Euler(0, inputManager.GetCameraRotation(), 0);
         Vector3 rotatedOffset = newRotation * offset;
         Vector3 newPos = playerTransform.position + rotatedOffset;
 
