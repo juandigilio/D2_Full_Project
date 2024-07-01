@@ -36,8 +36,6 @@ public static class CustomSceneManager
 
         index++;
 
-        //SetInput(scenesPool[index].actionName);
-
         SceneManager.LoadSceneAsync(scenesPool[index].sceneName, LoadSceneMode.Additive);
     }
 

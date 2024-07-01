@@ -6,6 +6,9 @@ public class MenuInputManager : MonoBehaviour
     private PlayerInput playerInput;
     private MenuManager menuManager;
 
+    private bool isJoystick = false;
+
+
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -17,7 +20,7 @@ public class MenuInputManager : MonoBehaviour
         playerInput.SwitchCurrentActionMap("Paused");
         if (playerInput != null)
         {
-            
+
 
             playerInput.currentActionMap.FindAction("Up").started += Up;
             playerInput.currentActionMap.FindAction("Down").started += Down;
@@ -43,17 +46,18 @@ public class MenuInputManager : MonoBehaviour
     private void Update()
     {
         CheckInput();
+        ActiveSelected();
     }
 
     public void Up(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.started)
         {
-            menuManager.index--;
+            menuManager.SetIndex(menuManager.GetIndex() - 1);
 
-            if (menuManager.index < 1)
+            if (menuManager.GetIndex() < 1)
             {
-                menuManager.index = 1;
+                menuManager.SetIndex(1);
             }
         }
     }
@@ -62,12 +66,30 @@ public class MenuInputManager : MonoBehaviour
     {
         if (callbackContext.started)
         {
-            menuManager.index++;
+            menuManager.SetIndex(menuManager.GetIndex() + 1);
 
-            if (menuManager.index > 3)
+            if (menuManager.GetIndex() > 3)
             {
-                menuManager.index = 3;
+                menuManager.SetIndex(3);
             }
+        }
+    }
+
+    public void ActiveSelected()
+    {
+        menuManager.TurnOffButtos();
+
+        switch (menuManager.GetIndex())
+        {
+            case 1:
+                menuManager.GetPlayText().gameObject.SetActive(true);
+                break;
+            case 2:
+                menuManager.GetCreditsText().gameObject.SetActive(true);
+                break;
+            case 3:
+                menuManager.GetExitText().gameObject.SetActive(true);
+                break;
         }
     }
 
@@ -75,7 +97,7 @@ public class MenuInputManager : MonoBehaviour
     {
         if (callbackContext.started)
         {
-            switch (menuManager.index)
+            switch (menuManager.GetIndex())
             {
                 case 1:
                     {
@@ -96,15 +118,20 @@ public class MenuInputManager : MonoBehaviour
         }
     }
 
-    public void CheckInput()
+    private void CheckInput()
     {
+        if (isJoystick && playerInput.currentControlScheme != "Gamepad")
+        {
+            menuManager.TurnOffButtos();
+        }
+
         if (playerInput.currentControlScheme == "Gamepad")
         {
-            menuManager.isJoystick = true;
+            isJoystick = true;
         }
         else
         {
-            menuManager.isJoystick = false;
+            isJoystick = false;
         }
     }
 }

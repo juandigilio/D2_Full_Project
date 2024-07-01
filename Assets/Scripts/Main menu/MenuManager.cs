@@ -1,63 +1,54 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using TMPro;
 using System.Collections;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using TMPro;
 
 public class MenuManager : MonoBehaviour
 {
-    public Button playButton;
-    public Button creditsButton;
-    public Button exitButton;
-    public TextMeshProUGUI playText;
-    public TextMeshProUGUI creditsText;
-    public TextMeshProUGUI exitText;
+    [SerializeField] private Button playButton;
+    [SerializeField] private Button creditsButton;
+    [SerializeField] private Button exitButton;
+    [SerializeField] private TextMeshProUGUI playText;
+    [SerializeField] private TextMeshProUGUI creditsText;
+    [SerializeField] private TextMeshProUGUI exitText;
 
-    public GameObject wall;
-    public Transform startPoint;
-    public Transform endPoint;
-    public Camera mainCamera;
-    public Transform cameraEnd;
-    public Canvas mainCanvas;
-
-    public int index = 1;
-    public bool isJoystick = false;
+    [SerializeField] private GameObject wall;
+    [SerializeField] private Transform startPoint;
+    [SerializeField] private Transform endPoint;
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private Transform cameraEnd;
+    [SerializeField] private Canvas mainCanvas;
 
     private Vector3 cameraStartPosition;
     private Quaternion cameraStartRotation;
 
     private bool isMovingToEnd = false;
 
+    private int index = 0;
+
     void Start()
     {
-        playText.gameObject.SetActive(false);
-        creditsText.gameObject.SetActive(false);
-        exitText.gameObject.SetActive(false);
+        TurnOffButtos();
 
         playButton.onClick.AddListener(LoadTutorial);
         creditsButton.onClick.AddListener(LoadCredits);
         exitButton.onClick.AddListener(Exit);
 
-        AddEventTrigger(playButton.gameObject, EventTriggerType.PointerEnter, () => OnHoverButton(playText, true));
-        AddEventTrigger(playButton.gameObject, EventTriggerType.PointerExit, () => OnHoverButton(playText, false));
+        AddEventTrigger(playButton.gameObject, EventTriggerType.PointerEnter, () => OnHoverButton(1));
+        AddEventTrigger(playButton.gameObject, EventTriggerType.PointerExit, () => OnHoverButton(0));
 
-        AddEventTrigger(creditsButton.gameObject, EventTriggerType.PointerEnter, () => OnHoverButton(creditsText, true));
-        AddEventTrigger(creditsButton.gameObject, EventTriggerType.PointerExit, () => OnHoverButton(creditsText, false));
+        AddEventTrigger(creditsButton.gameObject, EventTriggerType.PointerEnter, () => OnHoverButton(2));
+        AddEventTrigger(creditsButton.gameObject, EventTriggerType.PointerExit, () => OnHoverButton(0));
 
-        AddEventTrigger(exitButton.gameObject, EventTriggerType.PointerEnter, () => OnHoverButton(exitText, true));
-        AddEventTrigger(exitButton.gameObject, EventTriggerType.PointerExit, () => OnHoverButton(exitText, false));
+        AddEventTrigger(exitButton.gameObject, EventTriggerType.PointerEnter, () => OnHoverButton(3));
+        AddEventTrigger(exitButton.gameObject, EventTriggerType.PointerExit, () => OnHoverButton(0));
 
         wall.transform.position = startPoint.position;
 
         cameraStartPosition = mainCamera.transform.position;
         cameraStartRotation = mainCamera.transform.rotation;
-    }
-
-    void Update()
-    {
-        ActiveSelected();
     }
 
     public void Resume(InputAction.CallbackContext callbackContext)
@@ -67,33 +58,6 @@ public class MenuManager : MonoBehaviour
             StartCoroutine(MoveWallAndCamera(wall.transform, endPoint.position, startPoint.position, cameraEnd.position, cameraStartPosition, cameraEnd.rotation, cameraStartRotation));
             mainCanvas.gameObject.SetActive(true);
             isMovingToEnd = false;
-        }
-    }
-
-    public void ActiveSelected()
-    {
-        if (isJoystick)
-        {
-            playText.gameObject.SetActive(false);
-            creditsText.gameObject.SetActive(false);
-            exitText.gameObject.SetActive(false);
-
-            switch (index)
-            {
-                case 1:
-                    playText.gameObject.SetActive(true);
-                    break;
-                case 2:
-                    creditsText.gameObject.SetActive(true);
-                    break;
-                case 3:
-                    exitText.gameObject.SetActive(true);
-                    break;
-            }
-        }
-        else
-        {
-            index = 0;
         }
     }
 
@@ -120,7 +84,6 @@ public class MenuManager : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
-
     }
 
     private IEnumerator MoveWallAndCamera(Transform wallTransform, Vector3 wallStart, Vector3 wallEnd, Vector3 cameraStartPos, Vector3 cameraEndPos, Quaternion cameraStartRot, Quaternion cameraEndRot, float duration = 1.0f)
@@ -142,9 +105,10 @@ public class MenuManager : MonoBehaviour
         mainCamera.transform.rotation = cameraEndRot;
     }
 
-    private void OnHoverButton(TextMeshProUGUI text, bool isHovering)
+    private void OnHoverButton(int hoverIndex)
     {
-        text.gameObject.SetActive(isHovering);
+        index = hoverIndex;
+        //Debug.Log($"Hover Index: {hoverIndex}");
     }
 
     private void AddEventTrigger(GameObject obj, EventTriggerType type, System.Action action)
@@ -160,5 +124,37 @@ public class MenuManager : MonoBehaviour
 
         entry.callback.AddListener((eventData) => { action(); });
         trigger.triggers.Add(entry);
+    }
+
+    public TextMeshProUGUI GetPlayText()
+    {
+        return playText;
+    }
+
+    public TextMeshProUGUI GetCreditsText()
+    {
+        return creditsText;
+    }
+
+    public TextMeshProUGUI GetExitText()
+    {
+        return exitText;
+    }
+
+    public int GetIndex()
+    {
+        return index;
+    }
+
+    public void SetIndex(int newIndex)
+    {
+        index = newIndex;
+    }
+
+    public void TurnOffButtos()
+    {
+        GetPlayText().gameObject.SetActive(false);
+        GetCreditsText().gameObject.SetActive(false);
+        GetExitText().gameObject.SetActive(false);
     }
 }

@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripts\Levels\ExitZone.cs" />
     <Compile Include="Assets\Scripts\Main menu\MenuInputManager.cs" />
     <Compile Include="Assets\Scripts\Levels\LevelManager.cs" />
+    <Compile Include="Assets\Scripts\SundManager\MenuSounds.cs" />
     <Compile Include="Assets\Scripts\Player\PushRigisbodys.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
