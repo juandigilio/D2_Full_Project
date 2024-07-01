@@ -14,6 +14,12 @@ public class PlayerSounds : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    private void OnDisable()
+    {
+        //audioSource = null;
+        Destroy(gameObject);
+    }
+
     public void PlayJumpSound()
     {
         audioSource.PlayOneShot(jumped);

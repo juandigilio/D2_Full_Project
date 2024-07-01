@@ -20,6 +20,12 @@ public class AnimationsManager : MonoBehaviour
         JumpBehaviour.OnPlayerJumped += AnimateJump;
     }
 
+    private void OnDisable()
+    {
+        PrayBehaviour.OnAnimationPraying -= Praying;
+        JumpBehaviour.OnPlayerJumped -= AnimateJump;
+    }
+
     private void FixedUpdate()
     {
         CheckSpeed();

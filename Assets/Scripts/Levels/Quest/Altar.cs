@@ -11,13 +11,13 @@ public class Altar : MonoBehaviour
     [SerializeField] private GameObject cameraPoint;
     [SerializeField] private Arch arch;
 
-    [SerializeField] private float cameraHeight = 1.5f;
-    [SerializeField] private float offsetZ = 1.0f;
+    [SerializeField] private float cameraHeight = -1.0f;
+    [SerializeField] private float offsetZ = 3f;
 
     private Vector3 initialPosition;
     [SerializeField] private float altarHeight = 3.0f;
-    [SerializeField] private float duration = 2f;
-    [SerializeField] private float animationPause = 1.5f;
+    [SerializeField] private float duration = 4f;
+    [SerializeField] private float animationPause = 1.0f;
 
     private bool isAnimating = false;
     private bool inPrayingZone = false;
@@ -33,6 +33,11 @@ public class Altar : MonoBehaviour
         altarSound = GetComponent<AltarSound>();
 
         PrayBehaviour.OnActivateQuest += IsPraying;
+    }
+
+    private void OnDisable()
+    {
+        PrayBehaviour.OnActivateQuest -= IsPraying;
     }
 
     public void Activate()

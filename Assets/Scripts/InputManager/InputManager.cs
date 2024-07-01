@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,6 +20,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private string prayAction = "Pray";
     [SerializeField] private string pauseAction = "Pause";
     [SerializeField] private string moveAction = "Move";
+    [SerializeField] private string doorAction = "OpenDoor";
     /// <summary>
     /// Paused and menu inputs
     /// </summary>
@@ -34,6 +36,8 @@ public class InputManager : MonoBehaviour
 
     public static InputManager instance;
     public PlayerInput PlayerInput { get; private set; }
+
+    public static Action OnOpenDoor;
 
     private void Awake()
     {
@@ -56,6 +60,7 @@ public class InputManager : MonoBehaviour
             PlayerInput.currentActionMap.FindAction(moveAction).started += Move;
             PlayerInput.currentActionMap.FindAction(moveAction).performed += Move;
             PlayerInput.currentActionMap.FindAction(moveAction).canceled += Move;
+            PlayerInput.currentActionMap.FindAction(doorAction).started += OpenDoor;
 
             PlayerInput.SwitchCurrentActionMap(pausedAction);
 
@@ -66,6 +71,11 @@ public class InputManager : MonoBehaviour
 
             PlayerInput.SwitchCurrentActionMap(playerAction);
         }
+    }
+
+    private void OnDisable()
+    {
+        //Unsuscribe();
     }
 
     private void Update()
@@ -89,10 +99,11 @@ public class InputManager : MonoBehaviour
         PlayerInput.SwitchCurrentActionMap(playerAction);
         PlayerInput.currentActionMap.FindAction(jumpAction).started -= jumpBehaviour.Jump;
         PlayerInput.currentActionMap.FindAction(prayAction).started -= prayBehaviour.Pray;
-        PlayerInput.currentActionMap.FindAction(pausedAction).started -= pauseManager.Pause;
+        //PlayerInput.currentActionMap.FindAction(pausedAction).started -= pauseManager.Pause;
         PlayerInput.currentActionMap.FindAction(moveAction).started -= Move;
         PlayerInput.currentActionMap.FindAction(moveAction).performed -= Move;
         PlayerInput.currentActionMap.FindAction(moveAction).canceled -= Move;
+        PlayerInput.currentActionMap.FindAction(doorAction).started -= OpenDoor;
 
         PlayerInput.SwitchCurrentActionMap(pausedAction);
         PlayerInput.currentActionMap.FindAction(resumeAction).started -= pauseManager.Resume;
@@ -126,6 +137,11 @@ public class InputManager : MonoBehaviour
         {
             cameraRotation += Mouse.current.delta.ReadValue().x * mouseSensivity;
         }
+    }
+
+    private void OpenDoor(InputAction.CallbackContext callbackContext)
+    {
+        OnOpenDoor?.Invoke();
     }
 
     private void CheckInput()

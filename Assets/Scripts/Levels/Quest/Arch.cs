@@ -11,13 +11,13 @@ public class Arch : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private GameObject cameraPoint;
 
-    public float cameraHeight = 1.5f;
-    public float offsetZ = 1.0f;
+    public float cameraHeight = -1.0f;
+    public float offsetZ = -5.0f;
 
     private Vector3 initialPosition;
-    public float doorHeight = 3.0f;
-    public float duration = 2f;
-    public float animationPause = 1.5f;
+    [SerializeField] private float doorHeight = 3.0f;
+    [SerializeField] private float duration = 2f;
+    [SerializeField] private float animationPause = 3.0f;
 
     private bool isAnimating;
 
@@ -35,6 +35,19 @@ public class Arch : MonoBehaviour
         doorSOund = GetComponent<DoorSound>();
 
         Altar.OnOpenDoor += Open;
+        CheatsManager.OnOpenDoor += Open;
+    }
+
+    private void OnDisable()
+    {
+        Altar.OnOpenDoor -= Open;
+        CheatsManager.OnOpenDoor -= Open;
+    }
+
+    private void OnDestroy()
+    {
+        Altar.OnOpenDoor -= Open;
+        CheatsManager.OnOpenDoor -= Open;
     }
 
     private void Open()

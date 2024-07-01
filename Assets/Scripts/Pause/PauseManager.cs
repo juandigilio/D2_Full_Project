@@ -28,12 +28,12 @@ public class PauseManager : MonoBehaviour
     {
         if (!instance)
         {
-            DontDestroyOnLoad(gameObject);
-            instance = this;
+            //DontDestroyOnLoad(gameObject);
+            //instance = this;
         }
         else
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
 
 
@@ -193,7 +193,7 @@ public class PauseManager : MonoBehaviour
     {
         gameIsPaused = false;
         Time.timeScale = 1f;
-        InputManager.instance.Unsuscribe();
+        //InputManager.instance.Unsuscribe();
         CustomSceneManager.LoadMainMenu();
     }
 

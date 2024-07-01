@@ -4,13 +4,14 @@ public class Cameraman : MonoBehaviour
 {
     public Camera mainCamera;
     public Transform playerTransform;
-    private InputManager inputManager;
+    [SerializeField] private InputManager inputManager;
     private float distance;
     private float height = 3.5f;
     private float offsetZ = 3.0f;
 
     void Start()
     {
+        //DontDestroyOnLoad(gameObject);
         InitCamera();
         inputManager = InputManager.instance;
     }

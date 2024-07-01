@@ -30,6 +30,7 @@ public class MovementBehaviour : MonoBehaviour
 
     private void Awake()
     {
+        //DontDestroyOnLoad(this);
         player = GetComponent<Player>();
         rb = player.GetComponent<Rigidbody>();
         mainCamera = Camera.main.GetComponent<Camera>();

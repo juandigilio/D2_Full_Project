@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.050267264, g: 0.0606813, b: 0.1295487, a: 1}
+  m_IndirectSpecularColor: {r: 0.05026727, g: 0.060681224, b: 0.12954858, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2874,12 +2874,13 @@ MonoBehaviour:
   jumpBehaviour: {fileID: 1924293267}
   prayBehaviour: {fileID: 1924293268}
   pauseManager: {fileID: 37700345}
-  level: {fileID: 0}
+  level: {fileID: 1699288439}
   mouseSensivity: 0.1
   jumpAction: Jump
   prayAction: Pray
   pauseAction: Pause
   moveAction: Move
+  doorAction: OpenDoor
   resumeAction: Resume
   upAction: Up
   downAction: Down
@@ -3606,7 +3607,7 @@ MonoBehaviour:
   offsetZ: 3
   altarHeight: 3
   duration: 4
-  animationPause: 0
+  animationPause: 1
 --- !u!114 &818877276
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4677,6 +4678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
   playerTransform: {fileID: 1924293260}
+  inputManager: {fileID: 631087455}
 --- !u!1001 &985352475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5472,7 +5474,7 @@ MonoBehaviour:
   offsetZ: -5
   doorHeight: 3
   duration: 2
-  animationPause: 1.5
+  animationPause: 3
 --- !u!114 &1126975528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7438,6 +7440,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1699288437}
   - component: {fileID: 1699288439}
+  - component: {fileID: 1699288440}
   m_Layer: 0
   m_Name: Quest
   m_TagString: Untagged
@@ -7475,11 +7478,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a67617ce23eca2145b869af69ea7f0e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 1924293263}
+  player: {fileID: 1924293263}
   coinsPull: {fileID: 515601355}
   altar: {fileID: 818877275}
   door: {fileID: 1126975527}
   deathZone: {fileID: 800586923}
+  inputManager: {fileID: 631087455}
+--- !u!114 &1699288440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1699288436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da189c52824dce04d854992a4a872770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1712510284
 GameObject:
   m_ObjectHideFlags: 0

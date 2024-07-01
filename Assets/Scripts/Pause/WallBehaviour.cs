@@ -20,7 +20,7 @@ public class WallBehaviour : MonoBehaviour
         wall.SetActive(false);
     }
 
-    void SetTargetPosition()
+    private void SetTargetPosition()
     {
         wallTargetPosition = mainCamera.transform.position;
 

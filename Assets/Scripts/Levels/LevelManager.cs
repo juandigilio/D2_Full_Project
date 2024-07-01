@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private Player Player;
+    [SerializeField] private Player player;
     [SerializeField] private GameObject coinsPull;
     [SerializeField] private Altar altar;
     [SerializeField] private Arch door;
     [SerializeField] private Transform deathZone;
+    [SerializeField] private InputManager inputManager;
 
     private bool isAnimating = false;
 
@@ -30,6 +31,12 @@ public class LevelManager : MonoBehaviour
     private void Update()
     {
         CheckCoins();
+    }
+
+    private void OnDisable()
+    {
+        Coin.OnCoinCollected -= CollectCoin;
+        ExitZone.OnLevelFinished -= LoadNextLevel;
     }
 
     private void GetCoins()
@@ -72,6 +79,11 @@ public class LevelManager : MonoBehaviour
 
     private void LoadNextLevel()
     {
+        //Destroy(player);
+        inputManager.Unsuscribe();
+        Destroy(coinsPull);
+        Destroy(altar);
+        Destroy(door);
         CustomSceneManager.LoadNextSceneAsync();
     }
 }
