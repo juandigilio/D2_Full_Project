@@ -10,9 +10,15 @@ public class SceneActionMap
 
 public class SceneActionDictionary : MonoBehaviour
 {
-    [SerializeField] private static List<SceneActionMap> sceneActionList = new List<SceneActionMap>();
+    [SerializeField] private List<SceneActionMap> sceneActionList = new List<SceneActionMap>();
 
-    public static List<SceneActionMap> GetScenesList()
+    private void Awake()
+    {
+        CustomSceneManager.SetScenes(sceneActionList);
+        CustomSceneManager.LoadMainMenu();
+    }
+
+    public List<SceneActionMap> GetScenesList()
     {
         return sceneActionList;
     }
