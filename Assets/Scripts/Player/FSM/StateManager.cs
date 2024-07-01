@@ -24,15 +24,19 @@ public class StateManager : MonoBehaviour
         currentState = OnFloor;
 
         Debug.Log("current state: " + currentState);
+
+        PrayBehaviour.OnAnimationPraying += SetAnimating;
+        PrayBehaviour.OnActivateQuest += AnimatingFinished;
     }
 
     private void Update()
     {
-        CheckCurrentState();
+        //CheckCurrentState();
+        Debug.Log("current state: " + currentState);
 
         if (currentState != null)
         {
-            currentState.Update(currentState, player);
+            currentState.Update(currentState, player, this);
         }
     }
 
@@ -44,26 +48,34 @@ public class StateManager : MonoBehaviour
         }
     }
 
-    private void CheckCurrentState()
+    public void CheckCurrentState()
     {
+        currentState = null;
+
         if (currentState == null)
         {
-            currentState = Animating.Enter(player);
+            currentState = OnFloor.Enter(player);
 
             if (currentState == null)
             {
-                currentState = OnFloor.Enter(player);
+                currentState = OnAir.Enter(player);
 
                 if (currentState == null)
                 {
-                    currentState = OnAir.Enter(player);
-
-                    if (currentState == null)
-                    {
-                        Debug.LogError("Cant enter at any state!!!!!!!!!!");
-                    }
+                    Debug.LogError("Cant enter at any state!!!!!!!!!!");
                 }
             }
         }
+
+    }
+
+    private void SetAnimating()
+    {
+        currentState = Animating;
+    }
+
+    private void AnimatingFinished()
+    {
+        currentState = OnFloor;
     }
 }

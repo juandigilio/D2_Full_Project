@@ -64,7 +64,7 @@ public class Player : MonoBehaviour
         return isAnimating;
     }
 
-    public void IsAnimating(bool set)
+    public void SetAnimating(bool set)
     {
         isAnimating = set;
     }
@@ -74,7 +74,7 @@ public class Player : MonoBehaviour
         isAnimating = true;
     }
 
-    private void AnimationFinished()
+    public void AnimationFinished()
     {
         isAnimating = false;
     }

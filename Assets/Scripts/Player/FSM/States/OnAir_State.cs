@@ -16,11 +16,11 @@ public class OnAir_State : Base_state
         }
     }
 
-    public override void Update(Base_state currentState, Player player)
+    public override void Update(Base_state currentState, Player player, StateManager stateManager)
     {
         if (player.MovementBehaviour().IsGrounded())
         {
-            Exit(currentState);
+            Exit(currentState, stateManager);
         }
     }
 
@@ -32,8 +32,8 @@ public class OnAir_State : Base_state
         }
     }
 
-    public override void Exit(Base_state currentState)
+    public override void Exit(Base_state currentState, StateManager stateManager)
     {
-        currentState = null;
+        stateManager.CheckCurrentState();
     }
 }

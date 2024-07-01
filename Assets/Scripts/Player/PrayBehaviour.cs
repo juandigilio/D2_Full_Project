@@ -20,15 +20,14 @@ public class PrayBehaviour : MonoBehaviour
     {
         if (movementBehaviour.IsGrounded() && !player.IsAnimating())
         {
-            //Debug.Log("Pray!!!");
-            player.IsAnimating(true);
+            player.SetAnimating(true);
             OnAnimationPraying?.Invoke();
         }
     }
 
     public void PrayFinished()
     {
-        player.IsAnimating(false);
+        player.SetAnimating(false);
         Debug.Log("pray finished!!!!");
 
         OnActivateQuest?.Invoke();

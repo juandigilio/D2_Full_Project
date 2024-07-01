@@ -51,7 +51,7 @@ public class AnimationsManager : MonoBehaviour
             animator.SetFloat("landingSpeed", landingSpeed);
             animator.ResetTrigger("jumped");
 
-            player.IsAnimating(true);
+            player.SetAnimating(true);
 
             if (landingSpeed > badLandingLimit)
             {
@@ -74,7 +74,7 @@ public class AnimationsManager : MonoBehaviour
     private void Praying()
     {
         animator.SetTrigger("pray");
-        player.IsAnimating(true);
+        player.SetAnimating(true);
     }
 
     private void IsStuck()

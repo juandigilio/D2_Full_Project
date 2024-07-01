@@ -74,8 +74,6 @@ public class Altar : MonoBehaviour
         player.enabled = true;
         cameraman.enabled = true;
         isAnimating = false;
- 
-        //OnOpenDoor?.Invoke();
     }
 
     private void IsPraying()

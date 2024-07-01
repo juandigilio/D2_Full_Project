@@ -2876,7 +2876,6 @@ MonoBehaviour:
   pauseManager: {fileID: 37700345}
   level: {fileID: 0}
   mouseSensivity: 0.1
-  cameraRotation: 0
   jumpAction: Jump
   prayAction: Pray
   pauseAction: Pause
@@ -8032,6 +8031,7 @@ GameObject:
   - component: {fileID: 1924293265}
   - component: {fileID: 1924293268}
   - component: {fileID: 1924293267}
+  - component: {fileID: 1924293269}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -8212,7 +8212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3301d20f978828a46b7984e31f7108b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 4
+  jumpForce: 600
 --- !u!114 &1924293268
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8223,6 +8223,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f92d496ef85eda4a9911ab1ab2d804a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1924293269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1924293253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2d005a6b2942f342877edfd8c4ee01b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1968986213 stripped
