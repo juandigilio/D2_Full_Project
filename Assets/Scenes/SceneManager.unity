@@ -167,6 +167,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea0522292fc556245b4fe33c04d64c37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenu:
+    sceneName: MainMenu
+    actionName: Paused
   sceneActionList:
   - sceneName: MainMenu
     actionName: Paused

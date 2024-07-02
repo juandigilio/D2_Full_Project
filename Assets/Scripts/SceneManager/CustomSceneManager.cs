@@ -39,14 +39,33 @@ public static class CustomSceneManager
         SceneManager.LoadSceneAsync(scenesPool[index].sceneName, LoadSceneMode.Additive);
     }
 
-    public static void LoadMainMenu()
-    {
-        if (index != 0)
-        {
-            SceneManager.UnloadSceneAsync(scenesPool[index].sceneName);
-            index = 0;
-        }
+    //public static void LoadMainMenu()
+    //{
+    //    if (index != 0)
+    //    {
+    //        SceneManager.UnloadSceneAsync(scenesPool[index].sceneName);
+    //        index = 0;
+    //    }
+    //
+    //    SceneManager.LoadSceneAsync(scenesPool[index].sceneName, LoadSceneMode.Additive);
+    //}
 
-        SceneManager.LoadSceneAsync(scenesPool[index].sceneName, LoadSceneMode.Additive);
+    public static void LoadScene(string sceneName)
+    {
+        for (int i = 0; i < scenesPool.Count; i++)
+        {
+            if (sceneName == scenesPool[i].sceneName)
+            {
+                if (index != 0)
+                {
+                    SceneManager.UnloadSceneAsync(scenesPool[index].sceneName);
+                    index = 0;
+                }
+
+                SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+                index = i;
+                break;
+            }
+        }
     }
 }

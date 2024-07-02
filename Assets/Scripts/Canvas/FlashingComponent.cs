@@ -15,7 +15,6 @@ public class FlashingComponent : MonoBehaviour
     private const float MIN_TONE = 0.0f;
     [SerializeField] private float FLASH_SPEED = 2.2f;
 
-    public static Action OnCheckInput;
 
     private void Awake()
     {

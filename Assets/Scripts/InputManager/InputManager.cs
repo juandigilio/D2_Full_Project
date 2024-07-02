@@ -73,6 +73,8 @@ public class InputManager : MonoBehaviour
 
             PlayerInput.SwitchCurrentActionMap(playerAction);
         }
+
+        CheckInput();
     }
 
     private void Update()

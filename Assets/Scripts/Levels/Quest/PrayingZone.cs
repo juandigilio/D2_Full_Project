@@ -3,11 +3,15 @@ using UnityEngine;
 public class PrayingZone : MonoBehaviour
 {
     [SerializeField] private Altar altar;
+    [SerializeField] private Canvas canvas;
 
 
-    private void FixedUpdate()
+    private void Awake()
     {
-        Debug.Log("praying zone: " + altar.PrayingZone());
+        if (canvas != null)
+        {
+            canvas.enabled = false;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -15,6 +19,11 @@ public class PrayingZone : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             altar.PrayingZone(true);
+
+            if (canvas != null) 
+            {
+                canvas.enabled = true;
+            }
         }
     }
 
@@ -23,6 +32,11 @@ public class PrayingZone : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             altar.PrayingZone(false);
+
+            if (canvas != null)
+            {
+                canvas.enabled = false;
+            }
         }
     }
 }
