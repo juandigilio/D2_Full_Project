@@ -1,6 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+using UnityEngine;
+using System.Collections.Generic;
 
 public class ContinuousMovement : MonoBehaviour
 {
@@ -12,21 +14,21 @@ public class ContinuousMovement : MonoBehaviour
     public float rotationDegrees;   
 
     private int currentPointIndex;  
-    private Vector3 startPosition;  
-    private Vector3 originalPosition; 
+    private Vector3 startPosition;
+    private Vector3 originalPosition;
     private Vector3 endPosition;    
     private Quaternion originalRotation; 
     private Quaternion targetRotation;   
     private Quaternion currentTargetRotation; 
-    private Vector3 returnStartPosition;
-    private Quaternion returnStartRotation; 
-    private float journeyLength;    
-    private float startTime;        
-    private bool isMoving;          
-    private bool atLastPoint;       
-    private bool returningToStart;  
+    private Vector3 returnStartPosition; 
+    private Quaternion returnStartRotation;
+    private float journeyLength;   
+    private float startTime;       
+    private bool isMoving;         
+    private bool atLastPoint;      
+    private bool returningToStart; 
 
-    private Collider collider;
+    private Collider collider;     
 
     void Start()
     {
@@ -49,7 +51,7 @@ public class ContinuousMovement : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Assign unles end and start");
+            Debug.LogError("Assign at least two points");
         }
     }
 
@@ -100,6 +102,9 @@ public class ContinuousMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Set next point of the journey
+    /// </summary>
     private void SetNextJourney()
     {
         startPosition = transform.position;
@@ -114,6 +119,9 @@ public class ContinuousMovement : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Set return journey to start point
+    /// </summary>
     private void SetReturnJourney()
     {
         returnStartPosition = transform.position;
@@ -126,7 +134,6 @@ public class ContinuousMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Enter!!!!!");
         if (requiresTrigger && !isMoving && !returningToStart)
         {
             SetNextJourney();
@@ -146,4 +153,3 @@ public class ContinuousMovement : MonoBehaviour
         }
     }
 }
-

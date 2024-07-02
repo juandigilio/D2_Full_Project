@@ -8,15 +8,18 @@ public class WallBehaviour : MonoBehaviour
     public float wallDropDuration = 1.0f;
     private Vector3 wallStartPosition;
     private Vector3 wallTargetPosition;
-    public float forwardMagnitude = 4;
-    public float downMagnitude = 3.5f;
-    public float leftMagnitude = 2;
-    public bool activeCanvas = false;
-    public bool isQuiting = false;
-    public bool isDropping = false;
+    [SerializeField] private float forwardMagnitude = 4;
+    [SerializeField] private float downMagnitude = 3.5f;
+    [SerializeField] private float leftMagnitude = 2;
+    [SerializeField] private bool activeCanvas = false;
+    [SerializeField] private bool isQuiting = false;
+    [SerializeField] private bool isDropping = false;
 
     private MenuSounds menuSounds;
 
+    /// <summary>
+    /// Initializes the component and deactivates the wall.
+    /// </summary>
     private void Awake()
     {
         menuSounds = GetComponent<MenuSounds>();
@@ -24,6 +27,9 @@ public class WallBehaviour : MonoBehaviour
         wall.SetActive(false);
     }
 
+    /// <summary>
+    /// Sets the target position for the wall based on camera position and displacements.
+    /// </summary>
     private void SetTargetPosition()
     {
         wallTargetPosition = mainCamera.transform.position;
@@ -40,6 +46,9 @@ public class WallBehaviour : MonoBehaviour
         wall.transform.position = wallStartPosition;
     }
 
+    /// <summary>
+    /// Activates and starts dropping the wall.
+    /// </summary>
     public void DropWall()
     {
         if (wall == null)
@@ -51,6 +60,9 @@ public class WallBehaviour : MonoBehaviour
         StartCoroutine(DropingWall());
     }
 
+    /// <summary>
+    /// Coroutine to handle the dropping animation of the wall.
+    /// </summary>
     private IEnumerator DropingWall()
     {
         menuSounds.PlayWallSound();
@@ -70,14 +82,44 @@ public class WallBehaviour : MonoBehaviour
 
         wall.transform.position = wallTargetPosition;
         activeCanvas = true;
-        isDropping = false;        
+        isDropping = false;
     }
 
+    /// <summary>
+    /// Starts the coroutine to quit the wall.
+    /// </summary>
     public void QuitWall()
     {
         StartCoroutine(QuitingWall());
     }
 
+    /// <summary>
+    /// Returns whether the wall is currently dropping.
+    /// </summary>
+    public bool IsDropping()
+    {
+        return isDropping;
+    }
+
+    /// <summary>
+    /// Returns whether the wall is currently quitting.
+    /// </summary>
+    public bool IsQuiting()
+    {
+        return isQuiting;
+    }
+
+    /// <summary>
+    /// Returns whether the canvas is active.
+    /// </summary>
+    public bool ActiveCanvas()
+    {
+        return activeCanvas;
+    }
+
+    /// <summary>
+    /// Coroutine to handle the quitting animation of the wall.
+    /// </summary>
     private IEnumerator QuitingWall()
     {
         activeCanvas = false;

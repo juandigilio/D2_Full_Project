@@ -18,6 +18,9 @@ public class CheatsManager : MonoBehaviour
         InputManager.OnOpenDoor -= DoorCheat;
     }
 
+    /// <summary>
+    /// Handles the cheat action to open the door.
+    /// </summary>
     private void DoorCheat()
     {
         OnOpenDoor?.Invoke();

@@ -17,22 +17,30 @@ public class Coin : MonoBehaviour, ICollectable
         Rotate();
     }
 
+    /// <summary>
+    /// Detects collision with the player and triggers the collection event.
+    /// </summary>
+    /// <param name="other">The collider that this object collides with.</param>
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("colliding");
         if (other.CompareTag("Player"))
         {
             OnCoinCollected?.Invoke();
-
             Deactivate();
         }
     }
 
+    /// <summary>
+    /// Rotates the coin around its axis.
+    /// </summary>
     private void Rotate()
     {
         transform.Rotate(rotationAxis, 100 * Time.deltaTime);
     }
 
+    /// <summary>
+    /// Deactivates the coin game object.
+    /// </summary>
     public void Deactivate()
     {
         gameObject.SetActive(false);

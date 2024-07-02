@@ -11,7 +11,6 @@ public class Cameraman : MonoBehaviour
 
     void Start()
     {
-        //DontDestroyOnLoad(gameObject);
         InitCamera();
         inputManager = InputManager.instance;
     }
@@ -21,6 +20,9 @@ public class Cameraman : MonoBehaviour
         UpdatePosition();
     }
 
+    /// <summary>
+    /// Initializes the camera position relative to the player.
+    /// </summary>
     private void InitCamera()
     {
         mainCamera = Camera.main.GetComponent<Camera>();
@@ -34,6 +36,9 @@ public class Cameraman : MonoBehaviour
         distance = Vector3.Distance(playerTransform.position, mainCamera.transform.position);
     }
 
+    /// <summary>
+    /// Updates the camera position based on player movement and rotation input.
+    /// </summary>
     private void UpdatePosition()
     {
         Vector3 offset = new Vector3(0, height, -distance);

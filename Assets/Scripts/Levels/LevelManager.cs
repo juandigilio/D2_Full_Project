@@ -39,6 +39,9 @@ public class LevelManager : MonoBehaviour
         ExitZone.OnLevelFinished -= LoadNextLevel;
     }
 
+    /// <summary>
+    /// Retrieves the total number of coins in the level.
+    /// </summary>
     private void GetCoins()
     {
         if (coinsPull != null)
@@ -51,11 +54,17 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Handles the event of collecting a coin.
+    /// </summary>
     private void CollectCoin()
     {
         collectedCoins++;
     }
 
+    /// <summary>
+    /// Checks if all coins have been collected and activates the altar if true.
+    /// </summary>
     private void CheckCoins()
     {
         if (collectedCoins == totalCoins && !allCoinsCollected)
@@ -65,25 +74,23 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks if the altar is currently animating.
+    /// </summary>
     public bool IsAnimating()
     {
-        if (altar.IsAnimating())
-        {
-            return isAnimating;
-        }
-        else
-        {
-            return isAnimating;
-        }
+        return altar.IsAnimating();
     }
 
+    /// <summary>
+    /// Loads the next level when the exit zone is triggered.
+    /// </summary>
     private void LoadNextLevel()
     {
-        //Destroy(player);
         inputManager.Unsuscribe();
         Destroy(coinsPull);
-        Destroy(altar);
-        Destroy(door);
+        Destroy(altar.gameObject);
+        Destroy(door.gameObject);
         CustomSceneManager.LoadNextSceneAsync();
     }
 }

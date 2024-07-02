@@ -41,13 +41,18 @@ public class InputManager : MonoBehaviour
     public static Action OnKeyboardActive;
     public static Action OnGamepadActive;
 
+    /// <summary>
+    /// Sets the instance of InputManager and initializes PlayerInput.
+    /// </summary>
     private void Awake()
     {
         instance = this;
-
         PlayerInput = GetComponent<PlayerInput>();
     }
 
+    /// <summary>
+    /// Activates player input and assigns input actions.
+    /// </summary>
     private void Start()
     {
         PlayerInput.ActivateInput();
@@ -77,6 +82,9 @@ public class InputManager : MonoBehaviour
         CheckInput();
     }
 
+    /// <summary>
+    /// Switches action maps based on game state and updates camera position.
+    /// </summary>
     private void Update()
     {
         if (pauseManager.gameIsPaused && PlayerInput.currentActionMap.name != pausedAction)
@@ -93,8 +101,11 @@ public class InputManager : MonoBehaviour
         MoveCamera();
     }
 
+    /// <summary>
+    /// Unsubscribes from all input actions.
+    /// </summary>
     public void Unsuscribe()
-    {
+    {      
         PlayerInput.SwitchCurrentActionMap(playerAction);
         PlayerInput.currentActionMap.FindAction(jumpAction).started -= jumpBehaviour.Jump;
         PlayerInput.currentActionMap.FindAction(prayAction).started -= prayBehaviour.Pray;
@@ -111,6 +122,9 @@ public class InputManager : MonoBehaviour
         PlayerInput.SwitchCurrentActionMap(playerAction);
     }
 
+    /// <summary>
+    /// Updates player movement input.
+    /// </summary>
     public void Move(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.started)
@@ -129,6 +143,9 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Update camera rotation value.
+    /// </summary>
     private void MoveCamera()
     {
         if (!pauseManager.gameIsPaused)
@@ -137,11 +154,17 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Invokes the OnOpenDoor action.
+    /// </summary>
     private void OpenDoor(InputAction.CallbackContext callbackContext)
     {
         OnOpenDoor?.Invoke();
     }
 
+    /// <summary>
+    /// Checks the current input scheme.
+    /// </summary>
     private void CheckInput()
     {
         if (PlayerInput.currentControlScheme == "Gamepad")
@@ -156,6 +179,9 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Returns the current camera rotation value.
+    /// </summary>
     public float GetCameraRotation()
     {
         return cameraRotation;

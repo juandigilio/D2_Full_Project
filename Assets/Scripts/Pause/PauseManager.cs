@@ -23,7 +23,9 @@ public class PauseManager : MonoBehaviour
     private int index = 1;
     public bool isJoystick = false;
 
-
+    /// <summary>
+    /// Initializes the pause manager and sets up button listeners.
+    /// </summary>
     private void Awake()
     {
         if (!instance)
@@ -35,7 +37,6 @@ public class PauseManager : MonoBehaviour
         {
             //Destroy(gameObject);
         }
-
 
         pauseMenuUI.SetActive(false);
 
@@ -57,21 +58,27 @@ public class PauseManager : MonoBehaviour
         AddEventTrigger(exitButton.gameObject, EventTriggerType.PointerExit, () => OnHoverButton(exitText, false));
     }
 
+    /// <summary>
+    /// Updates the pause menu visibility and active selection state.
+    /// </summary>
     private void Update()
     {
-        if (pauseMenuUI.activeSelf != wall.activeCanvas)
+        if (pauseMenuUI.activeSelf != wall.ActiveCanvas())
         {
-            pauseMenuUI.SetActive(wall.activeCanvas);
+            pauseMenuUI.SetActive(wall.ActiveCanvas());
         }
 
         ActiveSelected();
     }
 
+    /// <summary>
+    /// Pauses the game and shows the pause menu.
+    /// </summary>
     public void Pause(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.started)
         {
-            if (!wall.isDropping && !wall.isQuiting && !gameIsPaused)
+            if (!wall.IsDropping() && !wall.IsQuiting() && !gameIsPaused)
             {
                 Time.timeScale = 0f;
                 gameIsPaused = true;
@@ -83,20 +90,26 @@ public class PauseManager : MonoBehaviour
 
                 wall.DropWall();
             }
-        }       
+        }
     }
 
+    /// <summary>
+    /// Resumes the game from the pause menu.
+    /// </summary>
     public void Resume(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.started)
         {
             Continue();
-        }      
+        }
     }
 
+    /// <summary>
+    /// Continues the game and hides the pause menu.
+    /// </summary>
     public void Continue()
     {
-        if (!wall.isDropping && !wall.isQuiting)
+        if (!wall.IsDropping() && !wall.IsQuiting())
         {
             wall.QuitWall();
             pauseMenuUI.SetActive(false);
@@ -105,6 +118,9 @@ public class PauseManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Moves the selection up in the pause menu.
+    /// </summary>
     public void Up(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.started)
@@ -118,6 +134,9 @@ public class PauseManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Moves the selection down in the pause menu.
+    /// </summary>
     public void Down(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.started)
@@ -131,6 +150,9 @@ public class PauseManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Activates the selected option text color in the pause menu.
+    /// </summary>
     public void ActiveSelected()
     {
         if (isJoystick)
@@ -164,6 +186,9 @@ public class PauseManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Selects the current option in the pause menu.
+    /// </summary>
     public void Select(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.started)
@@ -189,6 +214,9 @@ public class PauseManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Loads the main menu scene.
+    /// </summary>
     public void LoadMainMenu()
     {
         gameIsPaused = false;
@@ -197,6 +225,9 @@ public class PauseManager : MonoBehaviour
         CustomSceneManager.LoadScene("MainMenu");
     }
 
+    /// <summary>
+    /// Exits the game application.
+    /// </summary>
     public void Exit()
     {
         Application.Quit();
@@ -207,11 +238,17 @@ public class PauseManager : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Toggles the hover state for the specified button text.
+    /// </summary>
     private void OnHoverButton(TextMeshProUGUI text, bool isHovering)
     {
         text.gameObject.SetActive(isHovering);
     }
 
+    /// <summary>
+    /// Adds an event trigger to a UI object.
+    /// </summary>
     private void AddEventTrigger(GameObject obj, EventTriggerType type, System.Action action)
     {
         EventTrigger trigger = obj.GetComponent<EventTrigger>();

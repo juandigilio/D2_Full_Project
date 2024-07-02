@@ -15,7 +15,9 @@ public class FlashingComponent : MonoBehaviour
     private const float MIN_TONE = 0.0f;
     [SerializeField] private float FLASH_SPEED = 2.2f;
 
-
+    /// <summary>
+    /// Initializes components and subscribes to input events.
+    /// </summary>
     private void Awake()
     {
         keyText = GetComponent<TextMeshProUGUI>();
@@ -25,17 +27,26 @@ public class FlashingComponent : MonoBehaviour
         InputManager.OnGamepadActive += SetGamepad;
     }
 
+    /// <summary>
+    /// Unsubscribes from input events when the component is disabled.
+    /// </summary>
     private void OnDisable()
     {
         InputManager.OnKeyboardActive -= SetKeyboard;
         InputManager.OnGamepadActive -= SetGamepad;
     }
 
+    /// <summary>
+    /// Calls the Flash method every frame.
+    /// </summary>
     void Update()
     {
         Flash();
     }
 
+    /// <summary>
+    /// Handles the flashing effect for the component.
+    /// </summary>
     private void Flash()
     {
         if (keyText != null)
@@ -80,9 +91,12 @@ public class FlashingComponent : MonoBehaviour
         else
         {
             buttonImage.color = color;
-        }    
+        }
     }
 
+    /// <summary>
+    /// Sets the component to keyboard mode.
+    /// </summary>
     private void SetKeyboard()
     {
         if (keyText)
@@ -90,12 +104,15 @@ public class FlashingComponent : MonoBehaviour
             keyText.enabled = true;
         }
 
-        if(buttonImage)
+        if (buttonImage)
         {
             buttonImage.enabled = false;
         }
     }
 
+    /// <summary>
+    /// Sets the component to gamepad mode.
+    /// </summary>
     private void SetGamepad()
     {
         if (keyText)

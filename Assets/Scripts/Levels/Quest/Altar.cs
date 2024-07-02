@@ -26,6 +26,9 @@ public class Altar : MonoBehaviour
     public static event Action OnPlayerPause;
     public static event Action OnOpenDoor;
 
+    /// <summary>
+    /// Initializes the Altar and subscribes to the OnActivateQuest event.
+    /// </summary>
     private void Awake()
     {
         gameObject.SetActive(false);
@@ -35,11 +38,17 @@ public class Altar : MonoBehaviour
         PrayBehaviour.OnActivateQuest += IsPraying;
     }
 
+    /// <summary>
+    /// Unsubscribes from the OnActivateQuest event when the Altar is disabled.
+    /// </summary>
     private void OnDisable()
     {
         PrayBehaviour.OnActivateQuest -= IsPraying;
     }
 
+    /// <summary>
+    /// Activates the Altar and starts the MoveUpRoutine coroutine.
+    /// </summary>
     public void Activate()
     {
         gameObject.SetActive(true);
@@ -47,6 +56,9 @@ public class Altar : MonoBehaviour
         StartCoroutine(MoveUpRoutine());
     }
 
+    /// <summary>
+    /// Moves the Altar up over a duration and pauses before re-enabling player and cameraman.
+    /// </summary>
     private IEnumerator MoveUpRoutine()
     {
         OnPlayerPause?.Invoke();
@@ -83,6 +95,9 @@ public class Altar : MonoBehaviour
         isAnimating = false;
     }
 
+    /// <summary>
+    /// Checks if the player is praying and opens the door if conditions are met.
+    /// </summary>
     private void IsPraying()
     {
         if (!hasPrayed && inPrayingZone)
@@ -92,16 +107,25 @@ public class Altar : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets the state of the praying zone.
+    /// </summary>
     public void PrayingZone(bool state)
     {
         inPrayingZone = state;
     }
 
+    /// <summary>
+    /// Returns whether the player is in the praying zone.
+    /// </summary>
     public bool PrayingZone()
     {
         return inPrayingZone;
     }
 
+    /// <summary>
+    /// Returns whether the Altar is currently animating.
+    /// </summary>
     public bool IsAnimating()
     {
         return isAnimating;
