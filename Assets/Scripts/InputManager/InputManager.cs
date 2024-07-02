@@ -38,6 +38,8 @@ public class InputManager : MonoBehaviour
     public PlayerInput PlayerInput { get; private set; }
 
     public static Action OnOpenDoor;
+    public static Action OnKeyboardActive;
+    public static Action OnGamepadActive;
 
     private void Awake()
     {
@@ -73,11 +75,6 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        //Unsuscribe();
-    }
-
     private void Update()
     {
         if (pauseManager.gameIsPaused && PlayerInput.currentActionMap.name != pausedAction)
@@ -99,7 +96,6 @@ public class InputManager : MonoBehaviour
         PlayerInput.SwitchCurrentActionMap(playerAction);
         PlayerInput.currentActionMap.FindAction(jumpAction).started -= jumpBehaviour.Jump;
         PlayerInput.currentActionMap.FindAction(prayAction).started -= prayBehaviour.Pray;
-        //PlayerInput.currentActionMap.FindAction(pausedAction).started -= pauseManager.Pause;
         PlayerInput.currentActionMap.FindAction(moveAction).started -= Move;
         PlayerInput.currentActionMap.FindAction(moveAction).performed -= Move;
         PlayerInput.currentActionMap.FindAction(moveAction).canceled -= Move;
@@ -149,10 +145,12 @@ public class InputManager : MonoBehaviour
         if (PlayerInput.currentControlScheme == "Gamepad")
         {
             pauseManager.isJoystick = true;
+            OnGamepadActive?.Invoke();
         }
         else
         {
             pauseManager.isJoystick = false;
+            OnKeyboardActive?.Invoke();
         }
     }
 

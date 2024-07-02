@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Levels\Quest\Altar.cs" />
     <Compile Include="Assets\Scripts\Player\MovementBehaviour.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
+    <Compile Include="Assets\Scripts\Canvas\FlashingComponent.cs" />
     <Compile Include="Assets\Scripts\Main menu\MenuManager.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
@@ -1100,6 +1101,14 @@
     <ProjectReference Include="Polyperfect.Universal.csproj">
       <Project>{065FDC7D-FEF6-2237-BDC4-DEBB8B0BEE8E}</Project>
       <Name>Polyperfect.Universal</Name>
+    </ProjectReference>
+    <ProjectReference Include="SimpleInput.Editor.csproj">
+      <Project>{A7753EF8-16EE-EAC7-379A-E66C87565673}</Project>
+      <Name>SimpleInput.Editor</Name>
+    </ProjectReference>
+    <ProjectReference Include="SimpleInput.Runtime.csproj">
+      <Project>{ED9C7FEE-DF68-CC2E-A820-4A8AB14DC398}</Project>
+      <Name>SimpleInput.Runtime</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

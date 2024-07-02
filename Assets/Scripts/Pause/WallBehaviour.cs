@@ -15,8 +15,12 @@ public class WallBehaviour : MonoBehaviour
     public bool isQuiting = false;
     public bool isDropping = false;
 
+    private MenuSounds menuSounds;
+
     private void Awake()
     {
+        menuSounds = GetComponent<MenuSounds>();
+
         wall.SetActive(false);
     }
 
@@ -49,6 +53,7 @@ public class WallBehaviour : MonoBehaviour
 
     private IEnumerator DropingWall()
     {
+        menuSounds.PlayWallSound();
         SetTargetPosition();
         isDropping = true;
 
@@ -60,6 +65,9 @@ public class WallBehaviour : MonoBehaviour
             elapsedTime += Time.unscaledDeltaTime;
             yield return null;
         }
+
+        menuSounds.StopWallSound();
+
         wall.transform.position = wallTargetPosition;
         activeCanvas = true;
         isDropping = false;        
@@ -84,6 +92,7 @@ public class WallBehaviour : MonoBehaviour
             elapsedTime += Time.unscaledDeltaTime;
             yield return null;
         }
+
         wall.transform.position = wallStartPosition;
         isQuiting = false;
         wall.SetActive(false);

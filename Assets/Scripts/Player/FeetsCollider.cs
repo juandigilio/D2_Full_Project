@@ -21,18 +21,18 @@ public class FeetsCollider : MonoBehaviour
     {
         isInTrigger = true;
         fallingSpeed = rb.velocity.y;
-        Debug.Log("entando al suelo");
+        //Debug.Log("entando al suelo");
     }
 
     void OnTriggerStay(Collider other)
     {
         isInTrigger = true;
-        Debug.Log("tocando");
+        //Debug.Log("tocando");
     }
 
     void OnTriggerExit(Collider other)
     {
         isInTrigger = false;
-        Debug.Log("saliendo del suelo");
+        //Debug.Log("saliendo del suelo");
     }
 }
