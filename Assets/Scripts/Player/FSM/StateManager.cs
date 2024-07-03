@@ -23,7 +23,7 @@ public class StateManager : MonoBehaviour
 
         currentState = OnFloor;
 
-        Debug.Log("current state: " + currentState);
+        //Debug.Log("current state: " + currentState);
 
         PrayBehaviour.OnAnimationPraying += SetAnimating;
         PrayBehaviour.OnActivateQuest += AnimatingFinished;
@@ -32,7 +32,7 @@ public class StateManager : MonoBehaviour
     private void Update()
     {
         //CheckCurrentState();
-        Debug.Log("current state: " + currentState);
+        //Debug.Log("current state: " + currentState);
 
         if (currentState != null)
         {
@@ -62,7 +62,7 @@ public class StateManager : MonoBehaviour
 
                 if (currentState == null)
                 {
-                    Debug.LogError("Cant enter at any state!!!!!!!!!!");
+                    //Debug.LogError("Cant enter at any state!!!!!!!!!!");
                 }
             }
         }

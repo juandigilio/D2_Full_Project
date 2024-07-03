@@ -10,23 +10,17 @@ public class SceneActionMap
 
 public class SceneActionDictionary : MonoBehaviour
 {
+    [SerializeField] private SceneActionMap mainScene;
     [SerializeField] private SceneActionMap mainMenu;
     [SerializeField] private List<SceneActionMap> sceneActionList = new List<SceneActionMap>();
+    [SerializeField] private SceneActionMap winingScene;
 
     /// <summary>
     /// Get scene list from unity editor and load main menu
     /// </summary>
     private void Awake()
     {
-        CustomSceneManager.SetScenes(sceneActionList);
-        CustomSceneManager.LoadScene(mainMenu.sceneName);
-    }
-
-    /// <summary>
-    /// Get scene list from unity editor
-    /// </summary>
-    public List<SceneActionMap> GetScenesList()
-    {
-        return sceneActionList;
+        CustomSceneManager.SetScenes(mainScene, mainMenu, sceneActionList, winingScene);
+        CustomSceneManager.LoadMainMenu();
     }
 }

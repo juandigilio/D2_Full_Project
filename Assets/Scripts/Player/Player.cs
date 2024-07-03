@@ -4,6 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private PauseManager pauseManager;
+    private Rigidbody rigiboy;
     private MovementBehaviour movementBehaviour;
     private JumpBehaviour jumpBehaviour;
     private PrayBehaviour prayBehaviour;

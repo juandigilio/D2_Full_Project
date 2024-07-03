@@ -22,7 +22,7 @@ public class JumpBehaviour : MonoBehaviour
             if (movementBehaviour.IsGrounded() || movementBehaviour.IsStuck())
             {
                 OnPlayerJumped?.Invoke();
-                movementBehaviour.rb.AddForce((jumpForce * Vector3.up) * movementBehaviour.deltaTime, ForceMode.Impulse);
+                movementBehaviour.PlayerRb().AddForce((jumpForce * Vector3.up) * movementBehaviour.deltaTime, ForceMode.Impulse);
             }
         }
     }

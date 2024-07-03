@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "MoveCamera",
+                    "type": "Value",
+                    "id": "2435581d-0650-4953-b586-f2fef85471ae",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "e57c9e30-285a-43b7-a384-27a9623e6df4",
@@ -187,7 +196,7 @@
                 {
                     "name": "",
                     "id": "c3c8d262-eb73-44c6-94e5-973bf4c98a98",
-                    "path": "<Keyboard>/q",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -207,24 +216,79 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "ba871634-26b6-40f9-948f-6adec16d8633",
-                    "path": "<Keyboard>/numpad0",
+                    "name": "One Modifier",
+                    "id": "57bedcc4-91a9-40b5-b647-a993df1e351e",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenDoor",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "f440d38a-bd25-41d2-822c-5654a698c0d7",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "OpenDoor",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "01717623-3d99-4883-8399-35c2afc58cfd",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "OpenDoor",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "dd7235f0-a19d-491d-b9b0-f098717fe2b1",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenDoor",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "2fca7bcb-1509-438b-a6fd-2b076aff0a82",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "OpenDoor",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "f74ee7d3-1274-4462-96e9-6a6e31c6caef",
-                    "path": "<Keyboard>/0",
+                    "name": "binding",
+                    "id": "ddf68b6b-db5c-4980-b59e-1d9868612822",
+                    "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "OpenDoor",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "0483b787-fae6-4762-b196-abda709ca73d",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "MoveCamera",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

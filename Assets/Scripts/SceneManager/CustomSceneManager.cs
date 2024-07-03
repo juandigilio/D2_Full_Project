@@ -7,30 +7,43 @@ struct SceneStruct
 {
     public string sceneName;
     public string actionName;
+
+    public static implicit operator SceneStruct(SceneActionMap other)
+    {
+        SceneStruct result = new SceneStruct();
+        result.sceneName = other.sceneName;
+        result.actionName = other.actionName;
+
+        return result;
+    }
 }
 
 public static class CustomSceneManager
 {
+    private static SceneStruct mainScene;
+    private static SceneStruct mainMenu;
     private static List<SceneStruct> scenesPool = new List<SceneStruct>();
+    private static SceneStruct winingScene;
 
     private static int index = 0;
-    private static int totalScenes = 0;
 
     /// <summary>
     /// Sets up the scenes pool based on the provided scene dictionary.
     /// </summary>
     /// <param name="sceneDictionary">List of SceneActionMap defining scenes and actions.</param>
-    public static void SetScenes(List<SceneActionMap> sceneDictionary)
+    public static void SetScenes(SceneActionMap main, SceneActionMap menu, List<SceneActionMap> sceneDictionary, SceneActionMap win)
     {
+        mainScene = main;
+        mainMenu = menu;
+
         foreach (SceneActionMap scene in sceneDictionary)
         {
-            SceneStruct newScene;
-            newScene.sceneName = scene.sceneName;
-            newScene.actionName = scene.actionName;
+            SceneStruct newScene = scene;
 
             scenesPool.Add(newScene);
-            totalScenes++;
         }
+
+        winingScene = win;
     }
 
     /// <summary>
@@ -66,5 +79,30 @@ public static class CustomSceneManager
                 break;
             }
         }
+    }
+
+    public static void ResetLevel()
+    {
+        SceneManager.UnloadSceneAsync(scenesPool[index].sceneName);
+        SceneManager.LoadSceneAsync(scenesPool[index].sceneName, LoadSceneMode.Additive);
+    }
+    
+    public static void LoadWiningScene()
+    {
+        SceneManager.UnloadSceneAsync(scenesPool[index].sceneName);
+        index = 0;
+        SceneManager.LoadSceneAsync(winingScene.sceneName, LoadSceneMode.Additive);
+    }
+
+    public static void LoadMainMenu()
+    {
+        LoadScene(mainMenu.sceneName);
+    }
+
+    public static void ResetGame()
+    {
+        SceneManager.UnloadSceneAsync(winingScene.sceneName);
+        scenesPool.Clear();
+        SceneManager.LoadSceneAsync(mainScene.sceneName);
     }
 }

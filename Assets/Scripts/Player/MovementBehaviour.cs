@@ -3,7 +3,7 @@ using UnityEngine;
 public class MovementBehaviour : MonoBehaviour
 {
     private Player player;
-    public Rigidbody rb;
+    private Rigidbody rb;
     [SerializeField] private FeetsCollider leftFeet;
     [SerializeField] private FeetsCollider rightFeet;
 
@@ -18,13 +18,12 @@ public class MovementBehaviour : MonoBehaviour
 
     private Vector3 displacement;
     private Vector3 stopedVelocity;
-    public float maxSpeed = 6.0f;
-    private float decelerationSpeed = 3.0f;
-    public float acelerationForce = 4.0f;
-    
-    public float airSpeedMultiplier = 100.0f;
-    public bool isLanding = false;
-    public bool badLanded;
+    [SerializeField] private float maxSpeed = 6.0f;
+    [SerializeField] private float decelerationSpeed = 3.0f;
+    [SerializeField] private float acelerationForce = 4.0f;
+    [SerializeField] private float airSpeedMultiplier = 100.0f;
+    [SerializeField] private bool isLanding = false;
+    [SerializeField] private bool badLanded;
     [SerializeField] private bool isStuck;
     [SerializeField] private float rigibodySpeed;
     private bool isGrounded;
@@ -41,6 +40,8 @@ public class MovementBehaviour : MonoBehaviour
         GetCameraDirection();
 
         CheckGround();
+
+        CheckIfStuck();
     }
 
     private void FixedUpdate()
@@ -52,8 +53,6 @@ public class MovementBehaviour : MonoBehaviour
     public void Move()
     {
         LookForward();
-
-        CheckIfStuck();
 
         AddForces();
 
@@ -111,6 +110,7 @@ public class MovementBehaviour : MonoBehaviour
     {
         if (leftFeet.isInTrigger || rightFeet.isInTrigger)
         {
+            Debug.Log("feet trigger");
             if (!isGrounded)
             {
                 isLanding = true;
@@ -122,8 +122,6 @@ public class MovementBehaviour : MonoBehaviour
         {
             isGrounded = false;
         }
-
-        //Debug.Log("isGrounded: " + isGrounded);
     }
 
     private void CheckIfStuck()
@@ -138,6 +136,10 @@ public class MovementBehaviour : MonoBehaviour
         return isStuck;
     }
 
+
+    /// <summary>
+    /// Desacelerate player horizontal direction when no input is not pressed
+    /// </summary>
     private void StopInertia()
     {
         if (rb.velocity != Vector3.zero && player.input == Vector2.zero && isGrounded)
@@ -153,6 +155,41 @@ public class MovementBehaviour : MonoBehaviour
     public bool IsGrounded()
     {
         return isGrounded;
+    }
+
+    public void IsLanding(bool set)
+    {
+        isLanding = set;
+    }
+
+    public bool IsLanding()
+    {
+        return isLanding;
+    }
+
+    public void BadLanded(bool set)
+    {
+        badLanded = set;
+    }
+
+
+    /// <summary>
+    /// returns player position.y 
+    /// </summary>
+    /// <returns></returns>
+    public float PosY()
+    {
+        return rb.transform.position.y;
+    }
+
+    public Vector3 RbVelocity()
+    {
+        return rb.velocity;
+    }
+
+    public Rigidbody PlayerRb()
+    {
+        return rb;
     }
 
     private void UpdateDelta()

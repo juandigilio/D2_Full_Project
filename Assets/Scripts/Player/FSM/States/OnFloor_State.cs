@@ -11,7 +11,7 @@ public class OnFloor_State : Base_state
         }
         else
         {
-            Debug.LogWarning("Couldn't enter becouse its not grounded");
+            //Debug.LogWarning("Couldn't enter becouse its not grounded");
 
             return null;
         }

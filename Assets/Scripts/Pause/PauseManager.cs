@@ -1,43 +1,35 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class PauseManager : MonoBehaviour
 {
     private PauseManager instance;
 
-    public bool gameIsPaused = false;
-    public GameObject pauseMenuUI;
-    public Player player;
-    public WallBehaviour wall;
+    [SerializeField] private bool gameIsPaused = false;
+    [SerializeField] private GameObject pauseMenuUI;
+    [SerializeField] private Player player;
+    [SerializeField] private WallBehaviour wall;
 
-    public Button continueButton;
-    public Button menuButton;
-    public Button exitButton;
-    public TextMeshProUGUI continueText;
-    public TextMeshProUGUI menuText;
-    public TextMeshProUGUI exitText;
+    [SerializeField] private Button continueButton;
+    [SerializeField] private Button menuButton;
+    [SerializeField] private Button exitButton;
+    [SerializeField] private TextMeshProUGUI continueText;
+    [SerializeField] private TextMeshProUGUI menuText;
+    [SerializeField] private TextMeshProUGUI exitText;
+    [SerializeField] private Slider mouseSlider;
+    [SerializeField] private Slider padSlider;
 
     private int index = 1;
-    public bool isJoystick = false;
+    [SerializeField] private bool isJoystick = false;
 
     /// <summary>
     /// Initializes the pause manager and sets up button listeners.
     /// </summary>
     private void Awake()
     {
-        if (!instance)
-        {
-            //DontDestroyOnLoad(gameObject);
-            //instance = this;
-        }
-        else
-        {
-            //Destroy(gameObject);
-        }
-
         pauseMenuUI.SetActive(false);
 
         continueButton.onClick.AddListener(Continue);
@@ -56,6 +48,12 @@ public class PauseManager : MonoBehaviour
 
         AddEventTrigger(exitButton.gameObject, EventTriggerType.PointerEnter, () => OnHoverButton(exitText, true));
         AddEventTrigger(exitButton.gameObject, EventTriggerType.PointerExit, () => OnHoverButton(exitText, false));
+
+        //mouseSlider.value = 0.1f;
+        //padSlider.value = 3.0f;
+
+        mouseSlider.onValueChanged.AddListener(SetMouseSensitivity);
+        padSlider.onValueChanged.AddListener(SetPadSensitivity);
     }
 
     /// <summary>
@@ -69,6 +67,7 @@ public class PauseManager : MonoBehaviour
         }
 
         ActiveSelected();
+        ActiveCurrentSlider();
     }
 
     /// <summary>
@@ -82,6 +81,7 @@ public class PauseManager : MonoBehaviour
             {
                 Time.timeScale = 0f;
                 gameIsPaused = true;
+
                 if (player == null)
                 {
                     player = FindAnyObjectByType<Player>();
@@ -187,6 +187,31 @@ public class PauseManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Activates the current slider based on input type.
+    /// </summary>
+    public void ActiveCurrentSlider()
+    {
+        if (isJoystick)
+        {
+            if (PlayerConfig.GetPadSensitivity() == 0)
+            {
+                PlayerConfig.SetPadSensitivity(1);
+            }
+            mouseSlider.gameObject.SetActive(false);
+            padSlider.gameObject.SetActive(true);
+        }
+        else
+        {
+            if (PlayerConfig.GetMouseSensitivity() == 0)
+            {
+                PlayerConfig.SetMouseSensitivity(0.1f);
+            }
+            mouseSlider.gameObject.SetActive(true);
+            padSlider.gameObject.SetActive(false);
+        }
+    }
+
+    /// <summary>
     /// Selects the current option in the pause menu.
     /// </summary>
     public void Select(InputAction.CallbackContext callbackContext)
@@ -236,6 +261,34 @@ public class PauseManager : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
 
+    }
+
+    public bool GameIsPaused()
+    {
+        return gameIsPaused;
+    }
+
+    public void IsJoystick(bool set)
+    {
+        isJoystick = set;
+    }
+
+    /// <summary>
+    /// Sets the mouse sensitivity.
+    /// </summary>
+    /// <param name="value">The new sensitivity value.</param>
+    public void SetMouseSensitivity(float value)
+    {
+        PlayerConfig.SetMouseSensitivity(value);
+    }
+
+    /// <summary>
+    /// Sets the pad sensitivity.
+    /// </summary>
+    /// <param name="value">The new sensitivity value.</param>
+    public void SetPadSensitivity(float value)
+    {
+        PlayerConfig.SetPadSensitivity(value);
     }
 
     /// <summary>

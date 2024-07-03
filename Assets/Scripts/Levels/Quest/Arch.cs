@@ -20,6 +20,7 @@ public class Arch : MonoBehaviour
     [SerializeField] private float animationPause = 3.0f;
 
     private bool isAnimating;
+    private bool isOpen = false;
 
     public static event Action OnPlayerPause;
 
@@ -52,8 +53,13 @@ public class Arch : MonoBehaviour
 
     private void Open()
     {
-        doorSOund.PlayDoorSound();
-        StartCoroutine(MoveUpRoutine());
+        if (!isOpen)
+        {
+            isOpen = true;
+            doorSOund.PlayDoorSound();
+            StartCoroutine(MoveUpRoutine());
+        }
+        
     }
 
     private IEnumerator MoveUpRoutine()

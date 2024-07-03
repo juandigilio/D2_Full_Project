@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using UnityEngine;
-using System.Collections.Generic;
 
 public class ContinuousMovement : MonoBehaviour
 {

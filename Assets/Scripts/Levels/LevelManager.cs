@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
@@ -15,11 +16,14 @@ public class LevelManager : MonoBehaviour
     private int collectedCoins = 0;
     private bool allCoinsCollected = false;
 
+    public static Action onDeathZone;
+
 
     private void Start()
     {
         Coin.OnCoinCollected += CollectCoin;
         ExitZone.OnLevelFinished += LoadNextLevel;
+        WiningZone.OnGameFinished += LoadWiningScene;
     }
 
     private void Awake()
@@ -31,12 +35,14 @@ public class LevelManager : MonoBehaviour
     private void Update()
     {
         CheckCoins();
+        CheckDeathZone();
     }
 
     private void OnDisable()
     {
         Coin.OnCoinCollected -= CollectCoin;
         ExitZone.OnLevelFinished -= LoadNextLevel;
+        WiningZone.OnGameFinished -= LoadWiningScene;
     }
 
     /// <summary>
@@ -74,6 +80,14 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void CheckDeathZone()
+    {
+        if (player.MovementBehaviour().PosY() < deathZone.position.y)
+        {
+            onDeathZone?.Invoke();
+        }
+    }
+
     /// <summary>
     /// Checks if the altar is currently animating.
     /// </summary>
@@ -92,5 +106,14 @@ public class LevelManager : MonoBehaviour
         Destroy(altar.gameObject);
         Destroy(door.gameObject);
         CustomSceneManager.LoadNextSceneAsync();
+    }
+
+    private void LoadWiningScene()
+    {
+        inputManager.Unsuscribe();
+        Destroy(coinsPull);
+        Destroy(altar.gameObject);
+        Destroy(door.gameObject);
+        CustomSceneManager.LoadWiningScene();
     }
 }

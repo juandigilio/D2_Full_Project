@@ -55,7 +55,7 @@
     <UnityVersion>2022.3.14f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
@@ -93,8 +93,10 @@
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\Scripts\Player\FSM\States\Animating_State.cs" />
+    <Compile Include="Assets\Scripts\Levels\GameOver.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\Scripts\SceneManager\CustomSceneManager.cs" />
+    <Compile Include="Assets\Scripts\InputManager\PlayerConfig.cs" />
     <Compile Include="Assets\Scripts\Player\PrayBehaviour.cs" />
     <Compile Include="Assets\Scripts\Player\AnimationsManager.cs" />
     <Compile Include="Assets\Scripts\Levels\Quest\Arch.cs" />
@@ -106,6 +108,8 @@
     <Compile Include="Assets\Scripts\Player\JumpBehaviour.cs" />
     <Compile Include="Assets\Scripts\Levels\Platforms\ContinuousMovement.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
+    <Compile Include="Assets\Scripts\Levels\WiningZone.cs" />
+    <Compile Include="Assets\Scripts\Levels\WiningSceneManager.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\Scripts\Player\FeetsCollider.cs" />
     <Compile Include="Assets\Textures\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />

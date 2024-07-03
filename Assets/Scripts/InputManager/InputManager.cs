@@ -10,8 +10,8 @@ public class InputManager : MonoBehaviour
     [SerializeField] private PauseManager pauseManager;
     [SerializeField] private LevelManager level;
 
-    [SerializeField] private float mouseSensivity = 0.1f;
     private float cameraRotation = 0;
+    private float padCameraInput = 0;
 
     /// <summary>
     /// Player inputs
@@ -20,6 +20,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private string prayAction = "Pray";
     [SerializeField] private string pauseAction = "Pause";
     [SerializeField] private string moveAction = "Move";
+    [SerializeField] private string rotateCameraAction = "MoveCamera";
     [SerializeField] private string doorAction = "OpenDoor";
     /// <summary>
     /// Paused and menu inputs
@@ -67,6 +68,9 @@ public class InputManager : MonoBehaviour
             PlayerInput.currentActionMap.FindAction(moveAction).started += Move;
             PlayerInput.currentActionMap.FindAction(moveAction).performed += Move;
             PlayerInput.currentActionMap.FindAction(moveAction).canceled += Move;
+            PlayerInput.currentActionMap.FindAction(rotateCameraAction).started += GamePadCameraRotation;
+            PlayerInput.currentActionMap.FindAction(rotateCameraAction).performed += GamePadCameraRotation;
+            PlayerInput.currentActionMap.FindAction(rotateCameraAction).canceled += GamePadCameraRotation;
             PlayerInput.currentActionMap.FindAction(doorAction).started += OpenDoor;
 
             PlayerInput.SwitchCurrentActionMap(pausedAction);
@@ -87,12 +91,12 @@ public class InputManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (pauseManager.gameIsPaused && PlayerInput.currentActionMap.name != pausedAction)
+        if (pauseManager.GameIsPaused() && PlayerInput.currentActionMap.name != pausedAction)
         {
             PlayerInput.SwitchCurrentActionMap(pausedAction);
         }
 
-        if (!pauseManager.gameIsPaused && PlayerInput.currentActionMap.name != playerAction)
+        if (!pauseManager.GameIsPaused() && PlayerInput.currentActionMap.name != playerAction)
         {
             PlayerInput.SwitchCurrentActionMap(playerAction);
         }
@@ -112,6 +116,9 @@ public class InputManager : MonoBehaviour
         PlayerInput.currentActionMap.FindAction(moveAction).started -= Move;
         PlayerInput.currentActionMap.FindAction(moveAction).performed -= Move;
         PlayerInput.currentActionMap.FindAction(moveAction).canceled -= Move;
+        PlayerInput.currentActionMap.FindAction(rotateCameraAction).started -= GamePadCameraRotation;
+        PlayerInput.currentActionMap.FindAction(rotateCameraAction).performed -= GamePadCameraRotation;
+        PlayerInput.currentActionMap.FindAction(rotateCameraAction).canceled -= GamePadCameraRotation;
         PlayerInput.currentActionMap.FindAction(doorAction).started -= OpenDoor;
 
         PlayerInput.SwitchCurrentActionMap(pausedAction);
@@ -143,14 +150,29 @@ public class InputManager : MonoBehaviour
         }
     }
 
+    private void GamePadCameraRotation(InputAction.CallbackContext callbackContext)
+    {
+        padCameraInput = callbackContext.ReadValue<Vector2>().x * PlayerConfig.GetPadSensitivity();
+    }
+
     /// <summary>
     /// Update camera rotation value.
     /// </summary>
     private void MoveCamera()
     {
-        if (!pauseManager.gameIsPaused)
+        if (!pauseManager.GameIsPaused())
         {
-            cameraRotation += Mouse.current.delta.ReadValue().x * mouseSensivity;
+            if (PlayerInput.currentControlScheme == "Gamepad")
+            {
+                if (padCameraInput != 0)
+                {
+                    cameraRotation += padCameraInput;
+                }
+            }
+            else
+            {
+                cameraRotation += Mouse.current.delta.ReadValue().x * PlayerConfig.GetMouseSensitivity();
+            }
         }
     }
 
@@ -169,12 +191,12 @@ public class InputManager : MonoBehaviour
     {
         if (PlayerInput.currentControlScheme == "Gamepad")
         {
-            pauseManager.isJoystick = true;
+            pauseManager.IsJoystick(true);
             OnGamepadActive?.Invoke();
         }
         else
         {
-            pauseManager.isJoystick = false;
+            pauseManager.IsJoystick(false);
             OnKeyboardActive?.Invoke();
         }
     }
