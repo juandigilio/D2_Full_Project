@@ -18,6 +18,7 @@ public class Animating_State : Base_state
 
     public override void Update(Base_state currentState, Player player, StateManager stateManager)
     {
+        player.MovementBehaviour().StopInertia();
         Debug.Log("In animation state");
     }
 

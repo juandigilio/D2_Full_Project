@@ -8,6 +8,9 @@ public class StateManager : MonoBehaviour
     OnAir_State OnAir;
     Animating_State Animating;
 
+    /// <summary>
+    /// Initializes states and subscribes to events.
+    /// </summary>
     private void Awake()
     {
         player = GetComponent<Player>();
@@ -23,23 +26,24 @@ public class StateManager : MonoBehaviour
 
         currentState = OnFloor;
 
-        //Debug.Log("current state: " + currentState);
-
         PrayBehaviour.OnAnimationPraying += SetAnimating;
         PrayBehaviour.OnActivateQuest += AnimatingFinished;
     }
 
+    /// <summary>
+    /// Updates the current state.
+    /// </summary>
     private void Update()
     {
-        //CheckCurrentState();
-        //Debug.Log("current state: " + currentState);
-
         if (currentState != null)
         {
             currentState.Update(currentState, player, this);
         }
     }
 
+    /// <summary>
+    /// FixedUpdate for physics-related updates in the current state.
+    /// </summary>
     private void FixedUpdate()
     {
         if (currentState != null)
@@ -48,6 +52,9 @@ public class StateManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks and sets the current state.
+    /// </summary>
     public void CheckCurrentState()
     {
         currentState = null;
@@ -59,21 +66,21 @@ public class StateManager : MonoBehaviour
             if (currentState == null)
             {
                 currentState = OnAir.Enter(player);
-
-                if (currentState == null)
-                {
-                    //Debug.LogError("Cant enter at any state!!!!!!!!!!");
-                }
             }
         }
-
     }
 
+    /// <summary>
+    /// Sets the current state to Animating.
+    /// </summary>
     private void SetAnimating()
     {
         currentState = Animating;
     }
 
+    /// <summary>
+    /// Sets the current state to OnFloor.
+    /// </summary>
     private void AnimatingFinished()
     {
         currentState = OnFloor;

@@ -27033,6 +27033,7 @@ GameObject:
   - component: {fileID: 1792816418}
   - component: {fileID: 1792816417}
   - component: {fileID: 1792816419}
+  - component: {fileID: 1792816420}
   m_Layer: 0
   m_Name: Quest
   m_TagString: Untagged
@@ -27086,6 +27087,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da189c52824dce04d854992a4a872770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1792816420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1792816416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0133b54cabc99c44a98d372409b15179, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1793492844
@@ -28829,7 +28842,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3301d20f978828a46b7984e31f7108b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpForce: 600
+  jumpForce: 650
 --- !u!114 &1924293269
 MonoBehaviour:
   m_ObjectHideFlags: 0

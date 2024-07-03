@@ -79,6 +79,8 @@ public class PauseManager : MonoBehaviour
         {
             if (!wall.IsDropping() && !wall.IsQuiting() && !gameIsPaused)
             {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
                 Time.timeScale = 0f;
                 gameIsPaused = true;
 
@@ -101,6 +103,8 @@ public class PauseManager : MonoBehaviour
         if (callbackContext.started)
         {
             Continue();
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 
@@ -109,6 +113,9 @@ public class PauseManager : MonoBehaviour
     /// </summary>
     public void Continue()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         if (!wall.IsDropping() && !wall.IsQuiting())
         {
             wall.QuitWall();

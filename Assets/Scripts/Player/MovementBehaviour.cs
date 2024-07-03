@@ -140,7 +140,7 @@ public class MovementBehaviour : MonoBehaviour
     /// <summary>
     /// Desacelerate player horizontal direction when no input is not pressed
     /// </summary>
-    private void StopInertia()
+    public void StopInertia()
     {
         if (rb.velocity != Vector3.zero && player.input == Vector2.zero && isGrounded)
         {

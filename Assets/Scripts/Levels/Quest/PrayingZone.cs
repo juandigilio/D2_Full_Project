@@ -16,6 +16,14 @@ public class PrayingZone : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (altar.HasPrayed())
+        {
+            canvas.enabled = false;
+        }
+    }
+
     /// <summary>
     /// Activates the praying zone and enables the canvas when the player enters the trigger zone.
     /// </summary>
@@ -25,7 +33,7 @@ public class PrayingZone : MonoBehaviour
         {
             altar.PrayingZone(true);
 
-            if (canvas != null)
+            if (canvas != null && !altar.HasPrayed())
             {
                 canvas.enabled = true;
             }

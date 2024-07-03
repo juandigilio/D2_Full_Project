@@ -130,4 +130,9 @@ public class Altar : MonoBehaviour
     {
         return isAnimating;
     }
+
+    public bool HasPrayed()
+    {
+        return hasPrayed;
+    }
 }
