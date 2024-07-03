@@ -9561,7 +9561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 963194227}
-  player: {fileID: 0}
+  player: {fileID: 649825734}
   cameraPoint: {fileID: 1274764677}
   arch: {fileID: 1126975527}
   cameraHeight: -1
