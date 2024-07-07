@@ -4,7 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private PauseManager pauseManager;
-    private Rigidbody rigiboy;
+    //private Rigidbody rigiboy;
     private MovementBehaviour movementBehaviour;
     private JumpBehaviour jumpBehaviour;
     private PrayBehaviour prayBehaviour;
@@ -51,11 +51,13 @@ public class Player : MonoBehaviour
         if (isAnimating)
         {
             input = Vector2.zero;
+            //Debug.Log("animating: " + isAnimating);
         }
         else
         {
             input = stickInput;
         }
+        //Debug.Log("input: " + input);
     }
 
     /// <summary>
@@ -96,6 +98,7 @@ public class Player : MonoBehaviour
     public void AnimationFinished()
     {
         isAnimating = false;
+        //Debug.Log("animation finished!!!!" + isAnimating);
     }
 
     /// <summary>

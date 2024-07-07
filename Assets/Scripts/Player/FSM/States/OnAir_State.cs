@@ -22,14 +22,15 @@ public class OnAir_State : Base_state
         {
             Exit(currentState, stateManager);
         }
+
     }
 
     public override void FixedUpdate(Base_state currentState, Player player)
     {
-        if (player.MovementBehaviour().IsGrounded())
-        {
-            player.MovementBehaviour().Move();
-        }
+        Debug.Log("onAir");
+      
+        player.MovementBehaviour().Move();
+        
     }
 
     public override void Exit(Base_state currentState, StateManager stateManager)

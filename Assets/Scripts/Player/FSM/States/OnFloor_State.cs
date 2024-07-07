@@ -7,6 +7,7 @@ public class OnFloor_State : Base_state
     {
         if (player.MovementBehaviour().IsGrounded())
         {
+            //Debug.LogWarning("state = grounded");
             return this;
         }
         else
@@ -19,10 +20,13 @@ public class OnFloor_State : Base_state
 
     public override void Update(Base_state currentState, Player player, StateManager stateManager)
     {
+        //Debug.LogWarning("state = grounded");
+
         if (!player.MovementBehaviour().IsGrounded())
         {
             Exit(currentState, stateManager);
         }
+
     }
 
     public override void FixedUpdate(Base_state currentState, Player player)

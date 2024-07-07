@@ -7,7 +7,8 @@ public class AnimationsManager : MonoBehaviour
     private MovementBehaviour movementBehaviour;
     private PlayerSounds playerSounds;
     private float landingSpeed;
-    private float badLandingLimit = 10.0f;
+    [SerializeField] private float badLandingLimit = 10.0f;
+    [SerializeField] private float nonLandingLimit = 5.0f;
 
     private void Awake()
     {
@@ -41,12 +42,12 @@ public class AnimationsManager : MonoBehaviour
         if (movementBehaviour.IsGrounded())
         {
             animator.SetFloat("verticalVelocity", 0.0f);
-            animator.SetFloat("horizontalVelocity", movementBehaviour.RbVelocity().magnitude);
+            animator.SetFloat("horizontalVelocity", movementBehaviour.Displacement().magnitude);
             animator.SetBool("isGrounded", true);
         }
         else
         {
-            animator.SetFloat("verticalVelocity", movementBehaviour.RbVelocity().y); 
+            animator.SetFloat("verticalVelocity", movementBehaviour.Velocity().y); 
             animator.SetBool("isGrounded", false);
         }
     }
@@ -55,11 +56,15 @@ public class AnimationsManager : MonoBehaviour
     {
         if (movementBehaviour.IsLanding())
         {
-            animator.SetTrigger("landed");
+            //animator.SetTrigger("landed");
             animator.SetFloat("landingSpeed", landingSpeed);
             animator.ResetTrigger("jumped");
 
-            player.SetAnimating(true);
+            if (landingSpeed < -5)
+            {
+                player.SetAnimating(true);
+            }
+            
 
             if (landingSpeed > badLandingLimit)
             {
@@ -75,9 +80,9 @@ public class AnimationsManager : MonoBehaviour
         {
             animator.SetBool("isGrounded", false);
 
-            if (movementBehaviour.RbVelocity().y < landingSpeed)
+            if (movementBehaviour.Velocity().y < landingSpeed)
             {
-                landingSpeed = movementBehaviour.RbVelocity().y;
+                landingSpeed = movementBehaviour.Velocity().y;
             }
         }
     }
@@ -96,7 +101,8 @@ public class AnimationsManager : MonoBehaviour
         if (movementBehaviour.IsStuck())
         {
             animator.SetBool("isGrounded", true);
-            Debug.Log("is grounded");
+            //Debug.Log("is grounded");
+            //Debug.Log("is stuck: " + movementBehaviour.IsStuck());
         }
         else
         {

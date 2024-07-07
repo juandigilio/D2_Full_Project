@@ -241,9 +241,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90af916c770cf944eadb86114783a68c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 649825737}
   isInTrigger: 0
   fallingSpeed: 0
+  movementBehaviour: {fileID: 649825731}
 --- !u!1 &1543617
 GameObject:
   m_ObjectHideFlags: 0
@@ -7374,6 +7374,7 @@ MonoBehaviour:
   rightFeet: {fileID: 661960788}
   deltaTime: 0
   maxSpeed: 35
+  gravity: 9.8
   decelerationSpeed: 3
   acelerationForce: 100
   airSpeedMultiplier: 100
@@ -7807,9 +7808,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90af916c770cf944eadb86114783a68c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 649825737}
   isInTrigger: 0
   fallingSpeed: 0
+  movementBehaviour: {fileID: 649825731}
 --- !u!65 &661960789
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16515,7 +16516,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sensivilidad
+  m_text: Sensibilidad
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: d75b8f41e959450c84ac6e967084d3e1, type: 2}

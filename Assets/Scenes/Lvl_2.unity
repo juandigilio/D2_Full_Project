@@ -10152,9 +10152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90af916c770cf944eadb86114783a68c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 1924293256}
   isInTrigger: 0
   fallingSpeed: 0
+  movementBehaviour: {fileID: 1924293265}
 --- !u!1 &655349915
 GameObject:
   m_ObjectHideFlags: 0
@@ -14075,7 +14075,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Sensivilidad
+  m_text: Sensibilidad
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: d75b8f41e959450c84ac6e967084d3e1, type: 2}
@@ -23117,9 +23117,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90af916c770cf944eadb86114783a68c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 1924293256}
   isInTrigger: 0
   fallingSpeed: 0
+  movementBehaviour: {fileID: 1924293265}
 --- !u!4 &1555529222 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8460917321318470221, guid: 3964c23ae9838e84889ea6d65b5861aa, type: 3}
@@ -28798,6 +28798,7 @@ MonoBehaviour:
   rightFeet: {fileID: 655333964}
   deltaTime: 0
   maxSpeed: 35
+  gravity: 9.8
   decelerationSpeed: 3
   acelerationForce: 100
   airSpeedMultiplier: 100

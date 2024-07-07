@@ -11,7 +11,7 @@ public class Animating_State : Base_state
         }
         else
         {
-            Debug.LogWarning("Couldn't enter becouse isn't animating");
+            //Debug.LogWarning("Couldn't enter becouse isn't animating");
             return null;
         }
     }
@@ -29,7 +29,7 @@ public class Animating_State : Base_state
 
     public override void Exit(Base_state currentState, StateManager stateManager)
     {
-        Debug.Log("exit animation state");
+        //Debug.Log("exit animation state");
         stateManager.CheckCurrentState();
     }
 }

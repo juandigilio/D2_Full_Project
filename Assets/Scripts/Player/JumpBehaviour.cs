@@ -6,7 +6,7 @@ public class JumpBehaviour : MonoBehaviour
 {
     private MovementBehaviour movementBehaviour;
 
-    [SerializeField] private float jumpForce = 600.0f;
+    [SerializeField] private float jumpHeight = 5.0f;
 
     public static Action OnPlayerJumped;
 
@@ -22,8 +22,18 @@ public class JumpBehaviour : MonoBehaviour
             if (movementBehaviour.IsGrounded() || movementBehaviour.IsStuck())
             {
                 OnPlayerJumped?.Invoke();
-                movementBehaviour.PlayerRb().AddForce((jumpForce * Vector3.up) * movementBehaviour.deltaTime, ForceMode.Impulse);
+                CalculateJump();
+                //Debug.Log("velocity = " + movementBehaviour.Velocity());
             }
         }
+    }
+
+    private void CalculateJump()
+    {
+        float jumpForce = (float)Math.Sqrt(jumpHeight * -2 * -9.8f);
+
+        //Debug.Log("jumpForce =" + jumpForce);
+
+        movementBehaviour.VelocityY(jumpForce);
     }
 }

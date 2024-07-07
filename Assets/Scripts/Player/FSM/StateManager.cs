@@ -38,6 +38,12 @@ public class StateManager : MonoBehaviour
         if (currentState != null)
         {
             currentState.Update(currentState, player, this);
+            Debug.Log("state = active");
+            Debug.Log("currentState" + currentState);
+        }
+        else
+        {
+            Debug.Log("state = null");
         }
     }
 
@@ -59,6 +65,19 @@ public class StateManager : MonoBehaviour
     {
         currentState = null;
 
+        if (currentState == null)
+        {
+            currentState = OnFloor.Enter(player);
+
+            if (currentState == null)
+            {
+                currentState = OnAir.Enter(player);
+            }
+        }
+    }
+
+    private void CheckNullState()
+    {
         if (currentState == null)
         {
             currentState = OnFloor.Enter(player);

@@ -3,35 +3,36 @@ using UnityEngine;
 public class MovementBehaviour : MonoBehaviour
 {
     private Player player;
-    private Rigidbody rb;
-    [SerializeField] private FeetsCollider leftFeet;
-    [SerializeField] private FeetsCollider rightFeet;
-
+    private CharacterController controller;
+    [SerializeField] private Transform feetsPosition;
     private Camera mainCamera;
+
     private Vector3 cameraForward;
     private Vector3 cameraRight;
-
     private float rotationSpeed = 11.0f;
-   
+
 
     public float deltaTime;
 
     private Vector3 displacement;
-    private Vector3 stopedVelocity;
-    [SerializeField] private float maxSpeed = 6.0f;
+    private Vector3 velocity;
+
+    [SerializeField] private float groundDistance = 0.2f;
+    [SerializeField] private float maxSpeed = 5.0f;
+    [SerializeField] private float gravity = 4.8f;
+    [SerializeField] private float maxFallingSpeed = 10f;
     [SerializeField] private float decelerationSpeed = 3.0f;
-    [SerializeField] private float acelerationForce = 4.0f;
-    [SerializeField] private float airSpeedMultiplier = 100.0f;
+    [SerializeField] private float accelerationForce = 4.0f;
+   // [SerializeField] private float airSpeedMultiplier = 100.0f;
     [SerializeField] private bool isLanding = false;
     [SerializeField] private bool badLanded;
     [SerializeField] private bool isStuck;
-    [SerializeField] private float rigibodySpeed;
-    private bool isGrounded;
+    private bool isGrounded = true;
 
     private void Awake()
     {
         player = GetComponent<Player>();
-        rb = player.GetComponent<Rigidbody>();
+        controller = GetComponent<CharacterController>();
         mainCamera = Camera.main.GetComponent<Camera>();
     }
 
@@ -47,7 +48,8 @@ public class MovementBehaviour : MonoBehaviour
     private void FixedUpdate()
     {
         UpdateDelta();
-        rigibodySpeed = rb.velocity.magnitude;
+
+        UpdateGravity();
     }
 
     public void Move()
@@ -75,81 +77,89 @@ public class MovementBehaviour : MonoBehaviour
     {
         displacement = player.input.x * cameraRight + player.input.y * cameraForward;
 
+        //Debug.Log("displacement " + displacement);
+
         if (displacement.sqrMagnitude > 0.01f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(displacement);
-            rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRotation, rotationSpeed * Time.deltaTime));
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         }
     }
 
     private void AddForces()
     {
-        if (isGrounded)
+        if (isGrounded && velocity.y < 0)
         {
-            if (rb.velocity.magnitude <= maxSpeed * 0.25f)
-            {
-                rb.AddForce(displacement * (maxSpeed * acelerationForce) * deltaTime);
-            }
-            else
-            {
-                rb.AddForce((displacement * maxSpeed) * deltaTime);
-            }
+            velocity.y = -2;
         }
-        else
+
+        Vector3 targetVelocity = displacement * maxSpeed;
+
+        if (player.input != Vector2.zero)
         {
-            rb.AddForce((displacement * airSpeedMultiplier) * deltaTime);
+            displacement = Vector3.Lerp(displacement, targetVelocity, accelerationForce * Time.deltaTime);
         }
+
+        controller.Move(displacement * Time.deltaTime);
 
         if (badLanded)
         {
-            rb.velocity = Vector3.zero;
+            displacement = Vector3.zero;
         }
+
+        velocity.y -= gravity * Time.deltaTime;
+
+        if (velocity.y < -maxFallingSpeed)
+        {
+            velocity.y = -maxFallingSpeed;
+        }
+
+        controller.Move(velocity * Time.deltaTime);
+    }
+
+    private void UpdateGravity()
+    {
+        velocity.y -= gravity * Time.deltaTime;
+
+        controller.Move(velocity * Time.deltaTime);
     }
 
     private void CheckGround()
     {
-        if (leftFeet.isInTrigger || rightFeet.isInTrigger)
-        {
-            Debug.Log("feet trigger");
-            if (!isGrounded)
-            {
-                isLanding = true;
-            }
+        bool isTouchingFloor = Physics.CheckSphere(feetsPosition.position, groundDistance);
 
-            isGrounded = true;
-        }
-        else
+        if (isTouchingFloor && !isGrounded)
         {
-            isGrounded = false;
+            isLanding = true;
         }
+
+        isGrounded = isTouchingFloor;
+
+        //Debug.Log("isGounded check " + isGrounded);
     }
 
     private void CheckIfStuck()
     {
-        isStuck = rb.velocity.magnitude > -0.1f &&
-                        rb.velocity.magnitude < 0.1f &&
+        isStuck = velocity.magnitude > -0.1f &&
+                        velocity.magnitude < 0.1f &&
                         !isGrounded;
+    }
+
+    public void StopInertia()
+    {
+        if (player.input == Vector2.zero)
+        {
+            Vector3 horizontalVelocity = new Vector3(velocity.x, 0, velocity.z);
+            horizontalVelocity = Vector3.Lerp(horizontalVelocity, Vector3.zero, decelerationSpeed * Time.deltaTime);
+            velocity.x = horizontalVelocity.x;
+            velocity.z = horizontalVelocity.z;
+        }
     }
 
     public bool IsStuck()
     {
         return isStuck;
-    }
-
-
-    /// <summary>
-    /// Desacelerate player horizontal direction when no input is not pressed
-    /// </summary>
-    public void StopInertia()
-    {
-        if (rb.velocity != Vector3.zero && player.input == Vector2.zero && isGrounded)
-        {
-            Vector3 stop = rb.velocity;
-            stop.x = Mathf.Lerp(stop.x, 0, Time.fixedDeltaTime * decelerationSpeed);
-            stop.z = Mathf.Lerp(stop.z, 0, Time.fixedDeltaTime * decelerationSpeed);
-
-            rb.velocity = stop;
-        }
     }
 
     public bool IsGrounded()
@@ -179,17 +189,32 @@ public class MovementBehaviour : MonoBehaviour
     /// <returns></returns>
     public float PosY()
     {
-        return rb.transform.position.y;
+        return transform.position.y;
     }
 
-    public Vector3 RbVelocity()
+    public Vector3 Displacement()
     {
-        return rb.velocity;
+        return displacement;
     }
 
-    public Rigidbody PlayerRb()
+    public Vector3 Velocity()
     {
-        return rb;
+        return velocity;
+    }
+
+    public void VelocityY(float set)
+    {
+        velocity.y = set;
+    }
+
+    public float Gravity()
+    {
+        return gravity;
+    }
+
+    public CharacterController PlayerController()
+    {
+        return controller;
     }
 
     private void UpdateDelta()
