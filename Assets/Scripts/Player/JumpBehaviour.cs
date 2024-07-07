@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class JumpBehaviour : MonoBehaviour
 {
     private MovementBehaviour movementBehaviour;
@@ -23,17 +24,13 @@ public class JumpBehaviour : MonoBehaviour
             {
                 OnPlayerJumped?.Invoke();
                 CalculateJump();
-                //Debug.Log("velocity = " + movementBehaviour.Velocity());
             }
         }
     }
 
     private void CalculateJump()
     {
-        float jumpForce = (float)Math.Sqrt(jumpHeight * -2 * -9.8f);
-
-        //Debug.Log("jumpForce =" + jumpForce);
-
+        float jumpForce = Mathf.Sqrt(jumpHeight * 2 * movementBehaviour.Gravity());
         movementBehaviour.VelocityY(jumpForce);
     }
 }

@@ -23,7 +23,6 @@ public class MovementBehaviour : MonoBehaviour
     [SerializeField] private float maxFallingSpeed = 10f;
     [SerializeField] private float decelerationSpeed = 3.0f;
     [SerializeField] private float accelerationForce = 4.0f;
-   // [SerializeField] private float airSpeedMultiplier = 100.0f;
     [SerializeField] private bool isLanding = false;
     [SerializeField] private bool badLanded;
     [SerializeField] private bool isStuck;
@@ -98,14 +97,14 @@ public class MovementBehaviour : MonoBehaviour
 
         if (player.input != Vector2.zero)
         {
-            displacement = Vector3.Lerp(displacement, targetVelocity, accelerationForce * Time.deltaTime);
+            velocity = Vector3.Lerp(velocity, targetVelocity, accelerationForce * Time.deltaTime);
         }
 
-        controller.Move(displacement * Time.deltaTime);
+        controller.Move(velocity * Time.deltaTime);
 
         if (badLanded)
         {
-            displacement = Vector3.zero;
+            velocity = Vector3.zero;
         }
 
         velocity.y -= gravity * Time.deltaTime;
@@ -135,8 +134,6 @@ public class MovementBehaviour : MonoBehaviour
         }
 
         isGrounded = isTouchingFloor;
-
-        //Debug.Log("isGounded check " + isGrounded);
     }
 
     private void CheckIfStuck()
