@@ -27,7 +27,7 @@ public class OnAir_State : Base_state
 
     public override void FixedUpdate(Base_state currentState, Player player)
     {
-        Debug.Log("onAir");
+        //Debug.Log("onAir");
       
         player.MovementBehaviour().Move();
         

@@ -83,8 +83,9 @@ public static class CustomSceneManager
 
     public static void ResetLevel()
     {
-        SceneManager.UnloadSceneAsync(scenesPool[index].sceneName);
-        SceneManager.LoadSceneAsync(scenesPool[index].sceneName, LoadSceneMode.Additive);
+        Debug.Log("restarting level");
+        SceneManager.UnloadScene(scenesPool[index].sceneName);
+        SceneManager.LoadScene(scenesPool[index].sceneName, LoadSceneMode.Additive);
     }
     
     public static void LoadWiningScene()
@@ -102,6 +103,7 @@ public static class CustomSceneManager
     public static void ResetGame()
     {
         SceneManager.UnloadSceneAsync(winingScene.sceneName);
+        //SceneManager.UnloadSceneAsync(mainScene.sceneName);//////////////////
         scenesPool.Clear();
         SceneManager.LoadSceneAsync(mainScene.sceneName);
     }

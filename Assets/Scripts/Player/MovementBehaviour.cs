@@ -19,7 +19,7 @@ public class MovementBehaviour : MonoBehaviour
 
     [SerializeField] private float groundDistance = 0.2f;
     [SerializeField] private float maxSpeed = 5.0f;
-    [SerializeField] private float gravity = 4.8f;
+    private float gravity = 9.8f;
     [SerializeField] private float maxFallingSpeed = 10f;
     [SerializeField] private float decelerationSpeed = 3.0f;
     [SerializeField] private float accelerationForce = 4.0f;
@@ -49,13 +49,15 @@ public class MovementBehaviour : MonoBehaviour
         UpdateDelta();
 
         UpdateGravity();
+
+        AddForces();
     }
 
     public void Move()
     {
         LookForward();
 
-        AddForces();
+        //AddForces();
 
         StopInertia();
     }
@@ -94,24 +96,24 @@ public class MovementBehaviour : MonoBehaviour
         }
 
         Vector3 targetVelocity = displacement * maxSpeed;
+        float Y = velocity.y;
+        velocity.y = 0;
 
         if (player.input != Vector2.zero)
         {
             velocity = Vector3.Lerp(velocity, targetVelocity, accelerationForce * Time.deltaTime);
         }
 
-        controller.Move(velocity * Time.deltaTime);
-
-        if (badLanded)
-        {
-            velocity = Vector3.zero;
-        }
-
-        velocity.y -= gravity * Time.deltaTime;
+        velocity.y = Y;
 
         if (velocity.y < -maxFallingSpeed)
         {
             velocity.y = -maxFallingSpeed;
+        }
+
+        if (badLanded)
+        {
+            velocity = Vector3.zero;
         }
 
         controller.Move(velocity * Time.deltaTime);

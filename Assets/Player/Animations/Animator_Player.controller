@@ -500,6 +500,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 2
     m_ConditionEvent: isGrounded
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isStuck
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6713525155194431621}
   m_Solo: 0
@@ -667,7 +670,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: -203655887218126122, guid: 3cdf35265373c0046995893928b4a245, type: 3}
-    m_Threshold: 2
+    m_Threshold: 1
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -675,7 +678,7 @@ BlendTree:
     m_Mirror: 0
   - serializedVersion: 2
     m_Motion: {fileID: -203655887218126122, guid: db6823dcd1f48e949923928be03f3569, type: 3}
-    m_Threshold: 4
+    m_Threshold: 2
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
@@ -684,7 +687,7 @@ BlendTree:
   m_BlendParameter: horizontalVelocity
   m_BlendParameterY: Blend
   m_MinThreshold: 0
-  m_MaxThreshold: 4
+  m_MaxThreshold: 2
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
@@ -727,6 +730,7 @@ AnimatorState:
   - {fileID: -7405799592450439018}
   - {fileID: 106707677534502468}
   - {fileID: 6629502247264165029}
+  - {fileID: 8955685197930058135}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -855,6 +859,37 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.8458904
+  m_HasExitTime: 0
+  m_HasFixedDuration: 1
+  m_InterruptionSource: 0
+  m_OrderedInterruption: 1
+  m_CanTransitionToSelf: 1
+--- !u!1101 &8955685197930058135
+AnimatorStateTransition:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_Conditions:
+  - m_ConditionMode: 4
+    m_ConditionEvent: verticalVelocity
+    m_EventTreshold: -1
+  - m_ConditionMode: 2
+    m_ConditionEvent: isGrounded
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isStuck
+    m_EventTreshold: 0
+  m_DstStateMachine: {fileID: 0}
+  m_DstState: {fileID: 4352110569270260373}
+  m_Solo: 0
+  m_Mute: 0
+  m_IsExit: 0
+  serializedVersion: 3
+  m_TransitionDuration: 0.25
+  m_TransitionOffset: 0
+  m_ExitTime: 0.793578
   m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0

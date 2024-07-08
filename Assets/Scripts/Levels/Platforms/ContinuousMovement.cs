@@ -132,6 +132,17 @@ public class ContinuousMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Ontriggering");
+        if (requiresTrigger && !isMoving && !returningToStart)
+        {
+            SetNextJourney();
+            isMoving = true;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Ontriggering");
         if (requiresTrigger && !isMoving && !returningToStart)
         {
             SetNextJourney();

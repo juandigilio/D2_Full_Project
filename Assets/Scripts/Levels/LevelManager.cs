@@ -85,6 +85,7 @@ public class LevelManager : MonoBehaviour
         if (player.MovementBehaviour().PosY() < deathZone.position.y)
         {
             onDeathZone?.Invoke();
+            Debug.Log("death zone");
         }
     }
 

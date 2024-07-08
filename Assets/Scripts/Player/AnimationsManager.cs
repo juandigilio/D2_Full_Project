@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 public class AnimationsManager : MonoBehaviour
 {
     [SerializeField] private Animator animator;
     private Player player;
     private MovementBehaviour movementBehaviour;
+    private CharacterController controller;
     private PlayerSounds playerSounds;
     private float landingSpeed;
     [SerializeField] private float badLandingLimit = 10.0f;
@@ -15,6 +17,7 @@ public class AnimationsManager : MonoBehaviour
         player = GetComponent<Player>();
         animator = GetComponent<Animator>();
         movementBehaviour = GetComponent<MovementBehaviour>();
+        controller = GetComponent<CharacterController>();
         playerSounds = GetComponent<PlayerSounds>();
 
         PrayBehaviour.OnAnimationPraying += Praying;
@@ -42,12 +45,15 @@ public class AnimationsManager : MonoBehaviour
         if (movementBehaviour.IsGrounded())
         {
             animator.SetFloat("verticalVelocity", 0.0f);
-            animator.SetFloat("horizontalVelocity", movementBehaviour.Displacement().magnitude);
+            Vector3 horizontalVelocity = controller.velocity;
+            horizontalVelocity.y = 0;
+            animator.SetFloat("horizontalVelocity", horizontalVelocity.magnitude);
             animator.SetBool("isGrounded", true);
         }
         else
         {
-            animator.SetFloat("verticalVelocity", movementBehaviour.Velocity().y); 
+            animator.SetFloat("verticalVelocity", controller.velocity.y);
+            animator.SetFloat("horizontalVelocity", 0);
             animator.SetBool("isGrounded", false);
         }
     }

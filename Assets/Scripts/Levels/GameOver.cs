@@ -14,6 +14,7 @@ public class GameOver : MonoBehaviour
 
     private void ResetLevel()
     {
+        Debug.Log("action called");
         CustomSceneManager.ResetLevel();
     }
 }
