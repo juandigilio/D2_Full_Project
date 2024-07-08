@@ -18,6 +18,8 @@ public class OnAir_State : Base_state
 
     public override void Update(Base_state currentState, Player player, StateManager stateManager)
     {
+        player.GetInput();
+
         if (player.MovementBehaviour().IsGrounded())
         {
             Exit(currentState, stateManager);

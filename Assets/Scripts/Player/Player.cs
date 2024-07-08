@@ -27,12 +27,9 @@ public class Player : MonoBehaviour
         Altar.OnPlayerPause += StopMoving;
     }
 
-    /// <summary>
-    /// Updates player input.
-    /// </summary>
     private void Update()
     {
-        GetInput();
+        Debug.Log("animating: " + isAnimating);
     }
 
     /// <summary>
@@ -57,7 +54,7 @@ public class Player : MonoBehaviour
         {
             input = stickInput;
         }
-        //Debug.Log("input: " + input);
+        Debug.Log("input: " + input);
     }
 
     /// <summary>

@@ -133,6 +133,7 @@ public class MovementBehaviour : MonoBehaviour
         if (isTouchingFloor && !isGrounded)
         {
             isLanding = true;
+            velocity = controller.velocity / 3;
         }
 
         isGrounded = isTouchingFloor;

@@ -11,13 +11,14 @@ public class Animating_State : Base_state
         }
         else
         {
-            //Debug.LogWarning("Couldn't enter becouse isn't animating");
             return null;
         }
     }
 
     public override void Update(Base_state currentState, Player player, StateManager stateManager)
     {
+        player.input = Vector2.zero;
+        player.SetAnimating(true);
         player.MovementBehaviour().StopInertia();
         Debug.Log("In animation state");
     }
@@ -29,7 +30,6 @@ public class Animating_State : Base_state
 
     public override void Exit(Base_state currentState, StateManager stateManager)
     {
-        //Debug.Log("exit animation state");
         stateManager.CheckCurrentState();
     }
 }
