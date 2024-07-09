@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Arch door;
     [SerializeField] private Transform deathZone;
     [SerializeField] private InputManager inputManager;
+    [SerializeField] private GameObject startPoint;
 
     private bool isAnimating = false;
 
@@ -30,6 +31,20 @@ public class LevelManager : MonoBehaviour
     {
         coinsPull = GameObject.Find("CoinsPull");
         GetCoins();
+
+        GameObject obj = GameObject.FindGameObjectWithTag("Player");
+        GameObject input = GameObject.FindGameObjectWithTag("InputManager");
+
+        player = obj.GetComponent<Player>();
+
+        if (!player)
+        {
+            Debug.Log("Player not found");
+        }
+        inputManager = input.GetComponent<InputManager>();
+        //startPoint = GameObject.FindGameObjectWithTag("StartPoint");
+
+        player.transform.position = startPoint.transform.position;
     }
 
     private void Update()
@@ -85,7 +100,7 @@ public class LevelManager : MonoBehaviour
         if (player.MovementBehaviour().PosY() < deathZone.position.y)
         {
             onDeathZone?.Invoke();
-            Debug.Log("death zone");
+            //Debug.Log("death zone");
         }
     }
 
@@ -102,7 +117,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private void LoadNextLevel()
     {
-        inputManager.Unsuscribe();
+        //inputManager.Unsuscribe();
         Destroy(coinsPull);
         Destroy(altar.gameObject);
         Destroy(door.gameObject);
@@ -111,7 +126,7 @@ public class LevelManager : MonoBehaviour
 
     private void LoadWiningScene()
     {
-        inputManager.Unsuscribe();
+        //inputManager.Unsuscribe();
         Destroy(coinsPull);
         Destroy(altar.gameObject);
         Destroy(door.gameObject);

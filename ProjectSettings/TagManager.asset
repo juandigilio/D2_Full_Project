@@ -7,6 +7,9 @@ TagManager:
   - Floor
   - PrayingZone
   - ExitZone
+  - PauseManager
+  - InputManager
+  - StartPoint
   layers:
   - Default
   - TransparentFX

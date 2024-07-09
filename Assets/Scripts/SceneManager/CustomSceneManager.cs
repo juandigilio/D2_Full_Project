@@ -1,6 +1,6 @@
 using UnityEngine;
+using System;
 using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
 struct SceneStruct
@@ -71,7 +71,6 @@ public static class CustomSceneManager
                 if (index != 0)
                 {
                     SceneManager.UnloadSceneAsync(scenesPool[index].sceneName);
-                    index = 0;
                 }
 
                 SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -87,7 +86,7 @@ public static class CustomSceneManager
         SceneManager.UnloadScene(scenesPool[index].sceneName);
         SceneManager.LoadScene(scenesPool[index].sceneName, LoadSceneMode.Additive);
     }
-    
+
     public static void LoadWiningScene()
     {
         SceneManager.UnloadSceneAsync(scenesPool[index].sceneName);

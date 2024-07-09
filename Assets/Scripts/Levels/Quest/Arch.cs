@@ -22,7 +22,8 @@ public class Arch : MonoBehaviour
     private bool isAnimating;
     private bool isOpen = false;
 
-    public static event Action OnPlayerPause;
+    public static event Action OnDoorAnimationStarted;
+    public static event Action OnDoorAnimationFinished;
 
     private void Awake()
     {
@@ -31,6 +32,12 @@ public class Arch : MonoBehaviour
         {
             Debug.Log("No grate found");
         }
+
+        GameObject obj = GameObject.FindGameObjectWithTag("MainCamera");
+        mainCamera = obj.GetComponent<Camera>();
+
+        GameObject tempPlayer = GameObject.FindGameObjectWithTag("Player");
+        player = tempPlayer.GetComponent<Player>();
 
         cameraman = mainCamera.GetComponent<Cameraman>();
         doorSOund = GetComponent<DoorSound>();
@@ -64,7 +71,7 @@ public class Arch : MonoBehaviour
 
     private IEnumerator MoveUpRoutine()
     {
-        OnPlayerPause?.Invoke();
+        OnDoorAnimationStarted?.Invoke();
         player.enabled = false;
         cameraman.enabled = false;
 
@@ -79,7 +86,7 @@ public class Arch : MonoBehaviour
 
         while (elapsedTime < duration)
         {
-            Debug.Log("initialPosition: " + initialPosition);
+            //Debug.Log("initialPosition: " + initialPosition);
 
             grate.transform.position = Vector3.Lerp(initialPosition, targetPosition, elapsedTime / duration);
             elapsedTime += Time.deltaTime;
@@ -99,6 +106,8 @@ public class Arch : MonoBehaviour
         player.enabled = true;
         cameraman.enabled = true;
         isAnimating = false;
+
+        OnDoorAnimationFinished?.Invoke();
     }
 
     public bool IsAnimating()

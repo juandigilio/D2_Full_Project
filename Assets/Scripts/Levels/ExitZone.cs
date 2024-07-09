@@ -9,6 +9,7 @@ public class ExitZone : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            Debug.Log("Player trigger Exit Zone!!");
             OnLevelFinished?.Invoke();
         }
     }

@@ -4,7 +4,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private PauseManager pauseManager;
-    //private Rigidbody rigiboy;
     private MovementBehaviour movementBehaviour;
     private JumpBehaviour jumpBehaviour;
     private PrayBehaviour prayBehaviour;
@@ -19,12 +18,22 @@ public class Player : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("Player");
+        if (objs.Length > 1)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(this.gameObject);
+        }
+
         movementBehaviour = GetComponent<MovementBehaviour>();
         jumpBehaviour = GetComponent<JumpBehaviour>();
         prayBehaviour = GetComponent<PrayBehaviour>();
 
         isAnimating = false;
-        Altar.OnPlayerPause += StopMoving;
+        Altar.OnAltarAnimationStarted += StopMoving;
     }
 
     private void Update()
@@ -37,7 +46,7 @@ public class Player : MonoBehaviour
     /// </summary>
     private void OnDestroy()
     {
-        Altar.OnPlayerPause -= StopMoving;
+        Altar.OnAltarAnimationStarted -= StopMoving;
     }
 
     /// <summary>
@@ -54,7 +63,7 @@ public class Player : MonoBehaviour
         {
             input = stickInput;
         }
-        Debug.Log("input: " + input);
+        //Debug.Log("input: " + input);
     }
 
     /// <summary>

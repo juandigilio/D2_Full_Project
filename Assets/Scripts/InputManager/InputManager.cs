@@ -8,7 +8,6 @@ public class InputManager : MonoBehaviour
     [SerializeField] private JumpBehaviour jumpBehaviour;
     [SerializeField] private PrayBehaviour prayBehaviour;
     [SerializeField] private PauseManager pauseManager;
-    [SerializeField] private LevelManager level;
 
     private float cameraRotation = 0;
     private float padCameraInput = 0;
@@ -47,8 +46,17 @@ public class InputManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        instance = this;
-        PlayerInput = GetComponent<PlayerInput>();
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("InputManager");
+        if (objs.Length > 1)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(this.gameObject);
+            instance = this;
+            PlayerInput = GetComponent<PlayerInput>();
+        }
     }
 
     /// <summary>
@@ -127,6 +135,11 @@ public class InputManager : MonoBehaviour
         PlayerInput.currentActionMap.FindAction(downAction).started -= pauseManager.Down;
         PlayerInput.currentActionMap.FindAction(selectAction).started -= pauseManager.Select;
         PlayerInput.SwitchCurrentActionMap(playerAction);
+    }
+
+    private void OnDestroy()
+    {
+        //Unsuscribe();
     }
 
     /// <summary>

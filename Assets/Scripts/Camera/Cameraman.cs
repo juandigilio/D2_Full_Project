@@ -2,17 +2,29 @@ using UnityEngine;
 
 public class Cameraman : MonoBehaviour
 {
-    public Camera mainCamera;
-    public Transform playerTransform;
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private Transform playerTransform;
     [SerializeField] private InputManager inputManager;
     private float distance;
     private float height = 3.5f;
     private float offsetZ = 3.0f;
 
-    void Start()
+    private void Awake()
     {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("MainCamera");
+        if (objs.Length > 1)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(this.gameObject);
+        }
+
         InitCamera();
-        inputManager = InputManager.instance;
+
+        //GameObject input = GameObject.FindGameObjectWithTag("InputManager");
+        //inputManager = input.GetComponent<InputManager>();
     }
 
     void LateUpdate()

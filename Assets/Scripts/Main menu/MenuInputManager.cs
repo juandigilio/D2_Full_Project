@@ -21,6 +21,7 @@ public class MenuInputManager : MonoBehaviour
     private void Start()
     {
         playerInput.SwitchCurrentActionMap("Paused");
+
         if (playerInput != null)
         {
             playerInput.currentActionMap.FindAction("Up").started += Up;

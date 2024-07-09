@@ -23,7 +23,8 @@ public class Altar : MonoBehaviour
     private bool inPrayingZone = false;
     private bool hasPrayed = false;
 
-    public static event Action OnPlayerPause;
+    public static event Action OnAltarAnimationStarted;
+    public static event Action OnAltarAnimationFinished;
     public static event Action OnOpenDoor;
 
     /// <summary>
@@ -31,6 +32,12 @@ public class Altar : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        GameObject obj = GameObject.FindGameObjectWithTag("MainCamera");
+        mainCamera = obj.GetComponent<Camera>();
+
+        GameObject tempPlayer = GameObject.FindGameObjectWithTag("Player");
+        player = tempPlayer.GetComponent<Player>();
+
         gameObject.SetActive(false);
         cameraman = mainCamera.GetComponent<Cameraman>();
         altarSound = GetComponent<AltarSound>();
@@ -61,7 +68,7 @@ public class Altar : MonoBehaviour
     /// </summary>
     private IEnumerator MoveUpRoutine()
     {
-        OnPlayerPause?.Invoke();
+        OnAltarAnimationStarted?.Invoke();
         player.enabled = false;
         cameraman.enabled = false;
         isAnimating = true;
@@ -93,6 +100,8 @@ public class Altar : MonoBehaviour
         player.enabled = true;
         cameraman.enabled = true;
         isAnimating = false;
+
+        OnAltarAnimationFinished?.Invoke();
     }
 
     /// <summary>

@@ -28,6 +28,10 @@ public class StateManager : MonoBehaviour
 
         PrayBehaviour.OnAnimationPraying += SetAnimating;
         PrayBehaviour.OnActivateQuest += AnimatingFinished;
+        Altar.OnAltarAnimationStarted += SetAnimating;
+        Altar.OnAltarAnimationFinished += AnimatingFinished;
+        Arch.OnDoorAnimationStarted += SetAnimating;
+        Arch.OnDoorAnimationFinished += AnimatingFinished;
     }
 
     /// <summary>
@@ -56,6 +60,16 @@ public class StateManager : MonoBehaviour
         {
             currentState.FixedUpdate(currentState, player);
         }
+    }
+
+    private void OnDisable()
+    {
+        PrayBehaviour.OnAnimationPraying -= SetAnimating;
+        PrayBehaviour.OnActivateQuest -= AnimatingFinished;
+        Altar.OnAltarAnimationStarted -= SetAnimating;
+        Altar.OnAltarAnimationFinished -= AnimatingFinished;
+        Arch.OnDoorAnimationStarted -= SetAnimating;
+        Arch.OnDoorAnimationFinished -= AnimatingFinished;
     }
 
     /// <summary>

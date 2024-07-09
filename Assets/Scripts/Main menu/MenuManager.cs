@@ -18,6 +18,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Transform startPoint;
     [SerializeField] private Transform endPoint;
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private Transform cameraStart;
     [SerializeField] private Transform cameraEnd;
     [SerializeField] private Canvas mainCanvas;
 
@@ -32,6 +33,7 @@ public class MenuManager : MonoBehaviour
 
     void Start()
     {
+        //mainCamera = GetComponent<Camera>();
         menuSounds = GetComponent<MenuSounds>();
 
         TurnOffButtos();

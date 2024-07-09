@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PauseManager : MonoBehaviour
 {
-    private PauseManager instance;
+    //private PauseManager instance;
 
     [SerializeField] private bool gameIsPaused = false;
     [SerializeField] private GameObject pauseMenuUI;
@@ -30,6 +30,16 @@ public class PauseManager : MonoBehaviour
     /// </summary>
     private void Awake()
     {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("PauseManager");
+        if (objs.Length > 1)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            DontDestroyOnLoad(this.gameObject);
+        }
+
         pauseMenuUI.SetActive(false);
 
         continueButton.onClick.AddListener(Continue);
@@ -55,6 +65,21 @@ public class PauseManager : MonoBehaviour
         mouseSlider.onValueChanged.AddListener(SetMouseSensitivity);
         padSlider.onValueChanged.AddListener(SetPadSensitivity);
     }
+
+    private void OnDisable()
+    {
+        continueButton.onClick.RemoveListener(Continue);
+        menuButton.onClick.RemoveListener(LoadMainMenu);
+        exitButton.onClick.RemoveListener(Exit);
+    }
+
+    private void OnDestroy()
+    {
+        continueButton.onClick.RemoveListener(Continue);
+        menuButton.onClick.RemoveListener(LoadMainMenu);
+        exitButton.onClick.RemoveListener(Exit);
+    }
+
 
     /// <summary>
     /// Updates the pause menu visibility and active selection state.
@@ -253,7 +278,41 @@ public class PauseManager : MonoBehaviour
     {
         gameIsPaused = false;
         Time.timeScale = 1f;
-        InputManager.instance.Unsuscribe();
+        //InputManager.instance.Unsuscribe();
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
+        GameObject input = GameObject.FindGameObjectWithTag("InputManager");
+        GameObject pause = GameObject.FindGameObjectWithTag("PauseManager");
+
+        if (player)
+        {
+            Destroy(player);
+        }
+
+        if (camera)
+        {
+            Destroy(camera);
+        }
+
+        if (input)
+        {
+            Destroy(input);
+        }
+        else
+        {
+            Debug.Log("no input to delete!");
+        }
+
+        if (pause)
+        {
+            Destroy(pause);
+        }
+        else
+        {
+            Debug.Log("no pause to delete!");
+        }
+
         CustomSceneManager.LoadScene("MainMenu");
     }
 
