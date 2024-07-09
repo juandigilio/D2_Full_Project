@@ -80,8 +80,8 @@
     <Compile Include="Assets\Scripts\Player\FSM\States\OnFloor_State.cs" />
     <Compile Include="Assets\Scripts\Levels\Collectables\Coin\Coin.cs" />
     <Compile Include="Assets\Scripts\Levels\ExitZone.cs" />
-    <Compile Include="Assets\Scripts\Main menu\MenuInputManager.cs" />
     <Compile Include="Assets\Art world\Unity Prefabs\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
+    <Compile Include="Assets\Scripts\Main menu\MenuInputManager.cs" />
     <Compile Include="Assets\Scripts\Levels\LevelManager.cs" />
     <Compile Include="Assets\Scripts\SundManager\MenuSounds.cs" />
     <Compile Include="Assets\Scripts\Player\PushRigisbodys.cs" />
