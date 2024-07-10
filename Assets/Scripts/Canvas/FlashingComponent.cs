@@ -14,6 +14,7 @@ public class FlashingComponent : MonoBehaviour
     private const float MAX_TONE = 1.0f;
     private const float MIN_TONE = 0.0f;
     [SerializeField] private float FLASH_SPEED = 2.2f;
+    [SerializeField] private bool isMouse = false;
 
     /// <summary>
     /// Initializes components and subscribes to input events.
@@ -103,8 +104,12 @@ public class FlashingComponent : MonoBehaviour
         {
             keyText.enabled = true;
         }
+        else if (buttonImage && isMouse)
+        {
+            buttonImage.enabled = true;
+        }
 
-        if (buttonImage)
+        if (buttonImage && !isMouse)
         {
             buttonImage.enabled = false;
         }
@@ -120,7 +125,12 @@ public class FlashingComponent : MonoBehaviour
             keyText.enabled = false;
         }
 
-        if (buttonImage)
+        if (buttonImage && isMouse)
+        {
+            buttonImage.enabled = false;
+        }
+
+        if (buttonImage && !isMouse)
         {
             buttonImage.enabled = true;
         }

@@ -284,6 +284,7 @@ public class PauseManager : MonoBehaviour
         GameObject camera = GameObject.FindGameObjectWithTag("MainCamera");
         GameObject input = GameObject.FindGameObjectWithTag("InputManager");
         GameObject pause = GameObject.FindGameObjectWithTag("PauseManager");
+        GameObject eventSys = GameObject.FindGameObjectWithTag("EventSystem");
 
         if (player)
         {
@@ -302,6 +303,11 @@ public class PauseManager : MonoBehaviour
         else
         {
             Debug.Log("no input to delete!");
+        }
+
+        if (eventSys)
+        {
+            Destroy(eventSys);
         }
 
         if (pause)

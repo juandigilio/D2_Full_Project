@@ -3,13 +3,10 @@ using UnityEngine;
 
 public class CheatsManager : MonoBehaviour
 {
-    private Arch arch;
     public static event Action OnOpenDoor;
 
     private void Awake()
     {
-        arch = GetComponent<Arch>();
-
         InputManager.OnOpenDoor += DoorCheat;
     }
 

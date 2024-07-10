@@ -85,6 +85,7 @@
     <Compile Include="Assets\Scripts\Levels\LevelManager.cs" />
     <Compile Include="Assets\Scripts\SundManager\MenuSounds.cs" />
     <Compile Include="Assets\Scripts\Player\PushRigisbodys.cs" />
+    <Compile Include="Assets\Scripts\Levels\EnterZone.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Art world\Unity Prefabs\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
     <Compile Include="Assets\Art world\Unity Prefabs\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Assets\Art world\Unity Prefabs\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\Scripts\SundManager\PlayerSounds.cs" />
     <Compile Include="Assets\Scripts\Canvas\DisableCanvas.cs" />
+    <Compile Include="Assets\Scripts\Canvas\CanvasManager.cs" />
     <Compile Include="Assets\Scripts\Levels\CursorManager.cs" />
     <Compile Include="Assets\Scripts\Levels\Collectables\ICollectable.cs" />
     <Compile Include="Assets\Art world\Unity Prefabs\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
@@ -135,6 +137,7 @@
     <Compile Include="Assets\Art world\Unity Prefabs\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\Art world\Unity Prefabs\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\Scripts\SundManager\AltarSound.cs" />
+    <Compile Include="Assets\Scripts\SceneManager\OnLoad_EventSystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Art world\Unity Prefabs\TextMesh Pro\Shaders\TMPro.cginc" />

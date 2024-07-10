@@ -10,6 +10,7 @@ TagManager:
   - PauseManager
   - InputManager
   - StartPoint
+  - EventSystem
   layers:
   - Default
   - TransparentFX

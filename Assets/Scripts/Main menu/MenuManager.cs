@@ -70,6 +70,7 @@ public class MenuManager : MonoBehaviour
     public void LoadTutorial()
     {
         CustomSceneManager.LoadNextSceneAsync();
+        CustomSceneManager.UnloadLastScene();
     }
 
     public void LoadCredits()

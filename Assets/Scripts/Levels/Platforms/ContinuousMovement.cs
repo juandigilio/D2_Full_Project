@@ -130,16 +130,6 @@ public class ContinuousMovement : MonoBehaviour
         isMoving = false;
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    Debug.Log("Ontriggering");
-    //    if (requiresTrigger && !isMoving && !returningToStart)
-    //    {
-    //        SetNextJourney();
-    //        isMoving = true;
-    //    }
-    //}
-
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log("Ontriggering");
@@ -149,18 +139,6 @@ public class ContinuousMovement : MonoBehaviour
             isMoving = true;
         }
     }
-
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (requiresTrigger)
-    //    {
-    //        if (isMoving || atLastPoint)
-    //        {
-    //            SetReturnJourney();
-    //            atLastPoint = false;
-    //        }
-    //    }
-    //}
 
     private void OnCollisionExit(Collision collision)
     {

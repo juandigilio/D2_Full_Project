@@ -22,6 +22,7 @@ public class Altar : MonoBehaviour
     private bool isAnimating = false;
     private bool inPrayingZone = false;
     private bool hasPrayed = false;
+    private bool nextLevelLoaded = false;
 
     public static event Action OnAltarAnimationStarted;
     public static event Action OnAltarAnimationFinished;
@@ -42,7 +43,9 @@ public class Altar : MonoBehaviour
         cameraman = mainCamera.GetComponent<Cameraman>();
         altarSound = GetComponent<AltarSound>();
 
-        PrayBehaviour.OnActivateQuest += IsPraying;
+        PrayBehaviour.OnActivateQuest += PrayFinished;
+        PrayBehaviour.OnAnimationPraying += IsPraying;
+        CheatsManager.OnOpenDoor += CheatDoor;
     }
 
     /// <summary>
@@ -50,7 +53,9 @@ public class Altar : MonoBehaviour
     /// </summary>
     private void OnDisable()
     {
-        PrayBehaviour.OnActivateQuest -= IsPraying;
+        PrayBehaviour.OnActivateQuest -= PrayFinished;
+        PrayBehaviour.OnAnimationPraying -= IsPraying;
+        CheatsManager.OnOpenDoor -= CheatDoor;
     }
 
     /// <summary>
@@ -104,16 +109,33 @@ public class Altar : MonoBehaviour
         OnAltarAnimationFinished?.Invoke();
     }
 
+    private void IsPraying()
+    {
+        if (!nextLevelLoaded && inPrayingZone)
+        {
+            nextLevelLoaded = true;
+            CustomSceneManager.LoadNextSceneAsync();
+        }
+    }
+
     /// <summary>
     /// Checks if the player is praying and opens the door if conditions are met.
     /// </summary>
-    private void IsPraying()
+    private void PrayFinished()
     {
         if (!hasPrayed && inPrayingZone)
         {
-            OnOpenDoor?.Invoke();
             hasPrayed = true;
+            OnOpenDoor?.Invoke();
         }
+    }
+
+    private void CheatDoor()
+    {
+        CustomSceneManager.LoadNextSceneAsync();
+        nextLevelLoaded = true;
+        hasPrayed = true;
+        OnOpenDoor?.Invoke();
     }
 
     /// <summary>

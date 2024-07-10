@@ -23,7 +23,7 @@ public class LevelManager : MonoBehaviour
     private void Start()
     {
         Coin.OnCoinCollected += CollectCoin;
-        ExitZone.OnLevelFinished += LoadNextLevel;
+        ExitZone.OnLevelFinished += UnloadLevel;
         WiningZone.OnGameFinished += LoadWiningScene;
     }
 
@@ -42,7 +42,6 @@ public class LevelManager : MonoBehaviour
             Debug.Log("Player not found");
         }
         inputManager = input.GetComponent<InputManager>();
-        //startPoint = GameObject.FindGameObjectWithTag("StartPoint");
 
         player.transform.position = startPoint.transform.position;
     }
@@ -56,7 +55,7 @@ public class LevelManager : MonoBehaviour
     private void OnDisable()
     {
         Coin.OnCoinCollected -= CollectCoin;
-        ExitZone.OnLevelFinished -= LoadNextLevel;
+        ExitZone.OnLevelFinished -= UnloadLevel;
         WiningZone.OnGameFinished -= LoadWiningScene;
     }
 
@@ -100,7 +99,6 @@ public class LevelManager : MonoBehaviour
         if (player.MovementBehaviour().PosY() < deathZone.position.y)
         {
             onDeathZone?.Invoke();
-            //Debug.Log("death zone");
         }
     }
 
@@ -115,21 +113,21 @@ public class LevelManager : MonoBehaviour
     /// <summary>
     /// Loads the next level when the exit zone is triggered.
     /// </summary>
-    private void LoadNextLevel()
+    private void UnloadLevel()
     {
         //inputManager.Unsuscribe();
-        Destroy(coinsPull);
-        Destroy(altar.gameObject);
-        Destroy(door.gameObject);
-        CustomSceneManager.LoadNextSceneAsync();
+        //Destroy(coinsPull);
+        //Destroy(altar.gameObject);
+        //Destroy(door.gameObject);
+        CustomSceneManager.UnloadLastScene();
     }
 
     private void LoadWiningScene()
     {
-        //inputManager.Unsuscribe();
-        Destroy(coinsPull);
-        Destroy(altar.gameObject);
-        Destroy(door.gameObject);
+        inputManager.Unsuscribe();
+        //Destroy(coinsPull);
+        //Destroy(altar.gameObject);
+        //Destroy(door.gameObject);
         CustomSceneManager.LoadWiningScene();
     }
 }
