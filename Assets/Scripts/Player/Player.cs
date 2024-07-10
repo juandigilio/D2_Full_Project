@@ -37,11 +37,6 @@ public class Player : MonoBehaviour
         Altar.OnAltarAnimationStarted += StopMoving;
     }
 
-    private void Update()
-    {
-        //Debug.Log("animating: " + isAnimating);
-    }
-
     /// <summary>
     /// Unsubscribes from events.
     /// </summary>
@@ -58,13 +53,11 @@ public class Player : MonoBehaviour
         if (isAnimating)
         {
             input = Vector2.zero;
-            //Debug.Log("animating: " + isAnimating);
         }
         else
         {
             input = stickInput;
         }
-        //Debug.Log("input: " + input);
     }
 
     /// <summary>

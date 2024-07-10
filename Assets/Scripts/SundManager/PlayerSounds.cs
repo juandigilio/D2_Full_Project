@@ -3,8 +3,10 @@ using UnityEngine;
 public class PlayerSounds : MonoBehaviour
 {
     [SerializeField] private AudioClip jumped;
+    [SerializeField] private AudioClip hardLanding;
     [SerializeField] private AudioClip badLanded;
     [SerializeField] private AudioClip praying;
+    [SerializeField] private AudioClip coin;
 
 
     private AudioSource audioSource;
@@ -12,17 +14,27 @@ public class PlayerSounds : MonoBehaviour
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
+
+        Coin.OnCoinCollected += PlayCoinSound;
+        MovementBehaviour.OnHardLandingSound += PlayHardLandingSound;
+        MovementBehaviour.OnBadLandingSound += PlayBadLandSound;
     }
 
     private void OnDisable()
     {
         //audioSource = null;
+        Coin.OnCoinCollected -= PlayCoinSound;
         Destroy(gameObject);
     }
 
     public void PlayJumpSound()
     {
         audioSource.PlayOneShot(jumped);
+    }
+
+    public void PlayHardLandingSound()
+    {
+        audioSource.PlayOneShot(hardLanding);
     }
 
     public void PlayBadLandSound()
@@ -33,15 +45,10 @@ public class PlayerSounds : MonoBehaviour
     public void PlayPraySound()
     {
         audioSource.PlayOneShot(praying);
-    }
+    } 
 
-    public void PlayAltarSound()
+    public void PlayCoinSound()
     {
-        audioSource.PlayOneShot(praying);
-    }
-
-    public void PlayDoorSound()
-    {
-        audioSource.PlayOneShot(praying);
+        audioSource.PlayOneShot(coin);
     }
 }

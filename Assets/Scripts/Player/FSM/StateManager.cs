@@ -42,8 +42,6 @@ public class StateManager : MonoBehaviour
         if (currentState != null)
         {
             currentState.Update(currentState, player, this);
-            //Debug.Log("state = active");
-            //Debug.Log("currentState" + currentState);
         }
         else
         {

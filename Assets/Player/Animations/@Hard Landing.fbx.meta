@@ -37,7 +37,7 @@ ModelImporter:
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 4
-      lastFrame: 45
+      lastFrame: 13
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -61,6 +61,13 @@ ModelImporter:
         functionName: AnimationFinished
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 62a22bf12d7e86c40a3fe2711b857107, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0
+        functionName: PlayHardLandingSound
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 80ada3e25707f8f499629ac628a09dd6, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0

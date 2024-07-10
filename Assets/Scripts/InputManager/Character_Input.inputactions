@@ -333,6 +333,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SensivityUp",
+                    "type": "Button",
+                    "id": "0620a654-c489-430a-a074-02b4207297bf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SensivityDown",
+                    "type": "Button",
+                    "id": "a6ae1020-9ea1-4331-a5da-7b0fbadfeef3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -498,6 +516,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Resume",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "39068fff-a75b-4d90-b822-56c2e336e859",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "SensivityUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f3e47b91-eb0a-48f7-b48d-74185f0e290d",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "SensivityDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

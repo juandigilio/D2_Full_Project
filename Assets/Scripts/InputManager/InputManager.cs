@@ -28,6 +28,8 @@ public class InputManager : MonoBehaviour
     [SerializeField] private string upAction = "Up";
     [SerializeField] private string downAction = "Down";
     [SerializeField] private string selectAction = "Select";
+    [SerializeField] private string sensivityUp = "SensivityUp";
+    [SerializeField] private string sensivityDown = "SensivityDown";
     /// <summary>
     /// Maps
     /// </summary>
@@ -86,6 +88,8 @@ public class InputManager : MonoBehaviour
             playerInput.currentActionMap.FindAction(upAction).started += pauseManager.Up;
             playerInput.currentActionMap.FindAction(downAction).started += pauseManager.Down;
             playerInput.currentActionMap.FindAction(selectAction).started += pauseManager.Select;
+            playerInput.currentActionMap.FindAction(sensivityUp).started += pauseManager.SensivityUp;
+            playerInput.currentActionMap.FindAction(sensivityDown).started += pauseManager.SensivityDown;
 
             playerInput.SwitchCurrentActionMap(playerAction);
         }

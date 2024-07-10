@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class MovementBehaviour : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class MovementBehaviour : MonoBehaviour
     [SerializeField] private bool badLanded;
     [SerializeField] private bool isStuck;
     private bool isGrounded = true;
+
+    public static Action OnHardLandingSound;
+    public static Action OnBadLandingSound;
 
     private void Awake()
     {
@@ -58,8 +62,6 @@ public class MovementBehaviour : MonoBehaviour
     {
         LookForward();
 
-        //AddForces();
-
         StopInertia();
     }
 
@@ -78,8 +80,6 @@ public class MovementBehaviour : MonoBehaviour
     private void LookForward()
     {
         displacement = player.input.x * cameraRight + player.input.y * cameraForward;
-
-        //Debug.Log("displacement " + displacement);
 
         if (displacement.sqrMagnitude > 0.01f)
         {
@@ -134,6 +134,22 @@ public class MovementBehaviour : MonoBehaviour
         if (isTouchingFloor && !isGrounded)
         {
             isLanding = true;
+           
+
+            Debug.Log("landing speed" + velocity.y);
+
+            if (velocity.y < -6)
+            {
+                if (velocity.y > -9)
+                {
+                    OnHardLandingSound?.Invoke();
+                }
+                else
+                {
+                    OnBadLandingSound?.Invoke();
+                }
+            }
+
             velocity = controller.velocity / 3;
         }
 
@@ -160,9 +176,7 @@ public class MovementBehaviour : MonoBehaviour
 
     public void ResetPosition(Transform newPos)
     {
-        //controller.enabled = false;
         transform.position = newPos.position;
-        //controller.enabled = true;
         controller.center = newPos.position;
     }
 
@@ -190,7 +204,6 @@ public class MovementBehaviour : MonoBehaviour
     {
         badLanded = set;
     }
-
 
     /// <summary>
     /// returns player position.y 

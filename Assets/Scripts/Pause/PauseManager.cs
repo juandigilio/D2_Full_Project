@@ -29,6 +29,8 @@ public class PauseManager : MonoBehaviour
     private int index = 1;
     [SerializeField] private bool isJoystick = false;
 
+    private MenuSounds menuSounds;
+
     /// <summary>
     /// Initializes the pause manager and sets up button listeners.
     /// </summary>
@@ -43,6 +45,8 @@ public class PauseManager : MonoBehaviour
         {
             DontDestroyOnLoad(this.gameObject);
         }
+
+        menuSounds = GetComponent<MenuSounds>();
 
         pauseMenuUI.SetActive(false);
 
@@ -62,9 +66,6 @@ public class PauseManager : MonoBehaviour
 
         AddEventTrigger(exitButton.gameObject, EventTriggerType.PointerEnter, () => OnHoverButton(exitText, true));
         AddEventTrigger(exitButton.gameObject, EventTriggerType.PointerExit, () => OnHoverButton(exitText, false));
-
-        //mouseSlider.value = 0.1f;
-        //padSlider.value = 3.0f;
 
         mouseSlider.onValueChanged.AddListener(SetMouseSensitivity);
         padSlider.onValueChanged.AddListener(SetPadSensitivity);
@@ -140,6 +141,7 @@ public class PauseManager : MonoBehaviour
     {
         if (callbackContext.started)
         {
+            menuSounds.PlayWallSound();
             Continue();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
@@ -170,6 +172,7 @@ public class PauseManager : MonoBehaviour
     {
         if (callbackContext.started)
         {
+            menuSounds.PlaySelectSound();
             index--;
 
             if (index < 1)
@@ -186,6 +189,7 @@ public class PauseManager : MonoBehaviour
     {
         if (callbackContext.started)
         {
+            menuSounds.PlaySelectSound();
             index++;
 
             if (index > 3)
@@ -281,6 +285,8 @@ public class PauseManager : MonoBehaviour
                         break;
                     }
             }
+
+            menuSounds.PlayEnterSound();
         }
     }
 
@@ -378,6 +384,28 @@ public class PauseManager : MonoBehaviour
     public void IsJoystick(bool set)
     {
         isJoystick = set;
+    }
+
+    public void SensivityUp(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.started)
+        {
+            menuSounds.PlaySelectSound();
+            float increment = padSlider.wholeNumbers ? 1f : 0.1f;
+            float newValue = padSlider.value + increment;
+            padSlider.value = Mathf.Clamp(newValue, padSlider.minValue, padSlider.maxValue);
+        }
+    }
+
+    public void SensivityDown(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.started)
+        {
+            menuSounds.PlaySelectSound();
+            float decrement = padSlider.wholeNumbers ? 1f : 0.1f;
+            float newValue = padSlider.value - decrement;
+            padSlider.value = Mathf.Clamp(newValue, padSlider.minValue, padSlider.maxValue);
+        }
     }
 
     /// <summary>
