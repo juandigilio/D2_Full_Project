@@ -8191,7 +8191,6 @@ GameObject:
   - component: {fileID: 902073521}
   - component: {fileID: 902073520}
   - component: {fileID: 902073519}
-  - component: {fileID: 902073518}
   - component: {fileID: 902073523}
   m_Layer: 0
   m_Name: EnertZone
@@ -8200,18 +8199,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &902073518
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 902073517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e34049d937667be4ba3b163e69834b35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &902073519
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12716,7 +12703,7 @@ GameObject:
   - component: {fileID: 1401491855}
   - component: {fileID: 1401491854}
   - component: {fileID: 1401491853}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: StartPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12738,7 +12725,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -17661,13 +17648,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1869640071}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5066944, y: -0, z: -0, w: 0.8621257}
-  m_LocalPosition: {x: -7.95, y: 0.47, z: 26.9}
-  m_LocalScale: {x: 6.6410956, y: 0.07093, z: 6.8152237}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.07, y: -8.98, z: 26.64}
+  m_LocalScale: {x: 47.871708, y: 0.07093, z: 63.611885}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1398358738}
-  m_LocalEulerAnglesHint: {x: 60.888, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1869640073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18320,6 +18307,14 @@ PrefabInstance:
       propertyPath: startPoint
       value: 
       objectReference: {fileID: 1401491852}
+    - target: {fileID: 265050394835268718, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
+      propertyPath: m_Name
+      value: DeathZone1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1572006152660479217, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
+      propertyPath: m_Name
+      value: Quest1
+      objectReference: {fileID: 0}
     - target: {fileID: 2962578615080097876, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.17
@@ -18346,7 +18341,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4127812809804584067, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
       propertyPath: m_Name
-      value: Level
+      value: Level1
       objectReference: {fileID: 0}
     - target: {fileID: 5716403975152545329, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18388,6 +18383,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5944984026273350333, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
+      propertyPath: altar
+      value: 
+      objectReference: {fileID: 1933709989}
     - target: {fileID: 6011303058048561077, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
       propertyPath: m_LocalPosition.y
       value: -395.01
@@ -18395,6 +18394,10 @@ PrefabInstance:
     - target: {fileID: 6011303058048561077, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
       propertyPath: m_LocalPosition.z
       value: 9.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6177763694054055468, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
+      propertyPath: m_Name
+      value: GameOver1
       objectReference: {fileID: 0}
     - target: {fileID: 6247248342314232778, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18452,6 +18455,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -34.73
       objectReference: {fileID: 0}
+    - target: {fileID: 8809776376145451375, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
+      propertyPath: m_Name
+      value: CanvasPull1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7852670799088701375, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
@@ -18473,6 +18480,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2484688917196928223, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
   m_PrefabInstance: {fileID: 1933709987}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1933709989 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6841559515064280391, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
+  m_PrefabInstance: {fileID: 1933709987}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 098ef3e6d24a2b140992a5bd5fbfd14d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1939426299
 PrefabInstance:
   m_ObjectHideFlags: 0

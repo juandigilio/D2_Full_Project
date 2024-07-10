@@ -11,7 +11,6 @@ public class MovementBehaviour : MonoBehaviour
     private Vector3 cameraRight;
     private float rotationSpeed = 11.0f;
 
-
     public float deltaTime;
 
     private Vector3 displacement;
@@ -33,6 +32,7 @@ public class MovementBehaviour : MonoBehaviour
         player = GetComponent<Player>();
         controller = GetComponent<CharacterController>();
         mainCamera = Camera.main.GetComponent<Camera>();
+        controller.skinWidth = 0.2f;
     }
 
     private void Update()
@@ -46,11 +46,12 @@ public class MovementBehaviour : MonoBehaviour
 
     private void FixedUpdate()
     {
-        UpdateDelta();
-
-        UpdateGravity();
-
-        AddForces();
+        if (controller.enabled)
+        {
+            UpdateDelta();
+            UpdateGravity();
+            AddForces();
+        }
     }
 
     public void Move()
@@ -155,6 +156,14 @@ public class MovementBehaviour : MonoBehaviour
             velocity.x = horizontalVelocity.x;
             velocity.z = horizontalVelocity.z;
         }
+    }
+
+    public void ResetPosition(Transform newPos)
+    {
+        //controller.enabled = false;
+        transform.position = newPos.position;
+        //controller.enabled = true;
+        controller.center = newPos.position;
     }
 
     public bool IsStuck()

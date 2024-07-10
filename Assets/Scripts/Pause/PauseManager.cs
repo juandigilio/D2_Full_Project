@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
@@ -21,6 +22,9 @@ public class PauseManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI exitText;
     [SerializeField] private Slider mouseSlider;
     [SerializeField] private Slider padSlider;
+
+    [SerializeField] private List<Canvas> canvasList;
+    [SerializeField] private Canvas prayingCanvas;
 
     private int index = 1;
     [SerializeField] private bool isJoystick = false;
@@ -64,6 +68,9 @@ public class PauseManager : MonoBehaviour
 
         mouseSlider.onValueChanged.AddListener(SetMouseSensitivity);
         padSlider.onValueChanged.AddListener(SetPadSensitivity);
+
+        PrayingZone.OnPrayingCanvasOn += PrayinngCanvasOn;
+        PrayingZone.OnPrayingCanvasOff += PrayinngCanvasOff;
     }
 
     private void OnDisable()
@@ -71,6 +78,8 @@ public class PauseManager : MonoBehaviour
         continueButton.onClick.RemoveListener(Continue);
         menuButton.onClick.RemoveListener(LoadMainMenu);
         exitButton.onClick.RemoveListener(Exit);
+        PrayingZone.OnPrayingCanvasOn -= PrayinngCanvasOn;
+        PrayingZone.OnPrayingCanvasOff -= PrayinngCanvasOff;
     }
 
     private void OnDestroy()
@@ -78,6 +87,8 @@ public class PauseManager : MonoBehaviour
         continueButton.onClick.RemoveListener(Continue);
         menuButton.onClick.RemoveListener(LoadMainMenu);
         exitButton.onClick.RemoveListener(Exit);
+        PrayingZone.OnPrayingCanvasOn -= PrayinngCanvasOn;
+        PrayingZone.OnPrayingCanvasOff -= PrayinngCanvasOff;
     }
 
 
@@ -114,6 +125,8 @@ public class PauseManager : MonoBehaviour
                     player = FindAnyObjectByType<Player>();
                 }
                 player.enabled = false;
+
+                SetAllCanvas(false);
 
                 wall.DropWall();
             }
@@ -333,6 +346,28 @@ public class PauseManager : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
 
+    }
+
+    private void SetAllCanvas(bool state)
+    {
+        if (canvasList.Count > 0)
+        {
+            foreach (Canvas canvas in canvasList)
+            {
+                canvas.enabled = state;
+            }
+        }
+
+    }
+
+    private void PrayinngCanvasOn()
+    {
+        prayingCanvas.enabled = true;
+    }
+
+    private void PrayinngCanvasOff()
+    {
+        prayingCanvas.enabled = false;
     }
 
     public bool GameIsPaused()

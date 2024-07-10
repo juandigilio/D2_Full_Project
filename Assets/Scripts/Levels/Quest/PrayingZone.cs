@@ -1,28 +1,13 @@
 using UnityEngine;
+using System;
 
 public class PrayingZone : MonoBehaviour
 {
     [SerializeField] private Altar altar;
-    [SerializeField] private Canvas canvas;
 
-    /// <summary>
-    /// Disables the canvas if it is not null.
-    /// </summary>
-    private void Awake()
-    {
-        if (canvas != null)
-        {
-            canvas.enabled = false;
-        }
-    }
+    public static Action OnPrayingCanvasOn;
+    public static Action OnPrayingCanvasOff;
 
-    private void Update()
-    {
-        if (altar.HasPrayed())
-        {
-            canvas.enabled = false;
-        }
-    }
 
     /// <summary>
     /// Activates the praying zone and enables the canvas when the player enters the trigger zone.
@@ -32,11 +17,7 @@ public class PrayingZone : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             altar.PrayingZone(true);
-
-            if (canvas != null && !altar.HasPrayed())
-            {
-                canvas.enabled = true;
-            }
+            OnPrayingCanvasOn?.Invoke();
         }
     }
 
@@ -48,11 +29,7 @@ public class PrayingZone : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             altar.PrayingZone(false);
-
-            if (canvas != null)
-            {
-                canvas.enabled = false;
-            }
+            OnPrayingCanvasOff?.Invoke();
         }
     }
 }

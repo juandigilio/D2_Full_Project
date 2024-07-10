@@ -43,19 +43,16 @@ public class Arch : MonoBehaviour
         doorSOund = GetComponent<DoorSound>();
 
         Altar.OnOpenDoor += Open;
-        //CheatsManager.OnOpenDoor += Open;
     }
 
     private void OnDisable()
     {
         Altar.OnOpenDoor -= Open;
-        //CheatsManager.OnOpenDoor -= Open;
     }
 
     private void OnDestroy()
     {
         Altar.OnOpenDoor -= Open;
-        //CheatsManager.OnOpenDoor -= Open;
     }
 
     private void Open()

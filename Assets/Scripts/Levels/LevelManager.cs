@@ -9,15 +9,14 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Arch door;
     [SerializeField] private Transform deathZone;
     [SerializeField] private InputManager inputManager;
-    [SerializeField] private GameObject startPoint;
+    [SerializeField] private GameObject restartPoint;
+    private GameObject playerObj;
 
     private bool isAnimating = false;
 
     private int totalCoins;
     private int collectedCoins = 0;
     private bool allCoinsCollected = false;
-
-    public static Action onDeathZone;
 
 
     private void Start()
@@ -32,10 +31,10 @@ public class LevelManager : MonoBehaviour
         coinsPull = GameObject.Find("CoinsPull");
         GetCoins();
 
-        GameObject obj = GameObject.FindGameObjectWithTag("Player");
+        playerObj = GameObject.FindGameObjectWithTag("Player");
         GameObject input = GameObject.FindGameObjectWithTag("InputManager");
 
-        player = obj.GetComponent<Player>();
+        player = playerObj.GetComponent<Player>();
 
         if (!player)
         {
@@ -43,7 +42,7 @@ public class LevelManager : MonoBehaviour
         }
         inputManager = input.GetComponent<InputManager>();
 
-        player.transform.position = startPoint.transform.position;
+        //player.transform.position = startPoint.transform.position;
     }
 
     private void Update()
@@ -53,6 +52,13 @@ public class LevelManager : MonoBehaviour
     }
 
     private void OnDisable()
+    {
+        Coin.OnCoinCollected -= CollectCoin;
+        ExitZone.OnLevelFinished -= UnloadLevel;
+        WiningZone.OnGameFinished -= LoadWiningScene;
+    }
+
+    private void OnDestroy()
     {
         Coin.OnCoinCollected -= CollectCoin;
         ExitZone.OnLevelFinished -= UnloadLevel;
@@ -96,9 +102,16 @@ public class LevelManager : MonoBehaviour
 
     private void CheckDeathZone()
     {
-        if (player.MovementBehaviour().PosY() < deathZone.position.y)
+        if (player.MovementBehaviour().PosY() < deathZone.transform.position.y)
         {
-            onDeathZone?.Invoke();
+            Debug.Log("player y " + player.MovementBehaviour().PosY());
+            //Debug.Log("deathZone y " + deathZone.transform.position.y);
+            //Debug.Log("restart y " + restartPoint.transform.position.y);
+
+            //playerObj.transform.position = restartPoint.transform.position;
+            player.MovementBehaviour().ResetPosition(restartPoint.transform);
+
+            //player.MovementBehaviour().ResetVelocity();
         }
     }
 

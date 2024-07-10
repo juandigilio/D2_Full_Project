@@ -51,9 +51,12 @@ public static class CustomSceneManager
     /// </summary>
     public static void LoadNextSceneAsync()
     {
-        index++;
+        if ((index + 1) < scenesPool.Count)
+        {
+            index++;
 
-        SceneManager.LoadSceneAsync(scenesPool[index].sceneName, LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(scenesPool[index].sceneName, LoadSceneMode.Additive);
+        }   
     }
 
     public static void UnloadLastScene()

@@ -20,7 +20,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private string pauseAction = "Pause";
     [SerializeField] private string moveAction = "Move";
     [SerializeField] private string rotateCameraAction = "MoveCamera";
-    [SerializeField] private string doorAction = "OpenDoor";
+    [SerializeField] public string doorAction = "OpenDoor";
     /// <summary>
     /// Paused and menu inputs
     /// </summary>
@@ -32,10 +32,10 @@ public class InputManager : MonoBehaviour
     /// Maps
     /// </summary>
     [SerializeField] private string pausedAction = "Paused";
-    [SerializeField] private string playerAction = "Player";
+    [SerializeField] public string playerAction = "Player";
 
-    public static InputManager instance;
-    public PlayerInput PlayerInput { get; private set; }
+    //public static InputManager instance;
+    public PlayerInput playerInput { get; private set; }
 
     public static Action OnOpenDoor;
     public static Action OnKeyboardActive;
@@ -54,8 +54,8 @@ public class InputManager : MonoBehaviour
         else
         {
             DontDestroyOnLoad(this.gameObject);
-            instance = this;
-            PlayerInput = GetComponent<PlayerInput>();
+            //instance = this;
+            playerInput = GetComponent<PlayerInput>();
         }
     }
 
@@ -64,31 +64,30 @@ public class InputManager : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        PlayerInput.ActivateInput();
+        playerInput.ActivateInput();
 
-        if (PlayerInput != null)
+        if (playerInput != null)
         {
-            PlayerInput.SwitchCurrentActionMap(playerAction);
+            playerInput.SwitchCurrentActionMap(playerAction);
 
-            PlayerInput.currentActionMap.FindAction(jumpAction).started += jumpBehaviour.Jump;
-            PlayerInput.currentActionMap.FindAction(prayAction).started += prayBehaviour.Pray;
-            PlayerInput.currentActionMap.FindAction(pauseAction).started += pauseManager.Pause;
-            PlayerInput.currentActionMap.FindAction(moveAction).started += Move;
-            PlayerInput.currentActionMap.FindAction(moveAction).performed += Move;
-            PlayerInput.currentActionMap.FindAction(moveAction).canceled += Move;
-            PlayerInput.currentActionMap.FindAction(rotateCameraAction).started += GamePadCameraRotation;
-            PlayerInput.currentActionMap.FindAction(rotateCameraAction).performed += GamePadCameraRotation;
-            PlayerInput.currentActionMap.FindAction(rotateCameraAction).canceled += GamePadCameraRotation;
-            PlayerInput.currentActionMap.FindAction(doorAction).started += OpenDoor;
+            playerInput.currentActionMap.FindAction(jumpAction).started += jumpBehaviour.Jump;
+            playerInput.currentActionMap.FindAction(prayAction).started += prayBehaviour.Pray;
+            playerInput.currentActionMap.FindAction(pauseAction).started += pauseManager.Pause;
+            playerInput.currentActionMap.FindAction(moveAction).started += Move;
+            playerInput.currentActionMap.FindAction(moveAction).performed += Move;
+            playerInput.currentActionMap.FindAction(moveAction).canceled += Move;
+            playerInput.currentActionMap.FindAction(rotateCameraAction).started += GamePadCameraRotation;
+            playerInput.currentActionMap.FindAction(rotateCameraAction).performed += GamePadCameraRotation;
+            playerInput.currentActionMap.FindAction(rotateCameraAction).canceled += GamePadCameraRotation;
 
-            PlayerInput.SwitchCurrentActionMap(pausedAction);
+            playerInput.SwitchCurrentActionMap(pausedAction);
 
-            PlayerInput.currentActionMap.FindAction(resumeAction).started += pauseManager.Resume;
-            PlayerInput.currentActionMap.FindAction(upAction).started += pauseManager.Up;
-            PlayerInput.currentActionMap.FindAction(downAction).started += pauseManager.Down;
-            PlayerInput.currentActionMap.FindAction(selectAction).started += pauseManager.Select;
+            playerInput.currentActionMap.FindAction(resumeAction).started += pauseManager.Resume;
+            playerInput.currentActionMap.FindAction(upAction).started += pauseManager.Up;
+            playerInput.currentActionMap.FindAction(downAction).started += pauseManager.Down;
+            playerInput.currentActionMap.FindAction(selectAction).started += pauseManager.Select;
 
-            PlayerInput.SwitchCurrentActionMap(playerAction);
+            playerInput.SwitchCurrentActionMap(playerAction);
         }
 
         CheckInput();
@@ -99,14 +98,14 @@ public class InputManager : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (pauseManager.GameIsPaused() && PlayerInput.currentActionMap.name != pausedAction)
+        if (pauseManager.GameIsPaused() && playerInput.currentActionMap.name != pausedAction)
         {
-            PlayerInput.SwitchCurrentActionMap(pausedAction);
+            playerInput.SwitchCurrentActionMap(pausedAction);
         }
 
-        if (!pauseManager.GameIsPaused() && PlayerInput.currentActionMap.name != playerAction)
+        if (!pauseManager.GameIsPaused() && playerInput.currentActionMap.name != playerAction)
         {
-            PlayerInput.SwitchCurrentActionMap(playerAction);
+            playerInput.SwitchCurrentActionMap(playerAction);
         }
 
         CheckInput();
@@ -118,23 +117,22 @@ public class InputManager : MonoBehaviour
     /// </summary>
     public void Unsuscribe()
     {      
-        PlayerInput.SwitchCurrentActionMap(playerAction);
-        PlayerInput.currentActionMap.FindAction(jumpAction).started -= jumpBehaviour.Jump;
-        PlayerInput.currentActionMap.FindAction(prayAction).started -= prayBehaviour.Pray;
-        PlayerInput.currentActionMap.FindAction(moveAction).started -= Move;
-        PlayerInput.currentActionMap.FindAction(moveAction).performed -= Move;
-        PlayerInput.currentActionMap.FindAction(moveAction).canceled -= Move;
-        PlayerInput.currentActionMap.FindAction(rotateCameraAction).started -= GamePadCameraRotation;
-        PlayerInput.currentActionMap.FindAction(rotateCameraAction).performed -= GamePadCameraRotation;
-        PlayerInput.currentActionMap.FindAction(rotateCameraAction).canceled -= GamePadCameraRotation;
-        PlayerInput.currentActionMap.FindAction(doorAction).started -= OpenDoor;
+        playerInput.SwitchCurrentActionMap(playerAction);
+        playerInput.currentActionMap.FindAction(jumpAction).started -= jumpBehaviour.Jump;
+        playerInput.currentActionMap.FindAction(prayAction).started -= prayBehaviour.Pray;
+        playerInput.currentActionMap.FindAction(moveAction).started -= Move;
+        playerInput.currentActionMap.FindAction(moveAction).performed -= Move;
+        playerInput.currentActionMap.FindAction(moveAction).canceled -= Move;
+        playerInput.currentActionMap.FindAction(rotateCameraAction).started -= GamePadCameraRotation;
+        playerInput.currentActionMap.FindAction(rotateCameraAction).performed -= GamePadCameraRotation;
+        playerInput.currentActionMap.FindAction(rotateCameraAction).canceled -= GamePadCameraRotation;
 
-        PlayerInput.SwitchCurrentActionMap(pausedAction);
-        PlayerInput.currentActionMap.FindAction(resumeAction).started -= pauseManager.Resume;
-        PlayerInput.currentActionMap.FindAction(upAction).started -= pauseManager.Up;
-        PlayerInput.currentActionMap.FindAction(downAction).started -= pauseManager.Down;
-        PlayerInput.currentActionMap.FindAction(selectAction).started -= pauseManager.Select;
-        PlayerInput.SwitchCurrentActionMap(playerAction);
+        playerInput.SwitchCurrentActionMap(pausedAction);
+        playerInput.currentActionMap.FindAction(resumeAction).started -= pauseManager.Resume;
+        playerInput.currentActionMap.FindAction(upAction).started -= pauseManager.Up;
+        playerInput.currentActionMap.FindAction(downAction).started -= pauseManager.Down;
+        playerInput.currentActionMap.FindAction(selectAction).started -= pauseManager.Select;
+        playerInput.SwitchCurrentActionMap(playerAction);
     }
 
     private void OnDestroy()
@@ -175,7 +173,7 @@ public class InputManager : MonoBehaviour
     {
         if (!pauseManager.GameIsPaused())
         {
-            if (PlayerInput.currentControlScheme == "Gamepad")
+            if (playerInput.currentControlScheme == "Gamepad")
             {
                 if (padCameraInput != 0)
                 {
@@ -190,19 +188,11 @@ public class InputManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Invokes the OnOpenDoor action.
-    /// </summary>
-    private void OpenDoor(InputAction.CallbackContext callbackContext)
-    {
-        OnOpenDoor?.Invoke();
-    }
-
-    /// <summary>
     /// Checks the current input scheme.
     /// </summary>
     private void CheckInput()
     {
-        if (PlayerInput.currentControlScheme == "Gamepad")
+        if (playerInput.currentControlScheme == "Gamepad")
         {
             pauseManager.IsJoystick(true);
             OnGamepadActive?.Invoke();

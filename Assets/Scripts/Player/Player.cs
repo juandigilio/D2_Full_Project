@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public Vector2 input;
 
     private bool isAnimating;
+    private bool cheated = false;
 
     /// <summary>
     /// Initializes behaviors and subscribes to events.
@@ -38,7 +39,7 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("animating: " + isAnimating);
+        //Debug.Log("animating: " + isAnimating);
     }
 
     /// <summary>
@@ -96,6 +97,16 @@ public class Player : MonoBehaviour
     private void AnimationStarted()
     {
         isAnimating = true;
+    }
+
+    public void Cheated(bool state)
+    {
+        cheated = state;
+    }
+
+    public bool Cheated()
+    {
+        return cheated;
     }
 
     /// <summary>

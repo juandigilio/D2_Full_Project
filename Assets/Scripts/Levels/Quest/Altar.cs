@@ -45,7 +45,6 @@ public class Altar : MonoBehaviour
 
         PrayBehaviour.OnActivateQuest += PrayFinished;
         PrayBehaviour.OnAnimationPraying += IsPraying;
-        CheatsManager.OnOpenDoor += CheatDoor;
     }
 
     /// <summary>
@@ -55,7 +54,6 @@ public class Altar : MonoBehaviour
     {
         PrayBehaviour.OnActivateQuest -= PrayFinished;
         PrayBehaviour.OnAnimationPraying -= IsPraying;
-        CheatsManager.OnOpenDoor -= CheatDoor;
     }
 
     /// <summary>
@@ -130,12 +128,15 @@ public class Altar : MonoBehaviour
         }
     }
 
-    private void CheatDoor()
+    public void CheatDoor()
     {
-        CustomSceneManager.LoadNextSceneAsync();
-        nextLevelLoaded = true;
-        hasPrayed = true;
-        OnOpenDoor?.Invoke();
+        if (nextLevelLoaded == false)
+        {
+            CustomSceneManager.LoadNextSceneAsync();
+            nextLevelLoaded = true;
+            hasPrayed = true;
+            OnOpenDoor?.Invoke();
+        }   
     }
 
     /// <summary>

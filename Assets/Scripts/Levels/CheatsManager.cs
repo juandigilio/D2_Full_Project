@@ -1,25 +1,49 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CheatsManager : MonoBehaviour
 {
-    public static event Action OnOpenDoor;
+    [SerializeField] Altar altar;
+    private PlayerInput playerInput;
+    private InputManager inputManager;
+    private Player player;
 
     private void Awake()
     {
-        InputManager.OnOpenDoor += DoorCheat;
+        GameObject input = GameObject.FindGameObjectWithTag("InputManager");
+        playerInput = input.GetComponent<PlayerInput>();
+        inputManager = input.GetComponent<InputManager>();
+
+        GameObject obj = GameObject.FindGameObjectWithTag("Player");
+        player = obj.GetComponent<Player>();
+
+        playerInput.SwitchCurrentActionMap(inputManager.playerAction);
+        playerInput.currentActionMap.FindAction(inputManager.doorAction).started += OpenDoor;
     }
 
     private void OnDisable()
     {
-        InputManager.OnOpenDoor -= DoorCheat;
+        playerInput.SwitchCurrentActionMap(inputManager.playerAction);
+        playerInput.currentActionMap.FindAction(inputManager.doorAction).started -= OpenDoor;
+
+        player.Cheated(false);
     }
 
     /// <summary>
-    /// Handles the cheat action to open the door.
+    /// Invokes the OnOpenDoor action.
     /// </summary>
-    private void DoorCheat()
+    private void OpenDoor(InputAction.CallbackContext callbackContext)
     {
-        OnOpenDoor?.Invoke();
+        if (!player.Cheated())
+        {
+            altar.CheatDoor();
+            player.Cheated(true);
+        }   
+    }
+
+    private void CollectAllCoins(InputAction.CallbackContext callbackContext)
+    {
+
     }
 }

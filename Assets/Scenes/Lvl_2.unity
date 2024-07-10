@@ -13102,7 +13102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5716403975152545329, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 654.3075
+      value: 650.1075
       objectReference: {fileID: 0}
     - target: {fileID: 5716403975152545329, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
       propertyPath: m_LocalPosition.y
@@ -13110,7 +13110,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5716403975152545329, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 54.562744
+      value: -0.23725891
       objectReference: {fileID: 0}
     - target: {fileID: 5716403975152545329, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
       propertyPath: m_LocalRotation.w
@@ -13140,6 +13140,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5944984026273350333, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
+      propertyPath: altar
+      value: 
+      objectReference: {fileID: 1055762519}
     - target: {fileID: 6011303058048561077, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
       propertyPath: m_LocalPosition.y
       value: -385.05
@@ -13219,6 +13223,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
+--- !u!114 &1055762519 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6841559515064280391, guid: 5860810cd31b0e44b85e0bef82e71062, type: 3}
+  m_PrefabInstance: {fileID: 1055762518}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 098ef3e6d24a2b140992a5bd5fbfd14d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1058628342
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16412,7 +16427,7 @@ Transform:
   m_GameObject: {fileID: 1398358737}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.2, y: -22, z: 80.8}
+  m_LocalPosition: {x: -4.4, y: -22, z: 26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
